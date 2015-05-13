@@ -34,6 +34,10 @@ group :development do
   gem 'pry'
 end
 
+group :test do
+  gem 'iconv', '~> 1.0.4' if RUBY_VERSION >= '2.0'
+end
+
 if File.exists? "#{__FILE__}.local"
   eval(File.read("#{__FILE__}.local"), binding)
 end
