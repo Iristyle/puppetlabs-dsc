@@ -1,3 +1,5 @@
+require 'json'
+
 Puppet::Type.type(:base_dsc).provide(:powershell) do
   confine :operatingsystem => :windows
   defaultfor :operatingsystem => :windows
@@ -37,8 +39,13 @@ EOT
     script_content = ps_script_content('test')
     Puppet.debug "\n" + script_content
     output = powershell(powershell_args, script_content)
-    if ['true','false'].include?(output.to_s.strip.downcase)
-      check = (output.to_s.strip.downcase == 'true')
+    Puppet.debug "Dsc Resource returned: #{output}"
+    data = JSON.parse(output)
+    if data.has_key?("errormessage")
+      fail(data["errormessage"])
+    end
+    if data.has_key?("indesiredstate")
+      check = (data["isdesiredstate"] == 'true')
       Puppet.debug "Dsc Resource Exists?: #{check}"
       Puppet.debug "dsc_ensure: #{resource[:dsc_ensure]}" if resource.parameters.has_key?(:dsc_ensure)
       Puppet.debug "ensure: #{resource[:ensure]}"
@@ -52,14 +59,32 @@ EOT
     script_content = ps_script_content('set')
     Puppet.debug "\n" + script_content
     output = powershell(powershell_args, script_content)
-    Puppet.debug "Dsc Resource Return: #{output}"
+    Puppet.debug "Create Dsc Resource returned: #{output}"
+    data = JSON.parse(output)
+    if data.has_key?("errormessage")
+      fail(data["errormessage"])
+    end
+    if data.has_key?("rebootrequired")
+      check = (data["rebootrequired"] == 'true')
+      Puppet.debug "RebootRequired #{check}"
+    end
+    true
   end
 
   def destroy
     script_content = ps_script_content('set')
     Puppet.debug "\n" + script_content
     output = powershell(powershell_args, script_content)
-    Puppet.debug "Dsc Resource Return: #{output}"
+    Puppet.debug "Dsc Resource returned: #{output}"
+    data = JSON.parse(output)
+    if data.has_key?("errormessage")
+      fail(data["errormessage"])
+    end
+    if data.has_key?("rebootrequired")
+      check = (data["rebootrequired"] == 'true')
+      Puppet.debug "rebootrequired #{check}"
+    end
+    true
   end
 
   def munge_boolean(value)
