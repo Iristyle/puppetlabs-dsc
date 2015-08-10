@@ -4,13 +4,19 @@ if (!(Test-Path($PuppetModulesFolder))) {
   & cmd.exe /c mklink /d "$PuppetModulesFolder" "<%= vendored_modules_path %>" | Out-Null
 }
 
+$response = @{
+  indesiredstate = $false
+  rebootrequired = $false
+  error = $false
+  errormessage = ''
+  exception = ''
+}
+
 $currentState = Get-DscLocalConfigurationManager
 
 if ($currentState.RefreshMode -ne 'Disabled') {
-  $data = [PSCustomObject]@{
-    "error" = "DSC LCM RefreshMode must be set to Disabled for Puppet to execute DSC Resources! Please run dsc::lcm_config first"
-  } | ConvertTo-Json -Compress
-  return $data
+  fa$response.error = "DSC LCM RefreshMode must be set to Disabled for Puppet to execute DSC Resources! Please run dsc::lcm_config first"
+  return ($response | ConvertTo-Json -Compress)
 }
 
 $invokeParams = @{
@@ -34,33 +40,24 @@ $invokeParams = @{
 <% end -%>
 }
 
-try{
-    $result = Invoke-DscResource @invokeParams
-}catch{
-  $exc = $_
-  $data = [PSCustomObject]@{
-    indesiredstate = $false
-    rebootrequired = $false
-    errormessage   = $_.Exception.Message
-  } | ConvertTo-Json -Compress
-  return $data
+try {
+  $result = Invoke-DscResource @invokeParams
+}
+catch {
+  $response.errormessage = $_.Exception.Message
+  return ($response | ConvertTo-Json -Compress)
 }
 
 
 # keep the switch for when Test passes back changed properties
 switch ($invokeParams.Method) {
   'Test' {
-    $data = [PSCustomObject]@{
-      indesiredstate = $result.InDesiredState
-      rebootrequired = $false
-    } | ConvertTo-Json -Compress
-    return $data
+    $response.indesiredstate = $result.InDesiredState
   }
   'Set' {
-    $data = [PSCustomObject]@{
-      indesiredstate = $true
-      rebootrequired = $result.RebootRequired
-    } | ConvertTo-Json -Compress
-    return $data
+    $response.indesiredstate = $true
+    $response.rebootrequired = $result.RebootRequired
   }
+
+  return ($response | ConvertTo-Json -Compress)
 }

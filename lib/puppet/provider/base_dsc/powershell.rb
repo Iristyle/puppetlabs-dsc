@@ -61,8 +61,9 @@ EOT
     output = powershell(powershell_args, script_content)
     Puppet.debug "Create Dsc Resource returned: #{output}"
     data = JSON.parse(output)
+    fail(data['errormessage']) if data['error']
     if data.has_key?("errormessage")
-      fail(data["errormessage"])
+
     end
     if data.has_key?("rebootrequired")
       check = (data["rebootrequired"] == 'true')
