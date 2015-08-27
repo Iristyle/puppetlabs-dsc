@@ -193,8 +193,10 @@ describe Puppet::Type.type(:dsc_xpackage) do
     expect{dsc_xpackage[:dsc_arguments] = 16}.to raise_error(Puppet::ResourceError)
   end
 
-  it 'should not accept array for dsc_credential' do
-    expect{dsc_xpackage[:dsc_credential] = ["foo", "bar", "spec"]}.to raise_error(Puppet::ResourceError)
+  # TODO: this test is not right yet
+  it 'should accept array for dsc_credential' do
+    dsc_xpackage[:dsc_credential] = {"user"=>"user", "password"=>"password"}
+    expect(dsc_xpackage[:dsc_credential]).to eq({"user"=>"user", "password"=>"password"})
   end
 
   it 'should not accept boolean for dsc_credential' do
@@ -388,8 +390,10 @@ describe Puppet::Type.type(:dsc_xpackage) do
     expect{dsc_xpackage[:dsc_installed] = 16}.to raise_error(Puppet::ResourceError)
   end
 
-  it 'should not accept array for dsc_runascredential' do
-    expect{dsc_xpackage[:dsc_runascredential] = ["foo", "bar", "spec"]}.to raise_error(Puppet::ResourceError)
+  # TODO: this test is not right yet
+  it 'should accept array for dsc_runascredential' do
+    dsc_xpackage[:dsc_runascredential] = {"user"=>"user", "password"=>"password"}
+    expect(dsc_xpackage[:dsc_runascredential]).to eq({"user"=>"user", "password"=>"password"})
   end
 
   it 'should not accept boolean for dsc_runascredential' do
@@ -711,6 +715,19 @@ describe Puppet::Type.type(:dsc_xpackage) do
       end
 
     end
+
+    describe "when dsc_resource has credentials" do
+
+      before(:each) do
+        @provider = described_class.provider(:powershell).new(dsc_xpackage)
+      end
+
+      it "should convert credential hash to a pscredential object" do
+        expect(@provider.ps_script_content('test')).to match(/| new-pscredential'/)
+      end
+
+    end
+
 
   end
 end

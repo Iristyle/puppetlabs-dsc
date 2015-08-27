@@ -75,6 +75,20 @@ Puppet::Type.newtype(:dsc_<%= resource.friendlyname.downcase %>) do
       resource[:ensure] = value.downcase
 <%    end -%>
 <%    case -%>
+<%    when property.credential? -%>
+      unless value.kind_of?(Hash)
+        fail("Invalid value '#{value}'. Should be a hash")
+      end
+      required = ['user', 'password']
+      missing = required - value.keys.map(&:to_s)
+      unless missing.empty?
+        fail "for <%= property.name %> you are missing the following keys: #{missing.join(',')}"
+      end
+      required.each do |key|
+        if value[key]
+          fail "#{key} for <%= property.name %> should be a String" unless value[key].is_a? String
+        end
+      end
 <%    when property.embeddedinstance? && property.embeddedinstance_array? -%>
 <%      if property.keyvaluepair? -%>
       unless value.kind_of?(Hash)

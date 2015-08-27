@@ -117,8 +117,10 @@ describe Puppet::Type.type(:dsc_xazurepackidentityprovider) do
     expect(dsc_xazurepackidentityprovider[:dsc_port]).to eq(64)
   end
 
-  it 'should not accept array for dsc_azurepackadmincredential' do
-    expect{dsc_xazurepackidentityprovider[:dsc_azurepackadmincredential] = ["foo", "bar", "spec"]}.to raise_error(Puppet::ResourceError)
+  # TODO: this test is not right yet
+  it 'should accept array for dsc_azurepackadmincredential' do
+    dsc_xazurepackidentityprovider[:dsc_azurepackadmincredential] = {"user"=>"user", "password"=>"password"}
+    expect(dsc_xazurepackidentityprovider[:dsc_azurepackadmincredential]).to eq({"user"=>"user", "password"=>"password"})
   end
 
   it 'should not accept boolean for dsc_azurepackadmincredential' do
@@ -196,6 +198,19 @@ describe Puppet::Type.type(:dsc_xazurepackidentityprovider) do
       end
 
     end
+
+    describe "when dsc_resource has credentials" do
+
+      before(:each) do
+        @provider = described_class.provider(:powershell).new(dsc_xazurepackidentityprovider)
+      end
+
+      it "should convert credential hash to a pscredential object" do
+        expect(@provider.ps_script_content('test')).to match(/| new-pscredential'/)
+      end
+
+    end
+
 
   end
 end

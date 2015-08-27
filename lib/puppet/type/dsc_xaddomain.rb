@@ -102,6 +102,16 @@ Puppet::Type.newtype(:dsc_xaddomain) do
       unless value.kind_of?(Hash)
         fail("Invalid value '#{value}'. Should be a hash")
       end
+      required = ['user', 'password']
+      missing = required - value.keys.map(&:to_s)
+      unless missing.empty?
+        fail "for DomainAdministratorCredential you are missing the following keys: #{missing.join(',')}"
+      end
+      required.each do |key|
+        if value[key]
+          fail "#{key} for DomainAdministratorCredential should be a String" unless value[key].is_a? String
+        end
+      end
     end
   end
 
@@ -115,6 +125,16 @@ Puppet::Type.newtype(:dsc_xaddomain) do
       unless value.kind_of?(Hash)
         fail("Invalid value '#{value}'. Should be a hash")
       end
+      required = ['user', 'password']
+      missing = required - value.keys.map(&:to_s)
+      unless missing.empty?
+        fail "for SafemodeAdministratorPassword you are missing the following keys: #{missing.join(',')}"
+      end
+      required.each do |key|
+        if value[key]
+          fail "#{key} for SafemodeAdministratorPassword should be a String" unless value[key].is_a? String
+        end
+      end
     end
   end
 
@@ -127,6 +147,16 @@ Puppet::Type.newtype(:dsc_xaddomain) do
     validate do |value|
       unless value.kind_of?(Hash)
         fail("Invalid value '#{value}'. Should be a hash")
+      end
+      required = ['user', 'password']
+      missing = required - value.keys.map(&:to_s)
+      unless missing.empty?
+        fail "for DnsDelegationCredential you are missing the following keys: #{missing.join(',')}"
+      end
+      required.each do |key|
+        if value[key]
+          fail "#{key} for DnsDelegationCredential should be a String" unless value[key].is_a? String
+        end
       end
     end
   end

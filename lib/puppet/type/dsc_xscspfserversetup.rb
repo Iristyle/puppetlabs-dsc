@@ -111,6 +111,16 @@ Puppet::Type.newtype(:dsc_xscspfserversetup) do
       unless value.kind_of?(Hash)
         fail("Invalid value '#{value}'. Should be a hash")
       end
+      required = ['user', 'password']
+      missing = required - value.keys.map(&:to_s)
+      unless missing.empty?
+        fail "for SetupCredential you are missing the following keys: #{missing.join(',')}"
+      end
+      required.each do |key|
+        if value[key]
+          fail "#{key} for SetupCredential should be a String" unless value[key].is_a? String
+        end
+      end
     end
   end
 
@@ -244,6 +254,16 @@ Puppet::Type.newtype(:dsc_xscspfserversetup) do
       unless value.kind_of?(Hash)
         fail("Invalid value '#{value}'. Should be a hash")
       end
+      required = ['user', 'password']
+      missing = required - value.keys.map(&:to_s)
+      unless missing.empty?
+        fail "for SCVMM you are missing the following keys: #{missing.join(',')}"
+      end
+      required.each do |key|
+        if value[key]
+          fail "#{key} for SCVMM should be a String" unless value[key].is_a? String
+        end
+      end
     end
   end
 
@@ -271,6 +291,16 @@ Puppet::Type.newtype(:dsc_xscspfserversetup) do
     validate do |value|
       unless value.kind_of?(Hash)
         fail("Invalid value '#{value}'. Should be a hash")
+      end
+      required = ['user', 'password']
+      missing = required - value.keys.map(&:to_s)
+      unless missing.empty?
+        fail "for SCAdmin you are missing the following keys: #{missing.join(',')}"
+      end
+      required.each do |key|
+        if value[key]
+          fail "#{key} for SCAdmin should be a String" unless value[key].is_a? String
+        end
       end
     end
   end
@@ -300,6 +330,16 @@ Puppet::Type.newtype(:dsc_xscspfserversetup) do
       unless value.kind_of?(Hash)
         fail("Invalid value '#{value}'. Should be a hash")
       end
+      required = ['user', 'password']
+      missing = required - value.keys.map(&:to_s)
+      unless missing.empty?
+        fail "for SCProvider you are missing the following keys: #{missing.join(',')}"
+      end
+      required.each do |key|
+        if value[key]
+          fail "#{key} for SCProvider should be a String" unless value[key].is_a? String
+        end
+      end
     end
   end
 
@@ -327,6 +367,16 @@ Puppet::Type.newtype(:dsc_xscspfserversetup) do
     validate do |value|
       unless value.kind_of?(Hash)
         fail("Invalid value '#{value}'. Should be a hash")
+      end
+      required = ['user', 'password']
+      missing = required - value.keys.map(&:to_s)
+      unless missing.empty?
+        fail "for SCUsage you are missing the following keys: #{missing.join(',')}"
+      end
+      required.each do |key|
+        if value[key]
+          fail "#{key} for SCUsage should be a String" unless value[key].is_a? String
+        end
       end
     end
   end

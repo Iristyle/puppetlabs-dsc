@@ -130,8 +130,10 @@ describe Puppet::Type.type(:dsc_xscspfserversetup) do
     expect{dsc_xscspfserversetup[:dsc_sourcefolder] = 16}.to raise_error(Puppet::ResourceError)
   end
 
-  it 'should not accept array for dsc_setupcredential' do
-    expect{dsc_xscspfserversetup[:dsc_setupcredential] = ["foo", "bar", "spec"]}.to raise_error(Puppet::ResourceError)
+  # TODO: this test is not right yet
+  it 'should accept array for dsc_setupcredential' do
+    dsc_xscspfserversetup[:dsc_setupcredential] = {"user"=>"user", "password"=>"password"}
+    expect(dsc_xscspfserversetup[:dsc_setupcredential]).to eq({"user"=>"user", "password"=>"password"})
   end
 
   it 'should not accept boolean for dsc_setupcredential' do
@@ -343,8 +345,10 @@ describe Puppet::Type.type(:dsc_xscspfserversetup) do
     expect(dsc_xscspfserversetup[:dsc_websiteportnumber]).to eq(64)
   end
 
-  it 'should not accept array for dsc_scvmm' do
-    expect{dsc_xscspfserversetup[:dsc_scvmm] = ["foo", "bar", "spec"]}.to raise_error(Puppet::ResourceError)
+  # TODO: this test is not right yet
+  it 'should accept array for dsc_scvmm' do
+    dsc_xscspfserversetup[:dsc_scvmm] = {"user"=>"user", "password"=>"password"}
+    expect(dsc_xscspfserversetup[:dsc_scvmm]).to eq({"user"=>"user", "password"=>"password"})
   end
 
   it 'should not accept boolean for dsc_scvmm' do
@@ -375,8 +379,10 @@ describe Puppet::Type.type(:dsc_xscspfserversetup) do
     expect{dsc_xscspfserversetup[:dsc_scvmmusername] = 16}.to raise_error(Puppet::ResourceError)
   end
 
-  it 'should not accept array for dsc_scadmin' do
-    expect{dsc_xscspfserversetup[:dsc_scadmin] = ["foo", "bar", "spec"]}.to raise_error(Puppet::ResourceError)
+  # TODO: this test is not right yet
+  it 'should accept array for dsc_scadmin' do
+    dsc_xscspfserversetup[:dsc_scadmin] = {"user"=>"user", "password"=>"password"}
+    expect(dsc_xscspfserversetup[:dsc_scadmin]).to eq({"user"=>"user", "password"=>"password"})
   end
 
   it 'should not accept boolean for dsc_scadmin' do
@@ -407,8 +413,10 @@ describe Puppet::Type.type(:dsc_xscspfserversetup) do
     expect{dsc_xscspfserversetup[:dsc_scadminusername] = 16}.to raise_error(Puppet::ResourceError)
   end
 
-  it 'should not accept array for dsc_scprovider' do
-    expect{dsc_xscspfserversetup[:dsc_scprovider] = ["foo", "bar", "spec"]}.to raise_error(Puppet::ResourceError)
+  # TODO: this test is not right yet
+  it 'should accept array for dsc_scprovider' do
+    dsc_xscspfserversetup[:dsc_scprovider] = {"user"=>"user", "password"=>"password"}
+    expect(dsc_xscspfserversetup[:dsc_scprovider]).to eq({"user"=>"user", "password"=>"password"})
   end
 
   it 'should not accept boolean for dsc_scprovider' do
@@ -439,8 +447,10 @@ describe Puppet::Type.type(:dsc_xscspfserversetup) do
     expect{dsc_xscspfserversetup[:dsc_scproviderusername] = 16}.to raise_error(Puppet::ResourceError)
   end
 
-  it 'should not accept array for dsc_scusage' do
-    expect{dsc_xscspfserversetup[:dsc_scusage] = ["foo", "bar", "spec"]}.to raise_error(Puppet::ResourceError)
+  # TODO: this test is not right yet
+  it 'should accept array for dsc_scusage' do
+    dsc_xscspfserversetup[:dsc_scusage] = {"user"=>"user", "password"=>"password"}
+    expect(dsc_xscspfserversetup[:dsc_scusage]).to eq({"user"=>"user", "password"=>"password"})
   end
 
   it 'should not accept boolean for dsc_scusage' do
@@ -610,6 +620,19 @@ describe Puppet::Type.type(:dsc_xscspfserversetup) do
       end
 
     end
+
+    describe "when dsc_resource has credentials" do
+
+      before(:each) do
+        @provider = described_class.provider(:powershell).new(dsc_xscspfserversetup)
+      end
+
+      it "should convert credential hash to a pscredential object" do
+        expect(@provider.ps_script_content('test')).to match(/| new-pscredential'/)
+      end
+
+    end
+
 
   end
 end

@@ -133,8 +133,10 @@ describe Puppet::Type.type(:dsc_xscommanagementserversetup) do
     expect{dsc_xscommanagementserversetup[:dsc_sourcefolder] = 16}.to raise_error(Puppet::ResourceError)
   end
 
-  it 'should not accept array for dsc_setupcredential' do
-    expect{dsc_xscommanagementserversetup[:dsc_setupcredential] = ["foo", "bar", "spec"]}.to raise_error(Puppet::ResourceError)
+  # TODO: this test is not right yet
+  it 'should accept array for dsc_setupcredential' do
+    dsc_xscommanagementserversetup[:dsc_setupcredential] = {"user"=>"user", "password"=>"password"}
+    expect(dsc_xscommanagementserversetup[:dsc_setupcredential]).to eq({"user"=>"user", "password"=>"password"})
   end
 
   it 'should not accept boolean for dsc_setupcredential' do
@@ -279,8 +281,10 @@ describe Puppet::Type.type(:dsc_xscommanagementserversetup) do
     expect(dsc_xscommanagementserversetup[:dsc_managementserviceport]).to eq(64)
   end
 
-  it 'should not accept array for dsc_actionaccount' do
-    expect{dsc_xscommanagementserversetup[:dsc_actionaccount] = ["foo", "bar", "spec"]}.to raise_error(Puppet::ResourceError)
+  # TODO: this test is not right yet
+  it 'should accept array for dsc_actionaccount' do
+    dsc_xscommanagementserversetup[:dsc_actionaccount] = {"user"=>"user", "password"=>"password"}
+    expect(dsc_xscommanagementserversetup[:dsc_actionaccount]).to eq({"user"=>"user", "password"=>"password"})
   end
 
   it 'should not accept boolean for dsc_actionaccount' do
@@ -311,8 +315,10 @@ describe Puppet::Type.type(:dsc_xscommanagementserversetup) do
     expect{dsc_xscommanagementserversetup[:dsc_actionaccountusername] = 16}.to raise_error(Puppet::ResourceError)
   end
 
-  it 'should not accept array for dsc_dasaccount' do
-    expect{dsc_xscommanagementserversetup[:dsc_dasaccount] = ["foo", "bar", "spec"]}.to raise_error(Puppet::ResourceError)
+  # TODO: this test is not right yet
+  it 'should accept array for dsc_dasaccount' do
+    dsc_xscommanagementserversetup[:dsc_dasaccount] = {"user"=>"user", "password"=>"password"}
+    expect(dsc_xscommanagementserversetup[:dsc_dasaccount]).to eq({"user"=>"user", "password"=>"password"})
   end
 
   it 'should not accept boolean for dsc_dasaccount' do
@@ -343,8 +349,10 @@ describe Puppet::Type.type(:dsc_xscommanagementserversetup) do
     expect{dsc_xscommanagementserversetup[:dsc_dasaccountusername] = 16}.to raise_error(Puppet::ResourceError)
   end
 
-  it 'should not accept array for dsc_datareader' do
-    expect{dsc_xscommanagementserversetup[:dsc_datareader] = ["foo", "bar", "spec"]}.to raise_error(Puppet::ResourceError)
+  # TODO: this test is not right yet
+  it 'should accept array for dsc_datareader' do
+    dsc_xscommanagementserversetup[:dsc_datareader] = {"user"=>"user", "password"=>"password"}
+    expect(dsc_xscommanagementserversetup[:dsc_datareader]).to eq({"user"=>"user", "password"=>"password"})
   end
 
   it 'should not accept boolean for dsc_datareader' do
@@ -375,8 +383,10 @@ describe Puppet::Type.type(:dsc_xscommanagementserversetup) do
     expect{dsc_xscommanagementserversetup[:dsc_datareaderusername] = 16}.to raise_error(Puppet::ResourceError)
   end
 
-  it 'should not accept array for dsc_datawriter' do
-    expect{dsc_xscommanagementserversetup[:dsc_datawriter] = ["foo", "bar", "spec"]}.to raise_error(Puppet::ResourceError)
+  # TODO: this test is not right yet
+  it 'should accept array for dsc_datawriter' do
+    dsc_xscommanagementserversetup[:dsc_datawriter] = {"user"=>"user", "password"=>"password"}
+    expect(dsc_xscommanagementserversetup[:dsc_datawriter]).to eq({"user"=>"user", "password"=>"password"})
   end
 
   it 'should not accept boolean for dsc_datawriter' do
@@ -771,6 +781,19 @@ describe Puppet::Type.type(:dsc_xscommanagementserversetup) do
       end
 
     end
+
+    describe "when dsc_resource has credentials" do
+
+      before(:each) do
+        @provider = described_class.provider(:powershell).new(dsc_xscommanagementserversetup)
+      end
+
+      it "should convert credential hash to a pscredential object" do
+        expect(@provider.ps_script_content('test')).to match(/| new-pscredential'/)
+      end
+
+    end
+
 
   end
 end

@@ -229,8 +229,10 @@ describe Puppet::Type.type(:dsc_xazurepacksetup) do
     expect{dsc_xazurepacksetup[:dsc_sourcefolder] = 16}.to raise_error(Puppet::ResourceError)
   end
 
-  it 'should not accept array for dsc_setupcredential' do
-    expect{dsc_xazurepacksetup[:dsc_setupcredential] = ["foo", "bar", "spec"]}.to raise_error(Puppet::ResourceError)
+  # TODO: this test is not right yet
+  it 'should accept array for dsc_setupcredential' do
+    dsc_xazurepacksetup[:dsc_setupcredential] = {"user"=>"user", "password"=>"password"}
+    expect(dsc_xazurepacksetup[:dsc_setupcredential]).to eq({"user"=>"user", "password"=>"password"})
   end
 
   it 'should not accept boolean for dsc_setupcredential' do
@@ -245,8 +247,10 @@ describe Puppet::Type.type(:dsc_xazurepacksetup) do
     expect{dsc_xazurepacksetup[:dsc_setupcredential] = 16}.to raise_error(Puppet::ResourceError)
   end
 
-  it 'should not accept array for dsc_passphrase' do
-    expect{dsc_xazurepacksetup[:dsc_passphrase] = ["foo", "bar", "spec"]}.to raise_error(Puppet::ResourceError)
+  # TODO: this test is not right yet
+  it 'should accept array for dsc_passphrase' do
+    dsc_xazurepacksetup[:dsc_passphrase] = {"user"=>"user", "password"=>"password"}
+    expect(dsc_xazurepacksetup[:dsc_passphrase]).to eq({"user"=>"user", "password"=>"password"})
   end
 
   it 'should not accept boolean for dsc_passphrase' do
@@ -293,8 +297,10 @@ describe Puppet::Type.type(:dsc_xazurepacksetup) do
     expect{dsc_xazurepacksetup[:dsc_sqlinstance] = 16}.to raise_error(Puppet::ResourceError)
   end
 
-  it 'should not accept array for dsc_dbuser' do
-    expect{dsc_xazurepacksetup[:dsc_dbuser] = ["foo", "bar", "spec"]}.to raise_error(Puppet::ResourceError)
+  # TODO: this test is not right yet
+  it 'should accept array for dsc_dbuser' do
+    dsc_xazurepacksetup[:dsc_dbuser] = {"user"=>"user", "password"=>"password"}
+    expect(dsc_xazurepacksetup[:dsc_dbuser]).to eq({"user"=>"user", "password"=>"password"})
   end
 
   it 'should not accept boolean for dsc_dbuser' do
@@ -356,6 +362,19 @@ describe Puppet::Type.type(:dsc_xazurepacksetup) do
       end
 
     end
+
+    describe "when dsc_resource has credentials" do
+
+      before(:each) do
+        @provider = described_class.provider(:powershell).new(dsc_xazurepacksetup)
+      end
+
+      it "should convert credential hash to a pscredential object" do
+        expect(@provider.ps_script_content('test')).to match(/| new-pscredential'/)
+      end
+
+    end
+
 
   end
 end

@@ -61,8 +61,10 @@ describe Puppet::Type.type(:dsc_xsqlserverinstall) do
     expect{dsc_xsqlserverinstall[:dsc_sourcepath] = 16}.to raise_error(Puppet::ResourceError)
   end
 
-  it 'should not accept array for dsc_sourcepathcredential' do
-    expect{dsc_xsqlserverinstall[:dsc_sourcepathcredential] = ["foo", "bar", "spec"]}.to raise_error(Puppet::ResourceError)
+  # TODO: this test is not right yet
+  it 'should accept array for dsc_sourcepathcredential' do
+    dsc_xsqlserverinstall[:dsc_sourcepathcredential] = {"user"=>"user", "password"=>"password"}
+    expect(dsc_xsqlserverinstall[:dsc_sourcepathcredential]).to eq({"user"=>"user", "password"=>"password"})
   end
 
   it 'should not accept boolean for dsc_sourcepathcredential' do
@@ -93,8 +95,10 @@ describe Puppet::Type.type(:dsc_xsqlserverinstall) do
     expect{dsc_xsqlserverinstall[:dsc_features] = 16}.to raise_error(Puppet::ResourceError)
   end
 
-  it 'should not accept array for dsc_sqladministratorcredential' do
-    expect{dsc_xsqlserverinstall[:dsc_sqladministratorcredential] = ["foo", "bar", "spec"]}.to raise_error(Puppet::ResourceError)
+  # TODO: this test is not right yet
+  it 'should accept array for dsc_sqladministratorcredential' do
+    dsc_xsqlserverinstall[:dsc_sqladministratorcredential] = {"user"=>"user", "password"=>"password"}
+    expect(dsc_xsqlserverinstall[:dsc_sqladministratorcredential]).to eq({"user"=>"user", "password"=>"password"})
   end
 
   it 'should not accept boolean for dsc_sqladministratorcredential' do
@@ -235,6 +239,19 @@ describe Puppet::Type.type(:dsc_xsqlserverinstall) do
       end
 
     end
+
+    describe "when dsc_resource has credentials" do
+
+      before(:each) do
+        @provider = described_class.provider(:powershell).new(dsc_xsqlserverinstall)
+      end
+
+      it "should convert credential hash to a pscredential object" do
+        expect(@provider.ps_script_content('test')).to match(/| new-pscredential'/)
+      end
+
+    end
+
 
   end
 end

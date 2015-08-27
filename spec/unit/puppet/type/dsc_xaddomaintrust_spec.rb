@@ -69,8 +69,10 @@ describe Puppet::Type.type(:dsc_xaddomaintrust) do
     expect{dsc_xaddomaintrust[:dsc_ensure] = 16}.to raise_error(Puppet::ResourceError)
   end
 
-  it 'should not accept array for dsc_targetdomainadministratorcredential' do
-    expect{dsc_xaddomaintrust[:dsc_targetdomainadministratorcredential] = ["foo", "bar", "spec"]}.to raise_error(Puppet::ResourceError)
+  # TODO: this test is not right yet
+  it 'should accept array for dsc_targetdomainadministratorcredential' do
+    dsc_xaddomaintrust[:dsc_targetdomainadministratorcredential] = {"user"=>"user", "password"=>"password"}
+    expect(dsc_xaddomaintrust[:dsc_targetdomainadministratorcredential]).to eq({"user"=>"user", "password"=>"password"})
   end
 
   it 'should not accept boolean for dsc_targetdomainadministratorcredential' do
@@ -306,6 +308,19 @@ describe Puppet::Type.type(:dsc_xaddomaintrust) do
       end
 
     end
+
+    describe "when dsc_resource has credentials" do
+
+      before(:each) do
+        @provider = described_class.provider(:powershell).new(dsc_xaddomaintrust)
+      end
+
+      it "should convert credential hash to a pscredential object" do
+        expect(@provider.ps_script_content('test')).to match(/| new-pscredential'/)
+      end
+
+    end
+
 
   end
 end

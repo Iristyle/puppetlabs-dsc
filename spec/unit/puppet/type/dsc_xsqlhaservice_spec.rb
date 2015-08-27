@@ -39,8 +39,10 @@ describe Puppet::Type.type(:dsc_xsqlhaservice) do
     expect{dsc_xsqlhaservice[:dsc_instancename] = 16}.to raise_error(Puppet::ResourceError)
   end
 
-  it 'should not accept array for dsc_sqladministratorcredential' do
-    expect{dsc_xsqlhaservice[:dsc_sqladministratorcredential] = ["foo", "bar", "spec"]}.to raise_error(Puppet::ResourceError)
+  # TODO: this test is not right yet
+  it 'should accept array for dsc_sqladministratorcredential' do
+    dsc_xsqlhaservice[:dsc_sqladministratorcredential] = {"user"=>"user", "password"=>"password"}
+    expect(dsc_xsqlhaservice[:dsc_sqladministratorcredential]).to eq({"user"=>"user", "password"=>"password"})
   end
 
   it 'should not accept boolean for dsc_sqladministratorcredential' do
@@ -55,8 +57,10 @@ describe Puppet::Type.type(:dsc_xsqlhaservice) do
     expect{dsc_xsqlhaservice[:dsc_sqladministratorcredential] = 16}.to raise_error(Puppet::ResourceError)
   end
 
-  it 'should not accept array for dsc_servicecredential' do
-    expect{dsc_xsqlhaservice[:dsc_servicecredential] = ["foo", "bar", "spec"]}.to raise_error(Puppet::ResourceError)
+  # TODO: this test is not right yet
+  it 'should accept array for dsc_servicecredential' do
+    dsc_xsqlhaservice[:dsc_servicecredential] = {"user"=>"user", "password"=>"password"}
+    expect(dsc_xsqlhaservice[:dsc_servicecredential]).to eq({"user"=>"user", "password"=>"password"})
   end
 
   it 'should not accept boolean for dsc_servicecredential' do
@@ -102,6 +106,19 @@ describe Puppet::Type.type(:dsc_xsqlhaservice) do
       end
 
     end
+
+    describe "when dsc_resource has credentials" do
+
+      before(:each) do
+        @provider = described_class.provider(:powershell).new(dsc_xsqlhaservice)
+      end
+
+      it "should convert credential hash to a pscredential object" do
+        expect(@provider.ps_script_content('test')).to match(/| new-pscredential'/)
+      end
+
+    end
+
 
   end
 end

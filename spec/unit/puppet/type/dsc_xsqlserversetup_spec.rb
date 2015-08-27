@@ -46,8 +46,10 @@ describe Puppet::Type.type(:dsc_xsqlserversetup) do
     expect{dsc_xsqlserversetup[:dsc_sourcefolder] = 16}.to raise_error(Puppet::ResourceError)
   end
 
-  it 'should not accept array for dsc_setupcredential' do
-    expect{dsc_xsqlserversetup[:dsc_setupcredential] = ["foo", "bar", "spec"]}.to raise_error(Puppet::ResourceError)
+  # TODO: this test is not right yet
+  it 'should accept array for dsc_setupcredential' do
+    dsc_xsqlserversetup[:dsc_setupcredential] = {"user"=>"user", "password"=>"password"}
+    expect(dsc_xsqlserversetup[:dsc_setupcredential]).to eq({"user"=>"user", "password"=>"password"})
   end
 
   it 'should not accept boolean for dsc_setupcredential' do
@@ -287,8 +289,10 @@ describe Puppet::Type.type(:dsc_xsqlserversetup) do
     expect{dsc_xsqlserversetup[:dsc_instancedir] = 16}.to raise_error(Puppet::ResourceError)
   end
 
-  it 'should not accept array for dsc_sqlsvcaccount' do
-    expect{dsc_xsqlserversetup[:dsc_sqlsvcaccount] = ["foo", "bar", "spec"]}.to raise_error(Puppet::ResourceError)
+  # TODO: this test is not right yet
+  it 'should accept array for dsc_sqlsvcaccount' do
+    dsc_xsqlserversetup[:dsc_sqlsvcaccount] = {"user"=>"user", "password"=>"password"}
+    expect(dsc_xsqlserversetup[:dsc_sqlsvcaccount]).to eq({"user"=>"user", "password"=>"password"})
   end
 
   it 'should not accept boolean for dsc_sqlsvcaccount' do
@@ -319,8 +323,10 @@ describe Puppet::Type.type(:dsc_xsqlserversetup) do
     expect{dsc_xsqlserversetup[:dsc_sqlsvcaccountusername] = 16}.to raise_error(Puppet::ResourceError)
   end
 
-  it 'should not accept array for dsc_agtsvcaccount' do
-    expect{dsc_xsqlserversetup[:dsc_agtsvcaccount] = ["foo", "bar", "spec"]}.to raise_error(Puppet::ResourceError)
+  # TODO: this test is not right yet
+  it 'should accept array for dsc_agtsvcaccount' do
+    dsc_xsqlserversetup[:dsc_agtsvcaccount] = {"user"=>"user", "password"=>"password"}
+    expect(dsc_xsqlserversetup[:dsc_agtsvcaccount]).to eq({"user"=>"user", "password"=>"password"})
   end
 
   it 'should not accept boolean for dsc_agtsvcaccount' do
@@ -400,8 +406,10 @@ describe Puppet::Type.type(:dsc_xsqlserversetup) do
     expect{dsc_xsqlserversetup[:dsc_securitymode] = 16}.to raise_error(Puppet::ResourceError)
   end
 
-  it 'should not accept array for dsc_sapwd' do
-    expect{dsc_xsqlserversetup[:dsc_sapwd] = ["foo", "bar", "spec"]}.to raise_error(Puppet::ResourceError)
+  # TODO: this test is not right yet
+  it 'should accept array for dsc_sapwd' do
+    dsc_xsqlserversetup[:dsc_sapwd] = {"user"=>"user", "password"=>"password"}
+    expect(dsc_xsqlserversetup[:dsc_sapwd]).to eq({"user"=>"user", "password"=>"password"})
   end
 
   it 'should not accept boolean for dsc_sapwd' do
@@ -512,8 +520,10 @@ describe Puppet::Type.type(:dsc_xsqlserversetup) do
     expect{dsc_xsqlserversetup[:dsc_sqlbackupdir] = 16}.to raise_error(Puppet::ResourceError)
   end
 
-  it 'should not accept array for dsc_ftsvcaccount' do
-    expect{dsc_xsqlserversetup[:dsc_ftsvcaccount] = ["foo", "bar", "spec"]}.to raise_error(Puppet::ResourceError)
+  # TODO: this test is not right yet
+  it 'should accept array for dsc_ftsvcaccount' do
+    dsc_xsqlserversetup[:dsc_ftsvcaccount] = {"user"=>"user", "password"=>"password"}
+    expect(dsc_xsqlserversetup[:dsc_ftsvcaccount]).to eq({"user"=>"user", "password"=>"password"})
   end
 
   it 'should not accept boolean for dsc_ftsvcaccount' do
@@ -544,8 +554,10 @@ describe Puppet::Type.type(:dsc_xsqlserversetup) do
     expect{dsc_xsqlserversetup[:dsc_ftsvcaccountusername] = 16}.to raise_error(Puppet::ResourceError)
   end
 
-  it 'should not accept array for dsc_rssvcaccount' do
-    expect{dsc_xsqlserversetup[:dsc_rssvcaccount] = ["foo", "bar", "spec"]}.to raise_error(Puppet::ResourceError)
+  # TODO: this test is not right yet
+  it 'should accept array for dsc_rssvcaccount' do
+    dsc_xsqlserversetup[:dsc_rssvcaccount] = {"user"=>"user", "password"=>"password"}
+    expect(dsc_xsqlserversetup[:dsc_rssvcaccount]).to eq({"user"=>"user", "password"=>"password"})
   end
 
   it 'should not accept boolean for dsc_rssvcaccount' do
@@ -576,8 +588,10 @@ describe Puppet::Type.type(:dsc_xsqlserversetup) do
     expect{dsc_xsqlserversetup[:dsc_rssvcaccountusername] = 16}.to raise_error(Puppet::ResourceError)
   end
 
-  it 'should not accept array for dsc_assvcaccount' do
-    expect{dsc_xsqlserversetup[:dsc_assvcaccount] = ["foo", "bar", "spec"]}.to raise_error(Puppet::ResourceError)
+  # TODO: this test is not right yet
+  it 'should accept array for dsc_assvcaccount' do
+    dsc_xsqlserversetup[:dsc_assvcaccount] = {"user"=>"user", "password"=>"password"}
+    expect(dsc_xsqlserversetup[:dsc_assvcaccount]).to eq({"user"=>"user", "password"=>"password"})
   end
 
   it 'should not accept boolean for dsc_assvcaccount' do
@@ -721,8 +735,10 @@ describe Puppet::Type.type(:dsc_xsqlserversetup) do
     expect{dsc_xsqlserversetup[:dsc_asconfigdir] = 16}.to raise_error(Puppet::ResourceError)
   end
 
-  it 'should not accept array for dsc_issvcaccount' do
-    expect{dsc_xsqlserversetup[:dsc_issvcaccount] = ["foo", "bar", "spec"]}.to raise_error(Puppet::ResourceError)
+  # TODO: this test is not right yet
+  it 'should accept array for dsc_issvcaccount' do
+    dsc_xsqlserversetup[:dsc_issvcaccount] = {"user"=>"user", "password"=>"password"}
+    expect(dsc_xsqlserversetup[:dsc_issvcaccount]).to eq({"user"=>"user", "password"=>"password"})
   end
 
   it 'should not accept boolean for dsc_issvcaccount' do
@@ -784,6 +800,19 @@ describe Puppet::Type.type(:dsc_xsqlserversetup) do
       end
 
     end
+
+    describe "when dsc_resource has credentials" do
+
+      before(:each) do
+        @provider = described_class.provider(:powershell).new(dsc_xsqlserversetup)
+      end
+
+      it "should convert credential hash to a pscredential object" do
+        expect(@provider.ps_script_content('test')).to match(/| new-pscredential'/)
+      end
+
+    end
+
 
   end
 end

@@ -42,8 +42,10 @@ describe Puppet::Type.type(:dsc_xaddomaincontroller) do
     expect{dsc_xaddomaincontroller[:dsc_domainname] = 16}.to raise_error(Puppet::ResourceError)
   end
 
-  it 'should not accept array for dsc_domainadministratorcredential' do
-    expect{dsc_xaddomaincontroller[:dsc_domainadministratorcredential] = ["foo", "bar", "spec"]}.to raise_error(Puppet::ResourceError)
+  # TODO: this test is not right yet
+  it 'should accept array for dsc_domainadministratorcredential' do
+    dsc_xaddomaincontroller[:dsc_domainadministratorcredential] = {"user"=>"user", "password"=>"password"}
+    expect(dsc_xaddomaincontroller[:dsc_domainadministratorcredential]).to eq({"user"=>"user", "password"=>"password"})
   end
 
   it 'should not accept boolean for dsc_domainadministratorcredential' do
@@ -58,8 +60,10 @@ describe Puppet::Type.type(:dsc_xaddomaincontroller) do
     expect{dsc_xaddomaincontroller[:dsc_domainadministratorcredential] = 16}.to raise_error(Puppet::ResourceError)
   end
 
-  it 'should not accept array for dsc_safemodeadministratorpassword' do
-    expect{dsc_xaddomaincontroller[:dsc_safemodeadministratorpassword] = ["foo", "bar", "spec"]}.to raise_error(Puppet::ResourceError)
+  # TODO: this test is not right yet
+  it 'should accept array for dsc_safemodeadministratorpassword' do
+    dsc_xaddomaincontroller[:dsc_safemodeadministratorpassword] = {"user"=>"user", "password"=>"password"}
+    expect(dsc_xaddomaincontroller[:dsc_safemodeadministratorpassword]).to eq({"user"=>"user", "password"=>"password"})
   end
 
   it 'should not accept boolean for dsc_safemodeadministratorpassword' do
@@ -153,6 +157,19 @@ describe Puppet::Type.type(:dsc_xaddomaincontroller) do
       end
 
     end
+
+    describe "when dsc_resource has credentials" do
+
+      before(:each) do
+        @provider = described_class.provider(:powershell).new(dsc_xaddomaincontroller)
+      end
+
+      it "should convert credential hash to a pscredential object" do
+        expect(@provider.ps_script_content('test')).to match(/| new-pscredential'/)
+      end
+
+    end
+
 
   end
 end

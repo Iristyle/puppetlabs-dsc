@@ -118,6 +118,13 @@ describe Puppet::Type.type(:dsc_<%= resource.friendlyname.downcase %>) do
     expect(dsc_<%= resource.friendlyname.downcase %>[:dsc_<%= property.name.downcase %>]).to eq(<%= format_type_value(@spec_test_values[property.type]) %>)
   end
 <%      end # if property.values -%>
+<%    elsif property.credential? -%>
+
+  # TODO: this test is not right yet
+  it 'should accept array for dsc_<%= property.name.downcase %>' do
+    dsc_<%= resource.friendlyname.downcase %>[:dsc_<%= property.name.downcase %>] = <%= format_type_value(@spec_test_values[property.type]) %>
+    expect(dsc_<%= resource.friendlyname.downcase %>[:dsc_<%= property.name.downcase %>]).to eq(<%= format_type_value(@spec_test_values[property.type]) %>)
+  end
 <%    else # if property.array? -%>
 
   it 'should not accept array for dsc_<%= property.name.downcase %>' do
@@ -266,6 +273,21 @@ describe Puppet::Type.type(:dsc_<%= resource.friendlyname.downcase %>) do
 
     end
 <%  end # if resource.absentable? -%>
+<%  if resource.has_credential? -%>
+
+    describe "when dsc_resource has credentials" do
+
+      before(:each) do
+        @provider = described_class.provider(:powershell).new(dsc_<%= resource.friendlyname.downcase %>)
+      end
+
+      it "should convert credential hash to a pscredential object" do
+        expect(@provider.ps_script_content('test')).to match(/| new-pscredential'/)
+      end
+
+    end
+
+<%  end # if resource.has_credential? -%>
 
   end
 end

@@ -41,8 +41,10 @@ describe Puppet::Type.type(:dsc_xexchdatabaseavailabilitygroupmember) do
     expect{dsc_xexchdatabaseavailabilitygroupmember[:dsc_mailboxserver] = 16}.to raise_error(Puppet::ResourceError)
   end
 
-  it 'should not accept array for dsc_credential' do
-    expect{dsc_xexchdatabaseavailabilitygroupmember[:dsc_credential] = ["foo", "bar", "spec"]}.to raise_error(Puppet::ResourceError)
+  # TODO: this test is not right yet
+  it 'should accept array for dsc_credential' do
+    dsc_xexchdatabaseavailabilitygroupmember[:dsc_credential] = {"user"=>"user", "password"=>"password"}
+    expect(dsc_xexchdatabaseavailabilitygroupmember[:dsc_credential]).to eq({"user"=>"user", "password"=>"password"})
   end
 
   it 'should not accept boolean for dsc_credential' do
@@ -167,6 +169,19 @@ describe Puppet::Type.type(:dsc_xexchdatabaseavailabilitygroupmember) do
       end
 
     end
+
+    describe "when dsc_resource has credentials" do
+
+      before(:each) do
+        @provider = described_class.provider(:powershell).new(dsc_xexchdatabaseavailabilitygroupmember)
+      end
+
+      it "should convert credential hash to a pscredential object" do
+        expect(@provider.ps_script_content('test')).to match(/| new-pscredential'/)
+      end
+
+    end
+
 
   end
 end

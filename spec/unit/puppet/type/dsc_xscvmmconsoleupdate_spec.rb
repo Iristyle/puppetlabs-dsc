@@ -111,8 +111,10 @@ describe Puppet::Type.type(:dsc_xscvmmconsoleupdate) do
     expect{dsc_xscvmmconsoleupdate[:dsc_sourcefolder] = 16}.to raise_error(Puppet::ResourceError)
   end
 
-  it 'should not accept array for dsc_setupcredential' do
-    expect{dsc_xscvmmconsoleupdate[:dsc_setupcredential] = ["foo", "bar", "spec"]}.to raise_error(Puppet::ResourceError)
+  # TODO: this test is not right yet
+  it 'should accept array for dsc_setupcredential' do
+    dsc_xscvmmconsoleupdate[:dsc_setupcredential] = {"user"=>"user", "password"=>"password"}
+    expect(dsc_xscvmmconsoleupdate[:dsc_setupcredential]).to eq({"user"=>"user", "password"=>"password"})
   end
 
   it 'should not accept boolean for dsc_setupcredential' do
@@ -218,6 +220,19 @@ describe Puppet::Type.type(:dsc_xscvmmconsoleupdate) do
       end
 
     end
+
+    describe "when dsc_resource has credentials" do
+
+      before(:each) do
+        @provider = described_class.provider(:powershell).new(dsc_xscvmmconsoleupdate)
+      end
+
+      it "should convert credential hash to a pscredential object" do
+        expect(@provider.ps_script_content('test')).to match(/| new-pscredential'/)
+      end
+
+    end
+
 
   end
 end

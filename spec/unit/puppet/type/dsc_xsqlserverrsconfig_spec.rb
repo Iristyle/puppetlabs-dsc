@@ -73,8 +73,10 @@ describe Puppet::Type.type(:dsc_xsqlserverrsconfig) do
     expect{dsc_xsqlserverrsconfig[:dsc_rssqlinstancename] = 16}.to raise_error(Puppet::ResourceError)
   end
 
-  it 'should not accept array for dsc_sqladmincredential' do
-    expect{dsc_xsqlserverrsconfig[:dsc_sqladmincredential] = ["foo", "bar", "spec"]}.to raise_error(Puppet::ResourceError)
+  # TODO: this test is not right yet
+  it 'should accept array for dsc_sqladmincredential' do
+    dsc_xsqlserverrsconfig[:dsc_sqladmincredential] = {"user"=>"user", "password"=>"password"}
+    expect(dsc_xsqlserverrsconfig[:dsc_sqladmincredential]).to eq({"user"=>"user", "password"=>"password"})
   end
 
   it 'should not accept boolean for dsc_sqladmincredential' do
@@ -167,6 +169,19 @@ describe Puppet::Type.type(:dsc_xsqlserverrsconfig) do
       end
 
     end
+
+    describe "when dsc_resource has credentials" do
+
+      before(:each) do
+        @provider = described_class.provider(:powershell).new(dsc_xsqlserverrsconfig)
+      end
+
+      it "should convert credential hash to a pscredential object" do
+        expect(@provider.ps_script_content('test')).to match(/| new-pscredential'/)
+      end
+
+    end
+
 
   end
 end

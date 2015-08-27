@@ -106,6 +106,16 @@ Puppet::Type.newtype(:dsc_xazurepackresourceprovider) do
       unless value.kind_of?(Hash)
         fail("Invalid value '#{value}'. Should be a hash")
       end
+      required = ['user', 'password']
+      missing = required - value.keys.map(&:to_s)
+      unless missing.empty?
+        fail "for AzurePackAdminCredential you are missing the following keys: #{missing.join(',')}"
+      end
+      required.each do |key|
+        if value[key]
+          fail "#{key} for AzurePackAdminCredential should be a String" unless value[key].is_a? String
+        end
+      end
     end
   end
 
@@ -225,6 +235,16 @@ Puppet::Type.newtype(:dsc_xazurepackresourceprovider) do
       unless value.kind_of?(Hash)
         fail("Invalid value '#{value}'. Should be a hash")
       end
+      required = ['user', 'password']
+      missing = required - value.keys.map(&:to_s)
+      unless missing.empty?
+        fail "for AdminAuthenticationUser you are missing the following keys: #{missing.join(',')}"
+      end
+      required.each do |key|
+        if value[key]
+          fail "#{key} for AdminAuthenticationUser should be a String" unless value[key].is_a? String
+        end
+      end
     end
   end
 
@@ -283,6 +303,16 @@ Puppet::Type.newtype(:dsc_xazurepackresourceprovider) do
     validate do |value|
       unless value.kind_of?(Hash)
         fail("Invalid value '#{value}'. Should be a hash")
+      end
+      required = ['user', 'password']
+      missing = required - value.keys.map(&:to_s)
+      unless missing.empty?
+        fail "for TenantAuthenticationUser you are missing the following keys: #{missing.join(',')}"
+      end
+      required.each do |key|
+        if value[key]
+          fail "#{key} for TenantAuthenticationUser should be a String" unless value[key].is_a? String
+        end
       end
     end
   end
@@ -371,6 +401,16 @@ Puppet::Type.newtype(:dsc_xazurepackresourceprovider) do
       unless value.kind_of?(Hash)
         fail("Invalid value '#{value}'. Should be a hash")
       end
+      required = ['user', 'password']
+      missing = required - value.keys.map(&:to_s)
+      unless missing.empty?
+        fail "for UsageAuthenticationUser you are missing the following keys: #{missing.join(',')}"
+      end
+      required.each do |key|
+        if value[key]
+          fail "#{key} for UsageAuthenticationUser should be a String" unless value[key].is_a? String
+        end
+      end
     end
   end
 
@@ -430,6 +470,16 @@ Puppet::Type.newtype(:dsc_xazurepackresourceprovider) do
       unless value.kind_of?(Hash)
         fail("Invalid value '#{value}'. Should be a hash")
       end
+      required = ['user', 'password']
+      missing = required - value.keys.map(&:to_s)
+      unless missing.empty?
+        fail "for HealthCheckAuthenticationUser you are missing the following keys: #{missing.join(',')}"
+      end
+      required.each do |key|
+        if value[key]
+          fail "#{key} for HealthCheckAuthenticationUser should be a String" unless value[key].is_a? String
+        end
+      end
     end
   end
 
@@ -488,6 +538,16 @@ Puppet::Type.newtype(:dsc_xazurepackresourceprovider) do
     validate do |value|
       unless value.kind_of?(Hash)
         fail("Invalid value '#{value}'. Should be a hash")
+      end
+      required = ['user', 'password']
+      missing = required - value.keys.map(&:to_s)
+      unless missing.empty?
+        fail "for NotificationAuthenticationUser you are missing the following keys: #{missing.join(',')}"
+      end
+      required.each do |key|
+        if value[key]
+          fail "#{key} for NotificationAuthenticationUser should be a String" unless value[key].is_a? String
+        end
       end
     end
   end

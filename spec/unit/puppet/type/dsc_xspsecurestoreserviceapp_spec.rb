@@ -147,8 +147,10 @@ describe Puppet::Type.type(:dsc_xspsecurestoreserviceapp) do
     expect(dsc_xspsecurestoreserviceapp[:dsc_auditlogmaxsize]).to eq(64)
   end
 
-  it 'should not accept array for dsc_databasecredentials' do
-    expect{dsc_xspsecurestoreserviceapp[:dsc_databasecredentials] = ["foo", "bar", "spec"]}.to raise_error(Puppet::ResourceError)
+  # TODO: this test is not right yet
+  it 'should accept array for dsc_databasecredentials' do
+    dsc_xspsecurestoreserviceapp[:dsc_databasecredentials] = {"user"=>"user", "password"=>"password"}
+    expect(dsc_xspsecurestoreserviceapp[:dsc_databasecredentials]).to eq({"user"=>"user", "password"=>"password"})
   end
 
   it 'should not accept boolean for dsc_databasecredentials' do
@@ -337,8 +339,10 @@ describe Puppet::Type.type(:dsc_xspsecurestoreserviceapp) do
     expect{dsc_xspsecurestoreserviceapp[:dsc_sharing] = 16}.to raise_error(Puppet::ResourceError)
   end
 
-  it 'should not accept array for dsc_installaccount' do
-    expect{dsc_xspsecurestoreserviceapp[:dsc_installaccount] = ["foo", "bar", "spec"]}.to raise_error(Puppet::ResourceError)
+  # TODO: this test is not right yet
+  it 'should accept array for dsc_installaccount' do
+    dsc_xspsecurestoreserviceapp[:dsc_installaccount] = {"user"=>"user", "password"=>"password"}
+    expect(dsc_xspsecurestoreserviceapp[:dsc_installaccount]).to eq({"user"=>"user", "password"=>"password"})
   end
 
   it 'should not accept boolean for dsc_installaccount' do
@@ -384,6 +388,19 @@ describe Puppet::Type.type(:dsc_xspsecurestoreserviceapp) do
       end
 
     end
+
+    describe "when dsc_resource has credentials" do
+
+      before(:each) do
+        @provider = described_class.provider(:powershell).new(dsc_xspsecurestoreserviceapp)
+      end
+
+      it "should convert credential hash to a pscredential object" do
+        expect(@provider.ps_script_content('test')).to match(/| new-pscredential'/)
+      end
+
+    end
+
 
   end
 end

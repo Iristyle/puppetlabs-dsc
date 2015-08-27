@@ -104,8 +104,10 @@ describe Puppet::Type.type(:dsc_xazurepackresourceprovider) do
     expect{dsc_xazurepackresourceprovider[:dsc_name] = 16}.to raise_error(Puppet::ResourceError)
   end
 
-  it 'should not accept array for dsc_azurepackadmincredential' do
-    expect{dsc_xazurepackresourceprovider[:dsc_azurepackadmincredential] = ["foo", "bar", "spec"]}.to raise_error(Puppet::ResourceError)
+  # TODO: this test is not right yet
+  it 'should accept array for dsc_azurepackadmincredential' do
+    dsc_xazurepackresourceprovider[:dsc_azurepackadmincredential] = {"user"=>"user", "password"=>"password"}
+    expect(dsc_xazurepackresourceprovider[:dsc_azurepackadmincredential]).to eq({"user"=>"user", "password"=>"password"})
   end
 
   it 'should not accept boolean for dsc_azurepackadmincredential' do
@@ -390,8 +392,10 @@ describe Puppet::Type.type(:dsc_xazurepackresourceprovider) do
     expect{dsc_xazurepackresourceprovider[:dsc_adminauthenticationmode] = 16}.to raise_error(Puppet::ResourceError)
   end
 
-  it 'should not accept array for dsc_adminauthenticationuser' do
-    expect{dsc_xazurepackresourceprovider[:dsc_adminauthenticationuser] = ["foo", "bar", "spec"]}.to raise_error(Puppet::ResourceError)
+  # TODO: this test is not right yet
+  it 'should accept array for dsc_adminauthenticationuser' do
+    dsc_xazurepackresourceprovider[:dsc_adminauthenticationuser] = {"user"=>"user", "password"=>"password"}
+    expect(dsc_xazurepackresourceprovider[:dsc_adminauthenticationuser]).to eq({"user"=>"user", "password"=>"password"})
   end
 
   it 'should not accept boolean for dsc_adminauthenticationuser' do
@@ -488,8 +492,10 @@ describe Puppet::Type.type(:dsc_xazurepackresourceprovider) do
     expect{dsc_xazurepackresourceprovider[:dsc_tenantauthenticationmode] = 16}.to raise_error(Puppet::ResourceError)
   end
 
-  it 'should not accept array for dsc_tenantauthenticationuser' do
-    expect{dsc_xazurepackresourceprovider[:dsc_tenantauthenticationuser] = ["foo", "bar", "spec"]}.to raise_error(Puppet::ResourceError)
+  # TODO: this test is not right yet
+  it 'should accept array for dsc_tenantauthenticationuser' do
+    dsc_xazurepackresourceprovider[:dsc_tenantauthenticationuser] = {"user"=>"user", "password"=>"password"}
+    expect(dsc_xazurepackresourceprovider[:dsc_tenantauthenticationuser]).to eq({"user"=>"user", "password"=>"password"})
   end
 
   it 'should not accept boolean for dsc_tenantauthenticationuser' do
@@ -618,8 +624,10 @@ describe Puppet::Type.type(:dsc_xazurepackresourceprovider) do
     expect{dsc_xazurepackresourceprovider[:dsc_usageauthenticationmode] = 16}.to raise_error(Puppet::ResourceError)
   end
 
-  it 'should not accept array for dsc_usageauthenticationuser' do
-    expect{dsc_xazurepackresourceprovider[:dsc_usageauthenticationuser] = ["foo", "bar", "spec"]}.to raise_error(Puppet::ResourceError)
+  # TODO: this test is not right yet
+  it 'should accept array for dsc_usageauthenticationuser' do
+    dsc_xazurepackresourceprovider[:dsc_usageauthenticationuser] = {"user"=>"user", "password"=>"password"}
+    expect(dsc_xazurepackresourceprovider[:dsc_usageauthenticationuser]).to eq({"user"=>"user", "password"=>"password"})
   end
 
   it 'should not accept boolean for dsc_usageauthenticationuser' do
@@ -716,8 +724,10 @@ describe Puppet::Type.type(:dsc_xazurepackresourceprovider) do
     expect{dsc_xazurepackresourceprovider[:dsc_healthcheckauthenticationmode] = 16}.to raise_error(Puppet::ResourceError)
   end
 
-  it 'should not accept array for dsc_healthcheckauthenticationuser' do
-    expect{dsc_xazurepackresourceprovider[:dsc_healthcheckauthenticationuser] = ["foo", "bar", "spec"]}.to raise_error(Puppet::ResourceError)
+  # TODO: this test is not right yet
+  it 'should accept array for dsc_healthcheckauthenticationuser' do
+    dsc_xazurepackresourceprovider[:dsc_healthcheckauthenticationuser] = {"user"=>"user", "password"=>"password"}
+    expect(dsc_xazurepackresourceprovider[:dsc_healthcheckauthenticationuser]).to eq({"user"=>"user", "password"=>"password"})
   end
 
   it 'should not accept boolean for dsc_healthcheckauthenticationuser' do
@@ -814,8 +824,10 @@ describe Puppet::Type.type(:dsc_xazurepackresourceprovider) do
     expect{dsc_xazurepackresourceprovider[:dsc_notificationauthenticationmode] = 16}.to raise_error(Puppet::ResourceError)
   end
 
-  it 'should not accept array for dsc_notificationauthenticationuser' do
-    expect{dsc_xazurepackresourceprovider[:dsc_notificationauthenticationuser] = ["foo", "bar", "spec"]}.to raise_error(Puppet::ResourceError)
+  # TODO: this test is not right yet
+  it 'should accept array for dsc_notificationauthenticationuser' do
+    dsc_xazurepackresourceprovider[:dsc_notificationauthenticationuser] = {"user"=>"user", "password"=>"password"}
+    expect(dsc_xazurepackresourceprovider[:dsc_notificationauthenticationuser]).to eq({"user"=>"user", "password"=>"password"})
   end
 
   it 'should not accept boolean for dsc_notificationauthenticationuser' do
@@ -991,6 +1003,19 @@ describe Puppet::Type.type(:dsc_xazurepackresourceprovider) do
       end
 
     end
+
+    describe "when dsc_resource has credentials" do
+
+      before(:each) do
+        @provider = described_class.provider(:powershell).new(dsc_xazurepackresourceprovider)
+      end
+
+      it "should convert credential hash to a pscredential object" do
+        expect(@provider.ps_script_content('test')).to match(/| new-pscredential'/)
+      end
+
+    end
+
 
   end
 end

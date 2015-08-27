@@ -40,8 +40,10 @@ describe Puppet::Type.type(:dsc_xwaitforaddomain) do
     expect{dsc_xwaitforaddomain[:dsc_domainname] = 16}.to raise_error(Puppet::ResourceError)
   end
 
-  it 'should not accept array for dsc_domainusercredential' do
-    expect{dsc_xwaitforaddomain[:dsc_domainusercredential] = ["foo", "bar", "spec"]}.to raise_error(Puppet::ResourceError)
+  # TODO: this test is not right yet
+  it 'should accept array for dsc_domainusercredential' do
+    dsc_xwaitforaddomain[:dsc_domainusercredential] = {"user"=>"user", "password"=>"password"}
+    expect(dsc_xwaitforaddomain[:dsc_domainusercredential]).to eq({"user"=>"user", "password"=>"password"})
   end
 
   it 'should not accept boolean for dsc_domainusercredential' do
@@ -157,6 +159,19 @@ describe Puppet::Type.type(:dsc_xwaitforaddomain) do
       end
 
     end
+
+    describe "when dsc_resource has credentials" do
+
+      before(:each) do
+        @provider = described_class.provider(:powershell).new(dsc_xwaitforaddomain)
+      end
+
+      it "should convert credential hash to a pscredential object" do
+        expect(@provider.ps_script_content('test')).to match(/| new-pscredential'/)
+      end
+
+    end
+
 
   end
 end

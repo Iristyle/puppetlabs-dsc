@@ -120,8 +120,10 @@ describe Puppet::Type.type(:dsc_xscsmarunbookworkerserversetup) do
     expect{dsc_xscsmarunbookworkerserversetup[:dsc_sourcefolder] = 16}.to raise_error(Puppet::ResourceError)
   end
 
-  it 'should not accept array for dsc_setupcredential' do
-    expect{dsc_xscsmarunbookworkerserversetup[:dsc_setupcredential] = ["foo", "bar", "spec"]}.to raise_error(Puppet::ResourceError)
+  # TODO: this test is not right yet
+  it 'should accept array for dsc_setupcredential' do
+    dsc_xscsmarunbookworkerserversetup[:dsc_setupcredential] = {"user"=>"user", "password"=>"password"}
+    expect(dsc_xscsmarunbookworkerserversetup[:dsc_setupcredential]).to eq({"user"=>"user", "password"=>"password"})
   end
 
   it 'should not accept boolean for dsc_setupcredential' do
@@ -136,8 +138,10 @@ describe Puppet::Type.type(:dsc_xscsmarunbookworkerserversetup) do
     expect{dsc_xscsmarunbookworkerserversetup[:dsc_setupcredential] = 16}.to raise_error(Puppet::ResourceError)
   end
 
-  it 'should not accept array for dsc_service' do
-    expect{dsc_xscsmarunbookworkerserversetup[:dsc_service] = ["foo", "bar", "spec"]}.to raise_error(Puppet::ResourceError)
+  # TODO: this test is not right yet
+  it 'should accept array for dsc_service' do
+    dsc_xscsmarunbookworkerserversetup[:dsc_service] = {"user"=>"user", "password"=>"password"}
+    expect(dsc_xscsmarunbookworkerserversetup[:dsc_service]).to eq({"user"=>"user", "password"=>"password"})
   end
 
   it 'should not accept boolean for dsc_service' do
@@ -371,6 +375,19 @@ describe Puppet::Type.type(:dsc_xscsmarunbookworkerserversetup) do
       end
 
     end
+
+    describe "when dsc_resource has credentials" do
+
+      before(:each) do
+        @provider = described_class.provider(:powershell).new(dsc_xscsmarunbookworkerserversetup)
+      end
+
+      it "should convert credential hash to a pscredential object" do
+        expect(@provider.ps_script_content('test')).to match(/| new-pscredential'/)
+      end
+
+    end
+
 
   end
 end

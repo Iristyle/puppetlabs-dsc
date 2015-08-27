@@ -71,8 +71,10 @@ describe Puppet::Type.type(:dsc_xspcreatefarm) do
     expect{dsc_xspcreatefarm[:dsc_databaseserver] = 16}.to raise_error(Puppet::ResourceError)
   end
 
-  it 'should not accept array for dsc_farmaccount' do
-    expect{dsc_xspcreatefarm[:dsc_farmaccount] = ["foo", "bar", "spec"]}.to raise_error(Puppet::ResourceError)
+  # TODO: this test is not right yet
+  it 'should accept array for dsc_farmaccount' do
+    dsc_xspcreatefarm[:dsc_farmaccount] = {"user"=>"user", "password"=>"password"}
+    expect(dsc_xspcreatefarm[:dsc_farmaccount]).to eq({"user"=>"user", "password"=>"password"})
   end
 
   it 'should not accept boolean for dsc_farmaccount' do
@@ -87,8 +89,10 @@ describe Puppet::Type.type(:dsc_xspcreatefarm) do
     expect{dsc_xspcreatefarm[:dsc_farmaccount] = 16}.to raise_error(Puppet::ResourceError)
   end
 
-  it 'should not accept array for dsc_installaccount' do
-    expect{dsc_xspcreatefarm[:dsc_installaccount] = ["foo", "bar", "spec"]}.to raise_error(Puppet::ResourceError)
+  # TODO: this test is not right yet
+  it 'should accept array for dsc_installaccount' do
+    dsc_xspcreatefarm[:dsc_installaccount] = {"user"=>"user", "password"=>"password"}
+    expect(dsc_xspcreatefarm[:dsc_installaccount]).to eq({"user"=>"user", "password"=>"password"})
   end
 
   it 'should not accept boolean for dsc_installaccount' do
@@ -166,6 +170,19 @@ describe Puppet::Type.type(:dsc_xspcreatefarm) do
       end
 
     end
+
+    describe "when dsc_resource has credentials" do
+
+      before(:each) do
+        @provider = described_class.provider(:powershell).new(dsc_xspcreatefarm)
+      end
+
+      it "should convert credential hash to a pscredential object" do
+        expect(@provider.ps_script_content('test')).to match(/| new-pscredential'/)
+      end
+
+    end
+
 
   end
 end
