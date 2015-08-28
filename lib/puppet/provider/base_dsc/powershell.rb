@@ -76,6 +76,13 @@ EOT
     raise ArgumentError.new "invalid value: #{value}"
   end
 
+  def munge_ensure(value)
+    return 'absent' if value.casecmp(resource.provider.absent_value) == 0
+    return 'present' if value.casecmp(resource.provider.ensure_value) == 0
+
+    raise ArgumentError.new "invalid value: #{value}"
+  end
+
   def format_dsc_value(dsc_value)
     case
     when dsc_value.class.name == 'String'
