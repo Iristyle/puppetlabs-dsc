@@ -58,6 +58,7 @@ Puppet::Type.newtype(:dsc_xazureaffinitygroup) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_name) do
+    def mof_type; 'string' end
     desc "Specifies a name for the new affinity group that is unique to the subscription."
     isrequired
     validate do |value|
@@ -72,6 +73,7 @@ Puppet::Type.newtype(:dsc_xazureaffinitygroup) do
   # IsMandatory:  False
   # Values:       ["Present", "Absent"]
   newparam(:dsc_ensure) do
+    def mof_type; 'string' end
     desc "Specifies whether the Azure Affinity Group should be present or absent."
     validate do |value|
       resource[:ensure] = value.downcase
@@ -89,6 +91,7 @@ Puppet::Type.newtype(:dsc_xazureaffinitygroup) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_location) do
+    def mof_type; 'string' end
     desc "Specifies the geographical location of the data center where the affinity group will be created.  This must match a value from the Name property of objects returned by Get-AzureLocation."
     validate do |value|
       unless value.kind_of?(String)
@@ -102,6 +105,7 @@ Puppet::Type.newtype(:dsc_xazureaffinitygroup) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_description) do
+    def mof_type; 'string' end
     desc "Specifies a description for the affinity group. The description may be up to 1024 characters in length. "
     validate do |value|
       unless value.kind_of?(String)
@@ -115,6 +119,7 @@ Puppet::Type.newtype(:dsc_xazureaffinitygroup) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_label) do
+    def mof_type; 'string' end
     desc "Specifies a label for the affinity group. The label may be up to 100 characters in length. "
     validate do |value|
       unless value.kind_of?(String)

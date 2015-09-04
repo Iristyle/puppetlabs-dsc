@@ -58,6 +58,7 @@ Puppet::Type.newtype(:dsc_xwebpackagedeploy) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_sourcepath) do
+    def mof_type; 'string' end
     desc "Full path to the zip package."
     validate do |value|
       unless value.kind_of?(String)
@@ -71,6 +72,7 @@ Puppet::Type.newtype(:dsc_xwebpackagedeploy) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_destination) do
+    def mof_type; 'string' end
     desc "WebDeploy destination for content path or website name)."
     isrequired
     validate do |value|
@@ -85,6 +87,7 @@ Puppet::Type.newtype(:dsc_xwebpackagedeploy) do
   # IsMandatory:  False
   # Values:       ["Present", "Absent"]
   newparam(:dsc_ensure) do
+    def mof_type; 'string' end
     desc "Desired state of resource."
     validate do |value|
       resource[:ensure] = value.downcase

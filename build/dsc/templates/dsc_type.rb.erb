@@ -63,6 +63,7 @@ Puppet::Type.newtype(:dsc_<%= resource.friendlyname.downcase %>) do
   # IsMandatory:  <%= property.required? ? 'True' : 'False' %>
   # Values:       <%= property.values ? property.values : 'None' %>
   newparam(:dsc_<%= property.name.downcase %><% if property.array? %>, :array_matching => :all<% end %>) do
+    def mof_type; '<%= property.type %>' end
 <%    if property.description -%>
     desc "<%= property.description %>"
 <%    end -%>

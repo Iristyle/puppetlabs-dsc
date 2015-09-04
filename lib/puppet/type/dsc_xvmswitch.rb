@@ -59,6 +59,7 @@ Puppet::Type.newtype(:dsc_xvmswitch) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_name) do
+    def mof_type; 'string' end
     desc "Name of the VM Switch"
     isrequired
     validate do |value|
@@ -73,6 +74,7 @@ Puppet::Type.newtype(:dsc_xvmswitch) do
   # IsMandatory:  True
   # Values:       ["External", "Internal", "Private"]
   newparam(:dsc_type) do
+    def mof_type; 'string' end
     desc "Type of switch"
     isrequired
     validate do |value|
@@ -90,6 +92,7 @@ Puppet::Type.newtype(:dsc_xvmswitch) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_netadaptername) do
+    def mof_type; 'string' end
     desc "Network adapter name for external switch type"
     validate do |value|
       unless value.kind_of?(String)
@@ -103,6 +106,7 @@ Puppet::Type.newtype(:dsc_xvmswitch) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_allowmanagementos) do
+    def mof_type; 'boolean' end
     desc "Specify is the VM host has access to the physical NIC"
     validate do |value|
     end
@@ -117,6 +121,7 @@ Puppet::Type.newtype(:dsc_xvmswitch) do
   # IsMandatory:  False
   # Values:       ["Present", "Absent"]
   newparam(:dsc_ensure) do
+    def mof_type; 'string' end
     desc "Whether switch should be present or absent"
     validate do |value|
       resource[:ensure] = value.downcase
@@ -134,6 +139,7 @@ Puppet::Type.newtype(:dsc_xvmswitch) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_id) do
+    def mof_type; 'string' end
     desc "Unique ID for the switch"
     validate do |value|
       unless value.kind_of?(String)
@@ -147,6 +153,7 @@ Puppet::Type.newtype(:dsc_xvmswitch) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_netadapterinterfacedescription) do
+    def mof_type; 'string' end
     desc "Description of the network interface"
     validate do |value|
       unless value.kind_of?(String)

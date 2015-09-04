@@ -57,6 +57,7 @@ Puppet::Type.newtype(:dsc_xexchjetstress) do
   # IsMandatory:  True
   # Values:       ["Performance", "Stress", "DatabaseBackup", "SoftRecovery"]
   newparam(:dsc_type) do
+    def mof_type; 'string' end
     desc "Specifies the Type which was defined in the JetstressConfig.xml file. Valid values are Performance, Stress, DatabaseBackup, or SoftRecovery. Defaults to Performance."
     isrequired
     validate do |value|
@@ -74,6 +75,7 @@ Puppet::Type.newtype(:dsc_xexchjetstress) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_jetstresspath) do
+    def mof_type; 'string' end
     desc "The path to the folder where Jetstress is installed, and which contains JetstressCmd.exe"
     validate do |value|
       unless value.kind_of?(String)
@@ -87,6 +89,7 @@ Puppet::Type.newtype(:dsc_xexchjetstress) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_jetstressparams) do
+    def mof_type; 'string' end
     desc "Command line parameters to pass into JetstressCmd.exe"
     validate do |value|
       unless value.kind_of?(String)
@@ -100,6 +103,7 @@ Puppet::Type.newtype(:dsc_xexchjetstress) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_maxwaitminutes) do
+    def mof_type; 'uint32' end
     desc "The maximum amount of time that the Scheduled Task which runs Jetstress can execute for. Defaults to 0, which means there is no time limit."
     validate do |value|
       unless (value.kind_of?(Numeric) && value >= 0) || (value.to_i.to_s == value && value.to_i >= 0)
@@ -116,6 +120,7 @@ Puppet::Type.newtype(:dsc_xexchjetstress) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_minachievediops) do
+    def mof_type; 'uint32' end
     desc "The minimum value reported in the Achieved Transactional I/O per Second section of the Jetstress report for the run to be considered successful. Defaults to 0."
     validate do |value|
       unless (value.kind_of?(Numeric) && value >= 0) || (value.to_i.to_s == value && value.to_i >= 0)

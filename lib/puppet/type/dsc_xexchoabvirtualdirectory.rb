@@ -57,6 +57,7 @@ Puppet::Type.newtype(:dsc_xexchoabvirtualdirectory) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_identity) do
+    def mof_type; 'string' end
     isrequired
     validate do |value|
       unless value.kind_of?(String)
@@ -70,6 +71,7 @@ Puppet::Type.newtype(:dsc_xexchoabvirtualdirectory) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_credential) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -82,6 +84,7 @@ Puppet::Type.newtype(:dsc_xexchoabvirtualdirectory) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_oabstodistribute, :array_matching => :all) do
+    def mof_type; 'string[]' end
     validate do |value|
       unless value.kind_of?(Array) || value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string or an array of strings")
@@ -97,6 +100,7 @@ Puppet::Type.newtype(:dsc_xexchoabvirtualdirectory) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_allowservicerestart) do
+    def mof_type; 'boolean' end
     validate do |value|
     end
     newvalues(true, false)
@@ -110,6 +114,7 @@ Puppet::Type.newtype(:dsc_xexchoabvirtualdirectory) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_basicauthentication) do
+    def mof_type; 'boolean' end
     validate do |value|
     end
     newvalues(true, false)
@@ -123,6 +128,7 @@ Puppet::Type.newtype(:dsc_xexchoabvirtualdirectory) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_domaincontroller) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -135,6 +141,7 @@ Puppet::Type.newtype(:dsc_xexchoabvirtualdirectory) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_extendedprotectionflags, :array_matching => :all) do
+    def mof_type; 'string[]' end
     validate do |value|
       unless value.kind_of?(Array) || value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string or an array of strings")
@@ -150,6 +157,7 @@ Puppet::Type.newtype(:dsc_xexchoabvirtualdirectory) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_extendedprotectionspnlist, :array_matching => :all) do
+    def mof_type; 'string[]' end
     validate do |value|
       unless value.kind_of?(Array) || value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string or an array of strings")
@@ -165,6 +173,7 @@ Puppet::Type.newtype(:dsc_xexchoabvirtualdirectory) do
   # IsMandatory:  False
   # Values:       ["None", "Allow", "Require"]
   newparam(:dsc_extendedprotectiontokenchecking) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -180,6 +189,7 @@ Puppet::Type.newtype(:dsc_xexchoabvirtualdirectory) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_externalurl) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -192,6 +202,7 @@ Puppet::Type.newtype(:dsc_xexchoabvirtualdirectory) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_internalurl) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -204,6 +215,7 @@ Puppet::Type.newtype(:dsc_xexchoabvirtualdirectory) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_pollinterval) do
+    def mof_type; 'sint32' end
     validate do |value|
       unless value.kind_of?(Numeric) || value.to_i.to_s == value || value.to_i >= 0
           fail("Invalid value #{value}. Should be a signed Integer")
@@ -219,6 +231,7 @@ Puppet::Type.newtype(:dsc_xexchoabvirtualdirectory) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_requiressl) do
+    def mof_type; 'boolean' end
     validate do |value|
     end
     newvalues(true, false)
@@ -232,6 +245,7 @@ Puppet::Type.newtype(:dsc_xexchoabvirtualdirectory) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_windowsauthentication) do
+    def mof_type; 'boolean' end
     validate do |value|
     end
     newvalues(true, false)

@@ -57,6 +57,7 @@ Puppet::Type.newtype(:dsc_xcomputer) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_name) do
+    def mof_type; 'string' end
     isrequired
     validate do |value|
       unless value.kind_of?(String)
@@ -70,6 +71,7 @@ Puppet::Type.newtype(:dsc_xcomputer) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_domainname) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -82,6 +84,7 @@ Puppet::Type.newtype(:dsc_xcomputer) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_credential) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -94,6 +97,7 @@ Puppet::Type.newtype(:dsc_xcomputer) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_unjoincredential) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -106,6 +110,7 @@ Puppet::Type.newtype(:dsc_xcomputer) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_workgroupname) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")

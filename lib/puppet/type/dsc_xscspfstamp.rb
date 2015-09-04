@@ -58,6 +58,7 @@ Puppet::Type.newtype(:dsc_xscspfstamp) do
   # IsMandatory:  False
   # Values:       ["Present", "Absent"]
   newparam(:dsc_ensure) do
+    def mof_type; 'string' end
     desc "An enumerated value that describes if the SPF stamp exists.\nPresent {default}  \nAbsent   \n"
     validate do |value|
       resource[:ensure] = value.downcase
@@ -75,6 +76,7 @@ Puppet::Type.newtype(:dsc_xscspfstamp) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_name) do
+    def mof_type; 'string' end
     desc "Specifies a name for the stamp."
     isrequired
     validate do |value|
@@ -89,6 +91,7 @@ Puppet::Type.newtype(:dsc_xscspfstamp) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_servers, :array_matching => :all) do
+    def mof_type; 'string[]' end
     desc "Specifies the name of one or more server objects to associate with the new stamp."
     validate do |value|
       unless value.kind_of?(Array) || value.kind_of?(String)
@@ -105,6 +108,7 @@ Puppet::Type.newtype(:dsc_xscspfstamp) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_scspfadmincredential) do
+    def mof_type; 'string' end
     desc "Credential with admin permissions to Service Provider Foundation."
     validate do |value|
       unless value.kind_of?(String)

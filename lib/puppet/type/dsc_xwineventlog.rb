@@ -57,6 +57,7 @@ Puppet::Type.newtype(:dsc_xwineventlog) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_logname) do
+    def mof_type; 'string' end
     desc "Name of the event log"
     isrequired
     validate do |value|
@@ -71,6 +72,7 @@ Puppet::Type.newtype(:dsc_xwineventlog) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_maximumsizeinbytes) do
+    def mof_type; 'sint64' end
     desc "sizethat the event log file is allowed to be When the file reaches this maximum size it is considered full"
     validate do |value|
       unless value.kind_of?(Numeric) || value.to_i.to_s == value || value.to_i >= 0
@@ -87,6 +89,7 @@ Puppet::Type.newtype(:dsc_xwineventlog) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_isenabled) do
+    def mof_type; 'boolean' end
     validate do |value|
     end
     newvalues(true, false)
@@ -100,6 +103,7 @@ Puppet::Type.newtype(:dsc_xwineventlog) do
   # IsMandatory:  False
   # Values:       ["AutoBackup", "Circular", "Retain"]
   newparam(:dsc_logmode) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -115,6 +119,7 @@ Puppet::Type.newtype(:dsc_xwineventlog) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_securitydescriptor) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -127,6 +132,7 @@ Puppet::Type.newtype(:dsc_xwineventlog) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_logfilepath) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")

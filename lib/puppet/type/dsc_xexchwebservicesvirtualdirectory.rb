@@ -57,6 +57,7 @@ Puppet::Type.newtype(:dsc_xexchwebservicesvirtualdirectory) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_identity) do
+    def mof_type; 'string' end
     isrequired
     validate do |value|
       unless value.kind_of?(String)
@@ -70,6 +71,7 @@ Puppet::Type.newtype(:dsc_xexchwebservicesvirtualdirectory) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_credential) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -82,6 +84,7 @@ Puppet::Type.newtype(:dsc_xexchwebservicesvirtualdirectory) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_allowservicerestart) do
+    def mof_type; 'boolean' end
     validate do |value|
     end
     newvalues(true, false)
@@ -95,6 +98,7 @@ Puppet::Type.newtype(:dsc_xexchwebservicesvirtualdirectory) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_basicauthentication) do
+    def mof_type; 'boolean' end
     validate do |value|
     end
     newvalues(true, false)
@@ -108,6 +112,7 @@ Puppet::Type.newtype(:dsc_xexchwebservicesvirtualdirectory) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_certificateauthentication) do
+    def mof_type; 'boolean' end
     validate do |value|
     end
     newvalues(true, false)
@@ -121,6 +126,7 @@ Puppet::Type.newtype(:dsc_xexchwebservicesvirtualdirectory) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_digestauthentication) do
+    def mof_type; 'boolean' end
     validate do |value|
     end
     newvalues(true, false)
@@ -134,6 +140,7 @@ Puppet::Type.newtype(:dsc_xexchwebservicesvirtualdirectory) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_domaincontroller) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -146,6 +153,7 @@ Puppet::Type.newtype(:dsc_xexchwebservicesvirtualdirectory) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_externalurl) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -158,6 +166,7 @@ Puppet::Type.newtype(:dsc_xexchwebservicesvirtualdirectory) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_internalnlbbypassurl) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -170,6 +179,7 @@ Puppet::Type.newtype(:dsc_xexchwebservicesvirtualdirectory) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_internalurl) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -182,6 +192,7 @@ Puppet::Type.newtype(:dsc_xexchwebservicesvirtualdirectory) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_oauthauthentication) do
+    def mof_type; 'boolean' end
     validate do |value|
     end
     newvalues(true, false)
@@ -195,6 +206,7 @@ Puppet::Type.newtype(:dsc_xexchwebservicesvirtualdirectory) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_windowsauthentication) do
+    def mof_type; 'boolean' end
     validate do |value|
     end
     newvalues(true, false)
@@ -208,6 +220,7 @@ Puppet::Type.newtype(:dsc_xexchwebservicesvirtualdirectory) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_wssecurityauthentication) do
+    def mof_type; 'boolean' end
     validate do |value|
     end
     newvalues(true, false)

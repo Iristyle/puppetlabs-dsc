@@ -59,6 +59,7 @@ Puppet::Type.newtype(:dsc_xpackage) do
   # IsMandatory:  False
   # Values:       ["Present", "Absent"]
   newparam(:dsc_ensure) do
+    def mof_type; 'string' end
     validate do |value|
       resource[:ensure] = value.downcase
       unless value.kind_of?(String)
@@ -75,6 +76,7 @@ Puppet::Type.newtype(:dsc_xpackage) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_name) do
+    def mof_type; 'string' end
     isrequired
     validate do |value|
       unless value.kind_of?(String)
@@ -88,6 +90,7 @@ Puppet::Type.newtype(:dsc_xpackage) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_path) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -100,6 +103,7 @@ Puppet::Type.newtype(:dsc_xpackage) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_productid) do
+    def mof_type; 'string' end
     isrequired
     validate do |value|
       unless value.kind_of?(String)
@@ -113,6 +117,7 @@ Puppet::Type.newtype(:dsc_xpackage) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_arguments) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -125,6 +130,7 @@ Puppet::Type.newtype(:dsc_xpackage) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_credential) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -137,6 +143,7 @@ Puppet::Type.newtype(:dsc_xpackage) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_returncode, :array_matching => :all) do
+    def mof_type; 'uint32[]' end
     validate do |value|
       unless value.kind_of?(Array) || value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string or an array of strings")
@@ -152,6 +159,7 @@ Puppet::Type.newtype(:dsc_xpackage) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_logpath) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -164,6 +172,7 @@ Puppet::Type.newtype(:dsc_xpackage) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_packagedescription) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -176,6 +185,7 @@ Puppet::Type.newtype(:dsc_xpackage) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_publisher) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -188,6 +198,7 @@ Puppet::Type.newtype(:dsc_xpackage) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_installedon) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -200,6 +211,7 @@ Puppet::Type.newtype(:dsc_xpackage) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_size) do
+    def mof_type; 'uint32' end
     validate do |value|
       unless (value.kind_of?(Numeric) && value >= 0) || (value.to_i.to_s == value && value.to_i >= 0)
           fail("Invalid value #{value}. Should be a unsigned Integer")
@@ -215,6 +227,7 @@ Puppet::Type.newtype(:dsc_xpackage) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_version) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -227,6 +240,7 @@ Puppet::Type.newtype(:dsc_xpackage) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_installed) do
+    def mof_type; 'boolean' end
     validate do |value|
     end
     newvalues(true, false)
@@ -240,6 +254,7 @@ Puppet::Type.newtype(:dsc_xpackage) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_runascredential) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -252,6 +267,7 @@ Puppet::Type.newtype(:dsc_xpackage) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_filehash) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -264,6 +280,7 @@ Puppet::Type.newtype(:dsc_xpackage) do
   # IsMandatory:  False
   # Values:       ["SHA1", "SHA256", "SHA384", "SHA512", "MD5", "RIPEMD160"]
   newparam(:dsc_hashalgorithm) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -279,6 +296,7 @@ Puppet::Type.newtype(:dsc_xpackage) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_signersubject) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -291,6 +309,7 @@ Puppet::Type.newtype(:dsc_xpackage) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_signerthumbprint) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -303,6 +322,7 @@ Puppet::Type.newtype(:dsc_xpackage) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_servercertificatevalidationcallback) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -315,6 +335,7 @@ Puppet::Type.newtype(:dsc_xpackage) do
   # IsMandatory:  False
   # Values:       ["LocalMachine", "CurrentUser"]
   newparam(:dsc_installedcheckreghive) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -330,6 +351,7 @@ Puppet::Type.newtype(:dsc_xpackage) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_installedcheckregkey) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -342,6 +364,7 @@ Puppet::Type.newtype(:dsc_xpackage) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_installedcheckregvaluename) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -354,6 +377,7 @@ Puppet::Type.newtype(:dsc_xpackage) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_installedcheckregvaluedata) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")

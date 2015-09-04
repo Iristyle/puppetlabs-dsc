@@ -57,6 +57,7 @@ Puppet::Type.newtype(:dsc_xscommanagementpack) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_name) do
+    def mof_type; 'string' end
     desc "Name of the Management Pack."
     isrequired
     validate do |value|
@@ -71,6 +72,7 @@ Puppet::Type.newtype(:dsc_xscommanagementpack) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_version) do
+    def mof_type; 'string' end
     desc "Specific version of the Management Pack, overrides MinVersion if both set."
     validate do |value|
       unless value.kind_of?(String)
@@ -84,6 +86,7 @@ Puppet::Type.newtype(:dsc_xscommanagementpack) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_minversion) do
+    def mof_type; 'string' end
     desc "Minimum version of the Management Pack, overridden by Version if both set."
     validate do |value|
       unless value.kind_of?(String)
@@ -97,6 +100,7 @@ Puppet::Type.newtype(:dsc_xscommanagementpack) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_scomadmincredential) do
+    def mof_type; 'string' end
     desc "Credential with admin permissions to Operations Manager."
     validate do |value|
       unless value.kind_of?(String)
@@ -110,6 +114,7 @@ Puppet::Type.newtype(:dsc_xscommanagementpack) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_sourcepath) do
+    def mof_type; 'string' end
     desc "UNC path to the root of the source files for installation, if omitted the Operations Manager installation folder will be used."
     validate do |value|
       unless value.kind_of?(String)
@@ -123,6 +128,7 @@ Puppet::Type.newtype(:dsc_xscommanagementpack) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_sourcefolder) do
+    def mof_type; 'string' end
     desc "Folder within the source path containing the source files for installation."
     validate do |value|
       unless value.kind_of?(String)
@@ -136,6 +142,7 @@ Puppet::Type.newtype(:dsc_xscommanagementpack) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_sourcefile) do
+    def mof_type; 'string' end
     desc "Name of the file in the source folder for the Management Pack."
     validate do |value|
       unless value.kind_of?(String)

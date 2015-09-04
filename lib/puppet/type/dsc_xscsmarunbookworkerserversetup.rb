@@ -58,6 +58,7 @@ Puppet::Type.newtype(:dsc_xscsmarunbookworkerserversetup) do
   # IsMandatory:  True
   # Values:       ["Present", "Absent"]
   newparam(:dsc_ensure) do
+    def mof_type; 'string' end
     desc "An enumerated value that describes if the SMA Runbook Worker server is expected to be installed on the machine.\nPresent {default}  \nAbsent   \n"
     isrequired
     validate do |value|
@@ -76,6 +77,7 @@ Puppet::Type.newtype(:dsc_xscsmarunbookworkerserversetup) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_sourcepath) do
+    def mof_type; 'string' end
     desc "UNC path to the root of the source files for installation."
     validate do |value|
       unless value.kind_of?(String)
@@ -89,6 +91,7 @@ Puppet::Type.newtype(:dsc_xscsmarunbookworkerserversetup) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_sourcefolder) do
+    def mof_type; 'string' end
     desc "Folder within the source path containing the source files for installation."
     validate do |value|
       unless value.kind_of?(String)
@@ -102,6 +105,7 @@ Puppet::Type.newtype(:dsc_xscsmarunbookworkerserversetup) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_setupcredential) do
+    def mof_type; 'string' end
     desc "Credential to be used to perform the installation."
     validate do |value|
       unless value.kind_of?(String)
@@ -115,6 +119,7 @@ Puppet::Type.newtype(:dsc_xscsmarunbookworkerserversetup) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_service) do
+    def mof_type; 'string' end
     desc "Service account of the web service application pool."
     validate do |value|
       unless value.kind_of?(String)
@@ -128,6 +133,7 @@ Puppet::Type.newtype(:dsc_xscsmarunbookworkerserversetup) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_serviceusername) do
+    def mof_type; 'string' end
     desc "Output username of the Service account of the web service application pool."
     validate do |value|
       unless value.kind_of?(String)
@@ -141,6 +147,7 @@ Puppet::Type.newtype(:dsc_xscsmarunbookworkerserversetup) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_sqlserver) do
+    def mof_type; 'string' end
     desc "Name of the SQL Server for the SMA database."
     validate do |value|
       unless value.kind_of?(String)
@@ -154,6 +161,7 @@ Puppet::Type.newtype(:dsc_xscsmarunbookworkerserversetup) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_sqlinstance) do
+    def mof_type; 'string' end
     desc "Name of the SQL Instance for the SMA database."
     validate do |value|
       unless value.kind_of?(String)
@@ -167,6 +175,7 @@ Puppet::Type.newtype(:dsc_xscsmarunbookworkerserversetup) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_sqldatabase) do
+    def mof_type; 'string' end
     desc "Name of the SMA database."
     validate do |value|
       unless value.kind_of?(String)
@@ -180,6 +189,7 @@ Puppet::Type.newtype(:dsc_xscsmarunbookworkerserversetup) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_installfolder) do
+    def mof_type; 'string' end
     desc "Installation folder for SMA."
     validate do |value|
       unless value.kind_of?(String)
@@ -193,6 +203,7 @@ Puppet::Type.newtype(:dsc_xscsmarunbookworkerserversetup) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_etwmanifest) do
+    def mof_type; 'string' end
     desc "Log to ETW."
     validate do |value|
       unless value.kind_of?(String)
@@ -206,6 +217,7 @@ Puppet::Type.newtype(:dsc_xscsmarunbookworkerserversetup) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_sendceipreports) do
+    def mof_type; 'string' end
     desc "Participate in the Customer Experience Improvement Program."
     validate do |value|
       unless value.kind_of?(String)
@@ -219,6 +231,7 @@ Puppet::Type.newtype(:dsc_xscsmarunbookworkerserversetup) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_msupdate) do
+    def mof_type; 'string' end
     desc "Use Microsoft Update."
     validate do |value|
       unless value.kind_of?(String)
@@ -232,6 +245,7 @@ Puppet::Type.newtype(:dsc_xscsmarunbookworkerserversetup) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_productkey) do
+    def mof_type; 'string' end
     desc "Product key for licensed installations."
     validate do |value|
       unless value.kind_of?(String)

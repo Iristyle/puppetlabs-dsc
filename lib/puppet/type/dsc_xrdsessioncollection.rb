@@ -58,6 +58,7 @@ Puppet::Type.newtype(:dsc_xrdsessioncollection) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_collectionname) do
+    def mof_type; 'string' end
     desc "Specifies a name for the session collection. "
     isrequired
     validate do |value|
@@ -72,6 +73,7 @@ Puppet::Type.newtype(:dsc_xrdsessioncollection) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_sessionhost) do
+    def mof_type; 'string' end
     desc "Specifies an RD Session Host server to include in the session collection. "
     isrequired
     validate do |value|
@@ -86,6 +88,7 @@ Puppet::Type.newtype(:dsc_xrdsessioncollection) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_collectiondescription) do
+    def mof_type; 'string' end
     desc "Specifies a description for the collection."
     validate do |value|
       unless value.kind_of?(String)
@@ -99,6 +102,7 @@ Puppet::Type.newtype(:dsc_xrdsessioncollection) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_connectionbroker) do
+    def mof_type; 'string' end
     desc "Specifies the Remote Desktop Connection Broker (RD Connection Broker) server for a Remote Desktop deployment."
     validate do |value|
       unless value.kind_of?(String)

@@ -57,6 +57,7 @@ Puppet::Type.newtype(:dsc_xexchowavirtualdirectory) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_identity) do
+    def mof_type; 'string' end
     isrequired
     validate do |value|
       unless value.kind_of?(String)
@@ -70,6 +71,7 @@ Puppet::Type.newtype(:dsc_xexchowavirtualdirectory) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_credential) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -82,6 +84,7 @@ Puppet::Type.newtype(:dsc_xexchowavirtualdirectory) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_adfsauthentication) do
+    def mof_type; 'boolean' end
     validate do |value|
     end
     newvalues(true, false)
@@ -95,6 +98,7 @@ Puppet::Type.newtype(:dsc_xexchowavirtualdirectory) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_allowservicerestart) do
+    def mof_type; 'boolean' end
     validate do |value|
     end
     newvalues(true, false)
@@ -108,6 +112,7 @@ Puppet::Type.newtype(:dsc_xexchowavirtualdirectory) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_basicauthentication) do
+    def mof_type; 'boolean' end
     validate do |value|
     end
     newvalues(true, false)
@@ -121,6 +126,7 @@ Puppet::Type.newtype(:dsc_xexchowavirtualdirectory) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_changepasswordenabled) do
+    def mof_type; 'boolean' end
     validate do |value|
     end
     newvalues(true, false)
@@ -134,6 +140,7 @@ Puppet::Type.newtype(:dsc_xexchowavirtualdirectory) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_digestauthentication) do
+    def mof_type; 'boolean' end
     validate do |value|
     end
     newvalues(true, false)
@@ -147,6 +154,7 @@ Puppet::Type.newtype(:dsc_xexchowavirtualdirectory) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_domaincontroller) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -159,6 +167,7 @@ Puppet::Type.newtype(:dsc_xexchowavirtualdirectory) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_externalauthenticationmethods, :array_matching => :all) do
+    def mof_type; 'string[]' end
     validate do |value|
       unless value.kind_of?(Array) || value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string or an array of strings")
@@ -174,6 +183,7 @@ Puppet::Type.newtype(:dsc_xexchowavirtualdirectory) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_externalurl) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -186,6 +196,7 @@ Puppet::Type.newtype(:dsc_xexchowavirtualdirectory) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_formsauthentication) do
+    def mof_type; 'boolean' end
     validate do |value|
     end
     newvalues(true, false)
@@ -199,6 +210,7 @@ Puppet::Type.newtype(:dsc_xexchowavirtualdirectory) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_internalurl) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -211,6 +223,7 @@ Puppet::Type.newtype(:dsc_xexchowavirtualdirectory) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_instantmessagingenabled) do
+    def mof_type; 'boolean' end
     validate do |value|
     end
     newvalues(true, false)
@@ -224,6 +237,7 @@ Puppet::Type.newtype(:dsc_xexchowavirtualdirectory) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_instantmessagingcertificatethumbprint) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -236,6 +250,7 @@ Puppet::Type.newtype(:dsc_xexchowavirtualdirectory) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_instantmessagingservername) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -248,6 +263,7 @@ Puppet::Type.newtype(:dsc_xexchowavirtualdirectory) do
   # IsMandatory:  False
   # Values:       ["None", "Ocs"]
   newparam(:dsc_instantmessagingtype) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -263,6 +279,7 @@ Puppet::Type.newtype(:dsc_xexchowavirtualdirectory) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_logonpagepublicprivateselectionenabled) do
+    def mof_type; 'boolean' end
     validate do |value|
     end
     newvalues(true, false)
@@ -276,6 +293,7 @@ Puppet::Type.newtype(:dsc_xexchowavirtualdirectory) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_logonpagelightselectionenabled) do
+    def mof_type; 'boolean' end
     validate do |value|
     end
     newvalues(true, false)
@@ -289,6 +307,7 @@ Puppet::Type.newtype(:dsc_xexchowavirtualdirectory) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_windowsauthentication) do
+    def mof_type; 'boolean' end
     validate do |value|
     end
     newvalues(true, false)

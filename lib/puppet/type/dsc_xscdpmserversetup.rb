@@ -58,6 +58,7 @@ Puppet::Type.newtype(:dsc_xscdpmserversetup) do
   # IsMandatory:  True
   # Values:       ["Present", "Absent"]
   newparam(:dsc_ensure) do
+    def mof_type; 'string' end
     desc "An enumerated value that describes if the DPM server is expected to be installed on the machine.\nPresent {default}  \nAbsent   \n"
     isrequired
     validate do |value|
@@ -76,6 +77,7 @@ Puppet::Type.newtype(:dsc_xscdpmserversetup) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_sourcepath) do
+    def mof_type; 'string' end
     desc "UNC path to the root of the source filesfor installation."
     validate do |value|
       unless value.kind_of?(String)
@@ -89,6 +91,7 @@ Puppet::Type.newtype(:dsc_xscdpmserversetup) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_sourcefolder) do
+    def mof_type; 'string' end
     desc "Folder within the source path containing the source files for installation."
     validate do |value|
       unless value.kind_of?(String)
@@ -102,6 +105,7 @@ Puppet::Type.newtype(:dsc_xscdpmserversetup) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_setupcredential) do
+    def mof_type; 'string' end
     desc "Credential to be used to perform the installation."
     validate do |value|
       unless value.kind_of?(String)
@@ -115,6 +119,7 @@ Puppet::Type.newtype(:dsc_xscdpmserversetup) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_username) do
+    def mof_type; 'string' end
     desc "User name that the software will be registered to."
     validate do |value|
       unless value.kind_of?(String)
@@ -128,6 +133,7 @@ Puppet::Type.newtype(:dsc_xscdpmserversetup) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_companyname) do
+    def mof_type; 'string' end
     desc "Company name that the software will be registered to."
     validate do |value|
       unless value.kind_of?(String)
@@ -141,6 +147,7 @@ Puppet::Type.newtype(:dsc_xscdpmserversetup) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_productkey) do
+    def mof_type; 'string' end
     desc "Product key for licensed installations."
     validate do |value|
       unless value.kind_of?(String)
@@ -154,6 +161,7 @@ Puppet::Type.newtype(:dsc_xscdpmserversetup) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_programfiles) do
+    def mof_type; 'string' end
     desc "Installation path for the software."
     validate do |value|
       unless value.kind_of?(String)
@@ -167,6 +175,7 @@ Puppet::Type.newtype(:dsc_xscdpmserversetup) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_yukonmachinename) do
+    def mof_type; 'string' end
     desc "Name of the SQL server for the DPM database."
     validate do |value|
       unless value.kind_of?(String)
@@ -180,6 +189,7 @@ Puppet::Type.newtype(:dsc_xscdpmserversetup) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_yukoninstancename) do
+    def mof_type; 'string' end
     desc "SQL instance for the DPM database."
     validate do |value|
       unless value.kind_of?(String)
@@ -193,6 +203,7 @@ Puppet::Type.newtype(:dsc_xscdpmserversetup) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_yukonmachinecredential) do
+    def mof_type; 'string' end
     desc "Credential to be used to access the SQL instance for DPM at installation time."
     validate do |value|
       unless value.kind_of?(String)
@@ -206,6 +217,7 @@ Puppet::Type.newtype(:dsc_xscdpmserversetup) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_reportingmachinename) do
+    def mof_type; 'string' end
     desc "Name of the SQL server for reporting."
     validate do |value|
       unless value.kind_of?(String)
@@ -219,6 +231,7 @@ Puppet::Type.newtype(:dsc_xscdpmserversetup) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_reportinginstancename) do
+    def mof_type; 'string' end
     desc "SQL instance for reporting."
     validate do |value|
       unless value.kind_of?(String)
@@ -232,6 +245,7 @@ Puppet::Type.newtype(:dsc_xscdpmserversetup) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_reportingmachinecredential) do
+    def mof_type; 'string' end
     desc "Credential to be used to access SQL reporting for DPM at installation time."
     validate do |value|
       unless value.kind_of?(String)

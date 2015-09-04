@@ -58,6 +58,7 @@ Puppet::Type.newtype(:dsc_xdnsarecord) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_name) do
+    def mof_type; 'string' end
     isrequired
     validate do |value|
       unless value.kind_of?(String)
@@ -71,6 +72,7 @@ Puppet::Type.newtype(:dsc_xdnsarecord) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_zone) do
+    def mof_type; 'string' end
     isrequired
     validate do |value|
       unless value.kind_of?(String)
@@ -84,6 +86,7 @@ Puppet::Type.newtype(:dsc_xdnsarecord) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_target) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")

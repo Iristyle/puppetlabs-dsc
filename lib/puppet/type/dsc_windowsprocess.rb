@@ -55,6 +55,7 @@ Puppet::Type.newtype(:dsc_windowsprocess) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_path) do
+    def mof_type; 'string' end
     isrequired
     validate do |value|
       unless value.kind_of?(String)
@@ -68,6 +69,7 @@ Puppet::Type.newtype(:dsc_windowsprocess) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_arguments) do
+    def mof_type; 'string' end
     isrequired
     validate do |value|
       unless value.kind_of?(String)
@@ -81,6 +83,7 @@ Puppet::Type.newtype(:dsc_windowsprocess) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_credential) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -93,6 +96,7 @@ Puppet::Type.newtype(:dsc_windowsprocess) do
   # IsMandatory:  False
   # Values:       ["Present", "Absent"]
   newparam(:dsc_ensure) do
+    def mof_type; 'string' end
     validate do |value|
       resource[:ensure] = value.downcase
       unless value.kind_of?(String)
@@ -109,6 +113,7 @@ Puppet::Type.newtype(:dsc_windowsprocess) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_standardoutputpath) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -121,6 +126,7 @@ Puppet::Type.newtype(:dsc_windowsprocess) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_standarderrorpath) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -133,6 +139,7 @@ Puppet::Type.newtype(:dsc_windowsprocess) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_standardinputpath) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -145,6 +152,7 @@ Puppet::Type.newtype(:dsc_windowsprocess) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_workingdirectory) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -157,6 +165,7 @@ Puppet::Type.newtype(:dsc_windowsprocess) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_pagedmemorysize) do
+    def mof_type; 'uint64' end
     validate do |value|
       unless (value.kind_of?(Numeric) && value >= 0) || (value.to_i.to_s == value && value.to_i >= 0)
           fail("Invalid value #{value}. Should be a unsigned Integer")
@@ -172,6 +181,7 @@ Puppet::Type.newtype(:dsc_windowsprocess) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_nonpagedmemorysize) do
+    def mof_type; 'uint64' end
     validate do |value|
       unless (value.kind_of?(Numeric) && value >= 0) || (value.to_i.to_s == value && value.to_i >= 0)
           fail("Invalid value #{value}. Should be a unsigned Integer")
@@ -187,6 +197,7 @@ Puppet::Type.newtype(:dsc_windowsprocess) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_virtualmemorysize) do
+    def mof_type; 'uint64' end
     validate do |value|
       unless (value.kind_of?(Numeric) && value >= 0) || (value.to_i.to_s == value && value.to_i >= 0)
           fail("Invalid value #{value}. Should be a unsigned Integer")
@@ -202,6 +213,7 @@ Puppet::Type.newtype(:dsc_windowsprocess) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_handlecount) do
+    def mof_type; 'sint32' end
     validate do |value|
       unless value.kind_of?(Numeric) || value.to_i.to_s == value || value.to_i >= 0
           fail("Invalid value #{value}. Should be a signed Integer")
@@ -217,6 +229,7 @@ Puppet::Type.newtype(:dsc_windowsprocess) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_processid) do
+    def mof_type; 'sint32' end
     validate do |value|
       unless value.kind_of?(Numeric) || value.to_i.to_s == value || value.to_i >= 0
           fail("Invalid value #{value}. Should be a signed Integer")

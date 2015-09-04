@@ -58,6 +58,7 @@ Puppet::Type.newtype(:dsc_xinternetexplorerhomepage) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_startpage) do
+    def mof_type; 'string' end
     desc "Specifies the URL for the home page of Internet Explorer."
     isrequired
     validate do |value|
@@ -72,6 +73,7 @@ Puppet::Type.newtype(:dsc_xinternetexplorerhomepage) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_secondarystartpages) do
+    def mof_type; 'string' end
     desc "Specifies the URL for the secondary home pages of Internet Explorer."
     validate do |value|
       unless value.kind_of?(String)
@@ -85,6 +87,7 @@ Puppet::Type.newtype(:dsc_xinternetexplorerhomepage) do
   # IsMandatory:  False
   # Values:       ["Present", "Absent"]
   newparam(:dsc_ensure) do
+    def mof_type; 'string' end
     desc "Should the IE home page is configured or unconfigured."
     validate do |value|
       resource[:ensure] = value.downcase

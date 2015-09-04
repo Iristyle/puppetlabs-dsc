@@ -57,6 +57,7 @@ Puppet::Type.newtype(:dsc_xwebapppooldefaults) do
   # IsMandatory:  True
   # Values:       ["Machine"]
   newparam(:dsc_applyto) do
+    def mof_type; 'string' end
     desc "Dummy value because we need a key, always 'Machine'"
     isrequired
     validate do |value|
@@ -74,6 +75,7 @@ Puppet::Type.newtype(:dsc_xwebapppooldefaults) do
   # IsMandatory:  False
   # Values:       ["", "v2.0", "v4.0"]
   newparam(:dsc_managedruntimeversion) do
+    def mof_type; 'string' end
     desc "applicationPools/applicationPoolDefaults/managedRuntimeVersion"
     validate do |value|
       unless value.kind_of?(String)
@@ -90,6 +92,7 @@ Puppet::Type.newtype(:dsc_xwebapppooldefaults) do
   # IsMandatory:  False
   # Values:       ["ApplicationPoolIdentity", "LocalService", "LocalSystem", "NetworkService"]
   newparam(:dsc_identitytype) do
+    def mof_type; 'string' end
     desc "applicationPools/applicationPoolDefaults/processModel/identityType"
     validate do |value|
       unless value.kind_of?(String)

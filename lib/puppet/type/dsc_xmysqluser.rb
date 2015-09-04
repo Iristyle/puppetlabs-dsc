@@ -58,6 +58,7 @@ Puppet::Type.newtype(:dsc_xmysqluser) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_name) do
+    def mof_type; 'string' end
     desc "Name of MySQL user to create or remove."
     isrequired
     validate do |value|
@@ -72,6 +73,7 @@ Puppet::Type.newtype(:dsc_xmysqluser) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_credential) do
+    def mof_type; 'string' end
     desc "Credential for MySql user."
     validate do |value|
       unless value.kind_of?(String)
@@ -85,6 +87,7 @@ Puppet::Type.newtype(:dsc_xmysqluser) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_connectioncredential) do
+    def mof_type; 'string' end
     desc "MySql connection credential used to create a user."
     validate do |value|
       unless value.kind_of?(String)
@@ -98,6 +101,7 @@ Puppet::Type.newtype(:dsc_xmysqluser) do
   # IsMandatory:  False
   # Values:       ["Present", "Absent"]
   newparam(:dsc_ensure) do
+    def mof_type; 'string' end
     desc "Ensure mysql user is present or absent."
     validate do |value|
       resource[:ensure] = value.downcase

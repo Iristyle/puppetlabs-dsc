@@ -57,6 +57,7 @@ Puppet::Type.newtype(:dsc_xvhdfile) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_vhdpath) do
+    def mof_type; 'string' end
     desc "Path to the VHD"
     isrequired
     validate do |value|
@@ -71,6 +72,7 @@ Puppet::Type.newtype(:dsc_xvhdfile) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_filedirectory, :array_matching => :all) do
+    def mof_type; 'string[]' end
     desc "The FileDirectory objects to copy to the VHD"
     validate do |value|
       unless value.kind_of?(Array) || value.kind_of?(String)
@@ -87,6 +89,7 @@ Puppet::Type.newtype(:dsc_xvhdfile) do
   # IsMandatory:  False
   # Values:       ["ModifiedDate", "SHA-1", "SHA-256", "SHA-512"]
   newparam(:dsc_checksum) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")

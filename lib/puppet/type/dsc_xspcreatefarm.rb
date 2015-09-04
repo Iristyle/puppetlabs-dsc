@@ -58,6 +58,7 @@ Puppet::Type.newtype(:dsc_xspcreatefarm) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_farmconfigdatabasename) do
+    def mof_type; 'string' end
     isrequired
     validate do |value|
       unless value.kind_of?(String)
@@ -71,6 +72,7 @@ Puppet::Type.newtype(:dsc_xspcreatefarm) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_databaseserver) do
+    def mof_type; 'string' end
     isrequired
     validate do |value|
       unless value.kind_of?(String)
@@ -84,6 +86,7 @@ Puppet::Type.newtype(:dsc_xspcreatefarm) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_farmaccount) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -96,6 +99,7 @@ Puppet::Type.newtype(:dsc_xspcreatefarm) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_installaccount) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -108,6 +112,7 @@ Puppet::Type.newtype(:dsc_xspcreatefarm) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_passphrase) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -120,6 +125,7 @@ Puppet::Type.newtype(:dsc_xspcreatefarm) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_admincontentdatabasename) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")

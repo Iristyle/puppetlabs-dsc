@@ -58,6 +58,7 @@ Puppet::Type.newtype(:dsc_xdhcpserveroption) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_scopeid) do
+    def mof_type; 'string' end
     desc "ScopeId for which options are set"
     isrequired
     validate do |value|
@@ -72,6 +73,7 @@ Puppet::Type.newtype(:dsc_xdhcpserveroption) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_dnsserveripaddress, :array_matching => :all) do
+    def mof_type; 'string[]' end
     desc "IP address of DNS Servers"
     validate do |value|
       unless value.kind_of?(Array) || value.kind_of?(String)
@@ -88,6 +90,7 @@ Puppet::Type.newtype(:dsc_xdhcpserveroption) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_dnsdomain) do
+    def mof_type; 'string' end
     desc "Domain name of DNS Server"
     validate do |value|
       unless value.kind_of?(String)
@@ -101,6 +104,7 @@ Puppet::Type.newtype(:dsc_xdhcpserveroption) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_router, :array_matching => :all) do
+    def mof_type; 'string[]' end
     desc "IP address of the router/default gateway."
     validate do |value|
       unless value.kind_of?(Array) || value.kind_of?(String)
@@ -117,6 +121,7 @@ Puppet::Type.newtype(:dsc_xdhcpserveroption) do
   # IsMandatory:  False
   # Values:       ["IPv4"]
   newparam(:dsc_addressfamily) do
+    def mof_type; 'string' end
     desc "Address family type"
     validate do |value|
       unless value.kind_of?(String)
@@ -133,6 +138,7 @@ Puppet::Type.newtype(:dsc_xdhcpserveroption) do
   # IsMandatory:  False
   # Values:       ["Present", "Absent"]
   newparam(:dsc_ensure) do
+    def mof_type; 'string' end
     desc "Whether option should be set or removed"
     validate do |value|
       resource[:ensure] = value.downcase

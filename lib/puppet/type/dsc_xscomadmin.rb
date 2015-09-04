@@ -59,6 +59,7 @@ Puppet::Type.newtype(:dsc_xscomadmin) do
   # IsMandatory:  False
   # Values:       ["Present", "Absent"]
   newparam(:dsc_ensure) do
+    def mof_type; 'string' end
     desc "An enumerated value that describes if the principal is an Operations Manager admin.\nPresent {default}  \nAbsent   \n"
     validate do |value|
       resource[:ensure] = value.downcase
@@ -76,6 +77,7 @@ Puppet::Type.newtype(:dsc_xscomadmin) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_principal) do
+    def mof_type; 'string' end
     desc "The Operations Manager admin principal."
     isrequired
     validate do |value|
@@ -90,6 +92,7 @@ Puppet::Type.newtype(:dsc_xscomadmin) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_userrole) do
+    def mof_type; 'string' end
     desc "The Operations Manager user role."
     isrequired
     validate do |value|
@@ -104,6 +107,7 @@ Puppet::Type.newtype(:dsc_xscomadmin) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_scomadmincredential) do
+    def mof_type; 'string' end
     desc "Credential to be used to perform the operations."
     validate do |value|
       unless value.kind_of?(String)

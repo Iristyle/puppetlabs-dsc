@@ -58,6 +58,7 @@ Puppet::Type.newtype(:dsc_xiisfeaturedelegation) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_sectionname) do
+    def mof_type; 'string' end
     isrequired
     validate do |value|
       unless value.kind_of?(String)
@@ -71,6 +72,7 @@ Puppet::Type.newtype(:dsc_xiisfeaturedelegation) do
   # IsMandatory:  True
   # Values:       ["Allow", "Deny"]
   newparam(:dsc_overridemode) do
+    def mof_type; 'string' end
     isrequired
     validate do |value|
       unless value.kind_of?(String)

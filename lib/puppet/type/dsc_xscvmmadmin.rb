@@ -59,6 +59,7 @@ Puppet::Type.newtype(:dsc_xscvmmadmin) do
   # IsMandatory:  False
   # Values:       ["Present", "Absent"]
   newparam(:dsc_ensure) do
+    def mof_type; 'string' end
     desc "An enumerated value that describes if the principal is an Virtual Machine Manager admin.\nPresent {default}  \nAbsent   \n"
     validate do |value|
       resource[:ensure] = value.downcase
@@ -76,6 +77,7 @@ Puppet::Type.newtype(:dsc_xscvmmadmin) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_principal) do
+    def mof_type; 'string' end
     desc "The Virtual Machine Manager admin principal."
     isrequired
     validate do |value|
@@ -90,6 +92,7 @@ Puppet::Type.newtype(:dsc_xscvmmadmin) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_userrole) do
+    def mof_type; 'string' end
     desc "The Virtual Machine Manager user role."
     isrequired
     validate do |value|
@@ -104,6 +107,7 @@ Puppet::Type.newtype(:dsc_xscvmmadmin) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_scvmmadmincredential) do
+    def mof_type; 'string' end
     desc "Credential to be used to perform the operations."
     validate do |value|
       unless value.kind_of?(String)

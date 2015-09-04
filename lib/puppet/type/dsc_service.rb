@@ -54,6 +54,7 @@ Puppet::Type.newtype(:dsc_service) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_name) do
+    def mof_type; 'string' end
     isrequired
     validate do |value|
       unless value.kind_of?(String)
@@ -67,6 +68,7 @@ Puppet::Type.newtype(:dsc_service) do
   # IsMandatory:  False
   # Values:       ["Running", "Stopped"]
   newparam(:dsc_state) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -82,6 +84,7 @@ Puppet::Type.newtype(:dsc_service) do
   # IsMandatory:  False
   # Values:       ["Automatic", "Manual", "Disabled"]
   newparam(:dsc_startuptype) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -97,6 +100,7 @@ Puppet::Type.newtype(:dsc_service) do
   # IsMandatory:  False
   # Values:       ["LocalSystem", "LocalService", "NetworkService"]
   newparam(:dsc_builtinaccount) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -112,6 +116,7 @@ Puppet::Type.newtype(:dsc_service) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_credential) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -124,6 +129,7 @@ Puppet::Type.newtype(:dsc_service) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_status) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -136,6 +142,7 @@ Puppet::Type.newtype(:dsc_service) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_displayname) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -148,6 +155,7 @@ Puppet::Type.newtype(:dsc_service) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_description) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -160,6 +168,7 @@ Puppet::Type.newtype(:dsc_service) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_path) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -172,6 +181,7 @@ Puppet::Type.newtype(:dsc_service) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_dependencies, :array_matching => :all) do
+    def mof_type; 'string[]' end
     validate do |value|
       unless value.kind_of?(Array) || value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string or an array of strings")
@@ -187,6 +197,7 @@ Puppet::Type.newtype(:dsc_service) do
   # IsMandatory:  False
   # Values:       ["Present", "Absent"]
   newparam(:dsc_ensure) do
+    def mof_type; 'string' end
     validate do |value|
       resource[:ensure] = value.downcase
       unless value.kind_of?(String)

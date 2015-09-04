@@ -58,6 +58,7 @@ Puppet::Type.newtype(:dsc_xsqlserverrssecureconnectionlevel) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_instancename) do
+    def mof_type; 'string' end
     desc "SQL instance to set secure connection level for."
     isrequired
     validate do |value|
@@ -72,6 +73,7 @@ Puppet::Type.newtype(:dsc_xsqlserverrssecureconnectionlevel) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_secureconnectionlevel) do
+    def mof_type; 'uint16' end
     desc "SQL Server Reporting Service secure connection level."
     isrequired
     validate do |value|
@@ -89,6 +91,7 @@ Puppet::Type.newtype(:dsc_xsqlserverrssecureconnectionlevel) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_sqladmincredential) do
+    def mof_type; 'string' end
     desc "Credential with administrative permissions to the SQL instance."
     validate do |value|
       unless value.kind_of?(String)

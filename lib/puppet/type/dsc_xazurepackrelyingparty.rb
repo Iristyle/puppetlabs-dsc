@@ -57,6 +57,7 @@ Puppet::Type.newtype(:dsc_xazurepackrelyingparty) do
   # IsMandatory:  True
   # Values:       ["Admin", "Tenant"]
   newparam(:dsc_target) do
+    def mof_type; 'string' end
     desc "Specifies the target site."
     isrequired
     validate do |value|
@@ -74,6 +75,7 @@ Puppet::Type.newtype(:dsc_xazurepackrelyingparty) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_fullyqualifieddomainname) do
+    def mof_type; 'string' end
     desc "Specifies a Fully Qualified Domain Name (FQDN)."
     validate do |value|
       unless value.kind_of?(String)
@@ -87,6 +89,7 @@ Puppet::Type.newtype(:dsc_xazurepackrelyingparty) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_port) do
+    def mof_type; 'uint16' end
     desc "Specifies a port number."
     validate do |value|
       unless (value.kind_of?(Numeric) && value >= 0) || (value.to_i.to_s == value && value.to_i >= 0)
@@ -103,6 +106,7 @@ Puppet::Type.newtype(:dsc_xazurepackrelyingparty) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_azurepackadmincredential) do
+    def mof_type; 'string' end
     desc "Credential to be used to perform the installation."
     validate do |value|
       unless value.kind_of?(String)
@@ -116,6 +120,7 @@ Puppet::Type.newtype(:dsc_xazurepackrelyingparty) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_sqlserver) do
+    def mof_type; 'string' end
     desc "Database server for the Azure Pack databases."
     validate do |value|
       unless value.kind_of?(String)
@@ -129,6 +134,7 @@ Puppet::Type.newtype(:dsc_xazurepackrelyingparty) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_sqlinstance) do
+    def mof_type; 'string' end
     desc "Database instance for the Azure Pack databases."
     validate do |value|
       unless value.kind_of?(String)

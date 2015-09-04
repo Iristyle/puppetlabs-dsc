@@ -58,6 +58,7 @@ Puppet::Type.newtype(:dsc_xvmhyperv) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_name) do
+    def mof_type; 'string' end
     desc "Name of the VM"
     isrequired
     validate do |value|
@@ -72,6 +73,7 @@ Puppet::Type.newtype(:dsc_xvmhyperv) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_vhdpath) do
+    def mof_type; 'string' end
     desc "VHD associated with the VM"
     validate do |value|
       unless value.kind_of?(String)
@@ -85,6 +87,7 @@ Puppet::Type.newtype(:dsc_xvmhyperv) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_switchname) do
+    def mof_type; 'string' end
     desc "Virtual switch associated with the VM"
     validate do |value|
       unless value.kind_of?(String)
@@ -98,6 +101,7 @@ Puppet::Type.newtype(:dsc_xvmhyperv) do
   # IsMandatory:  False
   # Values:       ["Running", "Paused", "Off"]
   newparam(:dsc_state) do
+    def mof_type; 'string' end
     desc "State of the VM."
     validate do |value|
       unless value.kind_of?(String)
@@ -114,6 +118,7 @@ Puppet::Type.newtype(:dsc_xvmhyperv) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_path) do
+    def mof_type; 'string' end
     desc "Folder where the VM data will be stored"
     validate do |value|
       unless value.kind_of?(String)
@@ -127,6 +132,7 @@ Puppet::Type.newtype(:dsc_xvmhyperv) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_generation) do
+    def mof_type; 'uint32' end
     desc "Virtual machine generation"
     validate do |value|
       unless (value.kind_of?(Numeric) && value >= 0) || (value.to_i.to_s == value && value.to_i >= 0)
@@ -143,6 +149,7 @@ Puppet::Type.newtype(:dsc_xvmhyperv) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_startupmemory) do
+    def mof_type; 'uint64' end
     desc "Startup RAM for the VM."
     validate do |value|
       unless (value.kind_of?(Numeric) && value >= 0) || (value.to_i.to_s == value && value.to_i >= 0)
@@ -159,6 +166,7 @@ Puppet::Type.newtype(:dsc_xvmhyperv) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_minimummemory) do
+    def mof_type; 'uint64' end
     desc "Minimum RAM for the VM. This enables dynamic memory."
     validate do |value|
       unless (value.kind_of?(Numeric) && value >= 0) || (value.to_i.to_s == value && value.to_i >= 0)
@@ -175,6 +183,7 @@ Puppet::Type.newtype(:dsc_xvmhyperv) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_maximummemory) do
+    def mof_type; 'uint64' end
     desc "Maximum RAM for the VM. This enable dynamic memory."
     validate do |value|
       unless (value.kind_of?(Numeric) && value >= 0) || (value.to_i.to_s == value && value.to_i >= 0)
@@ -191,6 +200,7 @@ Puppet::Type.newtype(:dsc_xvmhyperv) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_macaddress) do
+    def mof_type; 'string' end
     desc "MAC address of the VM."
     validate do |value|
       unless value.kind_of?(String)
@@ -204,6 +214,7 @@ Puppet::Type.newtype(:dsc_xvmhyperv) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_processorcount) do
+    def mof_type; 'uint32' end
     desc "Processor count for the VM"
     validate do |value|
       unless (value.kind_of?(Numeric) && value >= 0) || (value.to_i.to_s == value && value.to_i >= 0)
@@ -220,6 +231,7 @@ Puppet::Type.newtype(:dsc_xvmhyperv) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_waitforip) do
+    def mof_type; 'boolean' end
     desc "Waits for VM to get valid IP address."
     validate do |value|
     end
@@ -234,6 +246,7 @@ Puppet::Type.newtype(:dsc_xvmhyperv) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_restartifneeded) do
+    def mof_type; 'boolean' end
     desc "If specified, shutdowns and restarts the VM as needed for property changes"
     validate do |value|
     end
@@ -248,6 +261,7 @@ Puppet::Type.newtype(:dsc_xvmhyperv) do
   # IsMandatory:  False
   # Values:       ["Present", "Absent"]
   newparam(:dsc_ensure) do
+    def mof_type; 'string' end
     desc "Should the VM be created or deleted"
     validate do |value|
       resource[:ensure] = value.downcase
@@ -265,6 +279,7 @@ Puppet::Type.newtype(:dsc_xvmhyperv) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_notes) do
+    def mof_type; 'string' end
     desc "Notes about the VM."
     validate do |value|
       unless value.kind_of?(String)
@@ -278,6 +293,7 @@ Puppet::Type.newtype(:dsc_xvmhyperv) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_id) do
+    def mof_type; 'string' end
     desc "VM unique ID"
     validate do |value|
       unless value.kind_of?(String)
@@ -291,6 +307,7 @@ Puppet::Type.newtype(:dsc_xvmhyperv) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_status) do
+    def mof_type; 'string' end
     desc "Status of the VM"
     validate do |value|
       unless value.kind_of?(String)
@@ -304,6 +321,7 @@ Puppet::Type.newtype(:dsc_xvmhyperv) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_cpuusage) do
+    def mof_type; 'uint32' end
     desc "CPU Usage of the VM"
     validate do |value|
       unless (value.kind_of?(Numeric) && value >= 0) || (value.to_i.to_s == value && value.to_i >= 0)
@@ -320,6 +338,7 @@ Puppet::Type.newtype(:dsc_xvmhyperv) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_memoryassigned) do
+    def mof_type; 'uint64' end
     desc "Memory assigned to the VM"
     validate do |value|
       unless (value.kind_of?(Numeric) && value >= 0) || (value.to_i.to_s == value && value.to_i >= 0)
@@ -336,6 +355,7 @@ Puppet::Type.newtype(:dsc_xvmhyperv) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_uptime) do
+    def mof_type; 'string' end
     desc "Uptime of the VM"
     validate do |value|
       unless value.kind_of?(String)
@@ -349,6 +369,7 @@ Puppet::Type.newtype(:dsc_xvmhyperv) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_creationtime) do
+    def mof_type; 'datetime' end
     desc "Creation time of the VM"
     validate do |value|
       unless value.kind_of?(String)
@@ -362,6 +383,7 @@ Puppet::Type.newtype(:dsc_xvmhyperv) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_hasdynamicmemory) do
+    def mof_type; 'boolean' end
     desc "Does VM has dynamic memory enabled"
     validate do |value|
     end
@@ -376,6 +398,7 @@ Puppet::Type.newtype(:dsc_xvmhyperv) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_networkadapters, :array_matching => :all) do
+    def mof_type; 'string[]' end
     desc "Network adapters of the VM"
     validate do |value|
       unless value.kind_of?(Array) || value.kind_of?(String)

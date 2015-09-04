@@ -58,6 +58,7 @@ Puppet::Type.newtype(:dsc_xspserviceinstance) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_name) do
+    def mof_type; 'string' end
     isrequired
     validate do |value|
       unless value.kind_of?(String)
@@ -71,6 +72,7 @@ Puppet::Type.newtype(:dsc_xspserviceinstance) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_installaccount) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -83,6 +85,7 @@ Puppet::Type.newtype(:dsc_xspserviceinstance) do
   # IsMandatory:  False
   # Values:       ["Present", "Absent"]
   newparam(:dsc_ensure) do
+    def mof_type; 'string' end
     validate do |value|
       resource[:ensure] = value.downcase
       unless value.kind_of?(String)

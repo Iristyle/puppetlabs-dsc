@@ -55,6 +55,7 @@ Puppet::Type.newtype(:dsc_script) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_getscript) do
+    def mof_type; 'string' end
     isrequired
     validate do |value|
       unless value.kind_of?(String)
@@ -68,6 +69,7 @@ Puppet::Type.newtype(:dsc_script) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_setscript) do
+    def mof_type; 'string' end
     isrequired
     validate do |value|
       unless value.kind_of?(String)
@@ -81,6 +83,7 @@ Puppet::Type.newtype(:dsc_script) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_testscript) do
+    def mof_type; 'string' end
     isrequired
     validate do |value|
       unless value.kind_of?(String)
@@ -94,6 +97,7 @@ Puppet::Type.newtype(:dsc_script) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_credential) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -106,6 +110,7 @@ Puppet::Type.newtype(:dsc_script) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_result) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")

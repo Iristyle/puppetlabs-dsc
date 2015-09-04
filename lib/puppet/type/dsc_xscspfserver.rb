@@ -58,6 +58,7 @@ Puppet::Type.newtype(:dsc_xscspfserver) do
   # IsMandatory:  False
   # Values:       ["Present", "Absent"]
   newparam(:dsc_ensure) do
+    def mof_type; 'string' end
     desc "An enumerated value that describes if the SPF server exists.\nPresent {default}  \nAbsent   \n"
     validate do |value|
       resource[:ensure] = value.downcase
@@ -75,6 +76,7 @@ Puppet::Type.newtype(:dsc_xscspfserver) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_name) do
+    def mof_type; 'string' end
     desc "Specifies a name for the server."
     isrequired
     validate do |value|
@@ -89,6 +91,7 @@ Puppet::Type.newtype(:dsc_xscspfserver) do
   # IsMandatory:  False
   # Values:       ["VMM", "OM", "DPM", "OMDW", "RDGateway", "Orchestrator", "None"]
   newparam(:dsc_servertype) do
+    def mof_type; 'string' end
     desc "Specifies the type of server."
     validate do |value|
       unless value.kind_of?(String)
@@ -105,6 +108,7 @@ Puppet::Type.newtype(:dsc_xscspfserver) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_scspfadmincredential) do
+    def mof_type; 'string' end
     desc "Credential with admin permissions to Service Provider Foundation."
     validate do |value|
       unless value.kind_of?(String)

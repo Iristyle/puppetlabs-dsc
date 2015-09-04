@@ -58,6 +58,7 @@ Puppet::Type.newtype(:dsc_xscdpmdatabaseserversetup) do
   # IsMandatory:  False
   # Values:       ["Present", "Absent"]
   newparam(:dsc_ensure) do
+    def mof_type; 'string' end
     desc "An enumerated value that describes if the DPM database support files are expected to be installed on the machine.\nPresent {default}  \nAbsent   \n"
     validate do |value|
       resource[:ensure] = value.downcase
@@ -75,6 +76,7 @@ Puppet::Type.newtype(:dsc_xscdpmdatabaseserversetup) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_sourcepath) do
+    def mof_type; 'string' end
     desc "UNC path to the root of the source files for installation."
     isrequired
     validate do |value|
@@ -89,6 +91,7 @@ Puppet::Type.newtype(:dsc_xscdpmdatabaseserversetup) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_sourcefolder) do
+    def mof_type; 'string' end
     desc "Folder within the source path containing the source files for installation."
     validate do |value|
       unless value.kind_of?(String)
@@ -102,6 +105,7 @@ Puppet::Type.newtype(:dsc_xscdpmdatabaseserversetup) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_setupcredential) do
+    def mof_type; 'string' end
     desc "Credential to be used to perform the installation."
     validate do |value|
       unless value.kind_of?(String)

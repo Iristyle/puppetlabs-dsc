@@ -57,6 +57,7 @@ Puppet::Type.newtype(:dsc_xspuserprofileserviceapp) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_name) do
+    def mof_type; 'string' end
     isrequired
     validate do |value|
       unless value.kind_of?(String)
@@ -70,6 +71,7 @@ Puppet::Type.newtype(:dsc_xspuserprofileserviceapp) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_applicationpool) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -82,6 +84,7 @@ Puppet::Type.newtype(:dsc_xspuserprofileserviceapp) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_farmaccount) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -94,6 +97,7 @@ Puppet::Type.newtype(:dsc_xspuserprofileserviceapp) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_installaccount) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -106,6 +110,7 @@ Puppet::Type.newtype(:dsc_xspuserprofileserviceapp) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_mysitehostlocation) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -118,6 +123,7 @@ Puppet::Type.newtype(:dsc_xspuserprofileserviceapp) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_profiledbname) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -130,6 +136,7 @@ Puppet::Type.newtype(:dsc_xspuserprofileserviceapp) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_profiledbserver) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -142,6 +149,7 @@ Puppet::Type.newtype(:dsc_xspuserprofileserviceapp) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_socialdbname) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -154,6 +162,7 @@ Puppet::Type.newtype(:dsc_xspuserprofileserviceapp) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_socialdbserver) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -166,6 +175,7 @@ Puppet::Type.newtype(:dsc_xspuserprofileserviceapp) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_syncdbname) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -178,6 +188,7 @@ Puppet::Type.newtype(:dsc_xspuserprofileserviceapp) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_syncdbserver) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")

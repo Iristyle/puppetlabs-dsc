@@ -58,6 +58,7 @@ Puppet::Type.newtype(:dsc_xdatabase) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_credentials) do
+    def mof_type; 'string' end
     desc "Credentials to Connect to the sql server"
     validate do |value|
       unless value.kind_of?(String)
@@ -71,6 +72,7 @@ Puppet::Type.newtype(:dsc_xdatabase) do
   # IsMandatory:  False
   # Values:       ["Present", "Absent"]
   newparam(:dsc_ensure) do
+    def mof_type; 'string' end
     validate do |value|
       resource[:ensure] = value.downcase
       unless value.kind_of?(String)
@@ -87,6 +89,7 @@ Puppet::Type.newtype(:dsc_xdatabase) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_sqlserver) do
+    def mof_type; 'string' end
     desc "Sql Server Name"
     validate do |value|
       unless value.kind_of?(String)
@@ -100,6 +103,7 @@ Puppet::Type.newtype(:dsc_xdatabase) do
   # IsMandatory:  False
   # Values:       ["2008-R2", "2012", "2014"]
   newparam(:dsc_sqlserverversion) do
+    def mof_type; 'string' end
     desc "Sql Server Version For DacFx"
     validate do |value|
       unless value.kind_of?(String)
@@ -116,6 +120,7 @@ Puppet::Type.newtype(:dsc_xdatabase) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_bacpacpath) do
+    def mof_type; 'string' end
     desc "Path to BacPac, if this is specified resore is performed"
     validate do |value|
       unless value.kind_of?(String)
@@ -129,6 +134,7 @@ Puppet::Type.newtype(:dsc_xdatabase) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_databasename) do
+    def mof_type; 'string' end
     desc "Name of the Database"
     isrequired
     validate do |value|
@@ -143,6 +149,7 @@ Puppet::Type.newtype(:dsc_xdatabase) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_dacpacpath) do
+    def mof_type; 'string' end
     desc "Path to DacPac, if this is specified dacpac deployment is performed"
     validate do |value|
       unless value.kind_of?(String)
@@ -156,6 +163,7 @@ Puppet::Type.newtype(:dsc_xdatabase) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_dacpacapplicationname) do
+    def mof_type; 'string' end
     desc "DacPac Application Name for Registration"
     validate do |value|
       unless value.kind_of?(String)
@@ -169,6 +177,7 @@ Puppet::Type.newtype(:dsc_xdatabase) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_dacpacapplicationversion) do
+    def mof_type; 'string' end
     desc "DacPac Application Version for Registration"
     validate do |value|
       unless value.kind_of?(String)

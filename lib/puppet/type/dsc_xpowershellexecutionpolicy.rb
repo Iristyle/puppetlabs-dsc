@@ -57,6 +57,7 @@ Puppet::Type.newtype(:dsc_xpowershellexecutionpolicy) do
   # IsMandatory:  True
   # Values:       ["Bypass", "Restricted", "AllSigned", "RemoteSigned", "Unrestricted"]
   newparam(:dsc_executionpolicy) do
+    def mof_type; 'string' end
     desc "Changes the user preference for the Windows PowerShell execution policy."
     isrequired
     validate do |value|

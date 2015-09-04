@@ -58,6 +58,7 @@ Puppet::Type.newtype(:dsc_xsystemrestore) do
   # IsMandatory:  True
   # Values:       ["Present", "Absent"]
   newparam(:dsc_ensure) do
+    def mof_type; 'string' end
     desc "Indicates that the computer restore is enabled or is disabled."
     isrequired
     validate do |value|
@@ -76,6 +77,7 @@ Puppet::Type.newtype(:dsc_xsystemrestore) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_drive, :array_matching => :all) do
+    def mof_type; 'string[]' end
     desc "Specifies the file system drives. Enter one or more file system drive letters, each followed by a colon and a backslash and enclosed in quotation marks, such as 'C:\' or 'D:\'."
     validate do |value|
       unless value.kind_of?(Array) || value.kind_of?(String)

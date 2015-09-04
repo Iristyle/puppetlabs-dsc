@@ -59,6 +59,7 @@ Puppet::Type.newtype(:dsc_xvhd) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_name) do
+    def mof_type; 'string' end
     desc "Name of the VHD File"
     isrequired
     validate do |value|
@@ -73,6 +74,7 @@ Puppet::Type.newtype(:dsc_xvhd) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_path) do
+    def mof_type; 'string' end
     desc "Folder where the VHD will be created"
     isrequired
     validate do |value|
@@ -87,6 +89,7 @@ Puppet::Type.newtype(:dsc_xvhd) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_parentpath) do
+    def mof_type; 'string' end
     desc "Parent VHD file path, for differencing disk"
     validate do |value|
       unless value.kind_of?(String)
@@ -100,6 +103,7 @@ Puppet::Type.newtype(:dsc_xvhd) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_maximumsizebytes) do
+    def mof_type; 'uint64' end
     desc "Maximum size of Vhd to be created"
     validate do |value|
       unless (value.kind_of?(Numeric) && value >= 0) || (value.to_i.to_s == value && value.to_i >= 0)
@@ -116,6 +120,7 @@ Puppet::Type.newtype(:dsc_xvhd) do
   # IsMandatory:  False
   # Values:       ["Vhd", "Vhdx"]
   newparam(:dsc_generation) do
+    def mof_type; 'string' end
     desc "Virtual disk format - Vhd or Vhdx"
     validate do |value|
       unless value.kind_of?(String)
@@ -132,6 +137,7 @@ Puppet::Type.newtype(:dsc_xvhd) do
   # IsMandatory:  False
   # Values:       ["Present", "Absent"]
   newparam(:dsc_ensure) do
+    def mof_type; 'string' end
     desc "Should the VHD be created or deleted"
     validate do |value|
       resource[:ensure] = value.downcase
@@ -149,6 +155,7 @@ Puppet::Type.newtype(:dsc_xvhd) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_id) do
+    def mof_type; 'string' end
     desc "Virtual Disk Identifier"
     validate do |value|
       unless value.kind_of?(String)
@@ -162,6 +169,7 @@ Puppet::Type.newtype(:dsc_xvhd) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_type) do
+    def mof_type; 'string' end
     desc "Type of Vhd - Dynamic, Fixed, Differencing"
     validate do |value|
       unless value.kind_of?(String)
@@ -175,6 +183,7 @@ Puppet::Type.newtype(:dsc_xvhd) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_filesizebytes) do
+    def mof_type; 'uint64' end
     desc "Current size of the VHD"
     validate do |value|
       unless (value.kind_of?(Numeric) && value >= 0) || (value.to_i.to_s == value && value.to_i >= 0)
@@ -191,6 +200,7 @@ Puppet::Type.newtype(:dsc_xvhd) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_isattached) do
+    def mof_type; 'boolean' end
     desc "Is the VHD attached to a VM or not"
     validate do |value|
     end

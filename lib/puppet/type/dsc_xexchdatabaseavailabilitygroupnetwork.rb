@@ -58,6 +58,7 @@ Puppet::Type.newtype(:dsc_xexchdatabaseavailabilitygroupnetwork) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_name) do
+    def mof_type; 'string' end
     isrequired
     validate do |value|
       unless value.kind_of?(String)
@@ -71,6 +72,7 @@ Puppet::Type.newtype(:dsc_xexchdatabaseavailabilitygroupnetwork) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_credential) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -83,6 +85,7 @@ Puppet::Type.newtype(:dsc_xexchdatabaseavailabilitygroupnetwork) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_databaseavailabilitygroup) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -95,6 +98,7 @@ Puppet::Type.newtype(:dsc_xexchdatabaseavailabilitygroupnetwork) do
   # IsMandatory:  False
   # Values:       ["Present", "Absent"]
   newparam(:dsc_ensure) do
+    def mof_type; 'string' end
     validate do |value|
       resource[:ensure] = value.downcase
       unless value.kind_of?(String)
@@ -111,6 +115,7 @@ Puppet::Type.newtype(:dsc_xexchdatabaseavailabilitygroupnetwork) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_domaincontroller) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -123,6 +128,7 @@ Puppet::Type.newtype(:dsc_xexchdatabaseavailabilitygroupnetwork) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_ignorenetwork) do
+    def mof_type; 'boolean' end
     validate do |value|
     end
     newvalues(true, false)
@@ -136,6 +142,7 @@ Puppet::Type.newtype(:dsc_xexchdatabaseavailabilitygroupnetwork) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_replicationenabled) do
+    def mof_type; 'boolean' end
     validate do |value|
     end
     newvalues(true, false)
@@ -149,6 +156,7 @@ Puppet::Type.newtype(:dsc_xexchdatabaseavailabilitygroupnetwork) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_subnets, :array_matching => :all) do
+    def mof_type; 'string[]' end
     validate do |value|
       unless value.kind_of?(Array) || value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string or an array of strings")

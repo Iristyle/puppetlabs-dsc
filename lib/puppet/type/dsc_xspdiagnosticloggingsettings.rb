@@ -57,6 +57,7 @@ Puppet::Type.newtype(:dsc_xspdiagnosticloggingsettings) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_logpath) do
+    def mof_type; 'string' end
     isrequired
     validate do |value|
       unless value.kind_of?(String)
@@ -70,6 +71,7 @@ Puppet::Type.newtype(:dsc_xspdiagnosticloggingsettings) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_logspaceingb) do
+    def mof_type; 'uint32' end
     validate do |value|
       unless (value.kind_of?(Numeric) && value >= 0) || (value.to_i.to_s == value && value.to_i >= 0)
           fail("Invalid value #{value}. Should be a unsigned Integer")
@@ -85,6 +87,7 @@ Puppet::Type.newtype(:dsc_xspdiagnosticloggingsettings) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_appanalyticsautomaticuploadenabled) do
+    def mof_type; 'boolean' end
     validate do |value|
     end
     newvalues(true, false)
@@ -98,6 +101,7 @@ Puppet::Type.newtype(:dsc_xspdiagnosticloggingsettings) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_customerexperienceimprovementprogramenabled) do
+    def mof_type; 'boolean' end
     validate do |value|
     end
     newvalues(true, false)
@@ -111,6 +115,7 @@ Puppet::Type.newtype(:dsc_xspdiagnosticloggingsettings) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_daystokeeplogs) do
+    def mof_type; 'uint32' end
     validate do |value|
       unless (value.kind_of?(Numeric) && value >= 0) || (value.to_i.to_s == value && value.to_i >= 0)
           fail("Invalid value #{value}. Should be a unsigned Integer")
@@ -126,6 +131,7 @@ Puppet::Type.newtype(:dsc_xspdiagnosticloggingsettings) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_downloaderrorreportingupdatesenabled) do
+    def mof_type; 'boolean' end
     validate do |value|
     end
     newvalues(true, false)
@@ -139,6 +145,7 @@ Puppet::Type.newtype(:dsc_xspdiagnosticloggingsettings) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_errorreportingautomaticuploadenabled) do
+    def mof_type; 'boolean' end
     validate do |value|
     end
     newvalues(true, false)
@@ -152,6 +159,7 @@ Puppet::Type.newtype(:dsc_xspdiagnosticloggingsettings) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_errorreportingenabled) do
+    def mof_type; 'boolean' end
     validate do |value|
     end
     newvalues(true, false)
@@ -165,6 +173,7 @@ Puppet::Type.newtype(:dsc_xspdiagnosticloggingsettings) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_eventlogfloodprotectionenabled) do
+    def mof_type; 'boolean' end
     validate do |value|
     end
     newvalues(true, false)
@@ -178,6 +187,7 @@ Puppet::Type.newtype(:dsc_xspdiagnosticloggingsettings) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_eventlogfloodprotectionnotifyinterval) do
+    def mof_type; 'uint32' end
     validate do |value|
       unless (value.kind_of?(Numeric) && value >= 0) || (value.to_i.to_s == value && value.to_i >= 0)
           fail("Invalid value #{value}. Should be a unsigned Integer")
@@ -193,6 +203,7 @@ Puppet::Type.newtype(:dsc_xspdiagnosticloggingsettings) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_eventlogfloodprotectionquietperiod) do
+    def mof_type; 'uint32' end
     validate do |value|
       unless (value.kind_of?(Numeric) && value >= 0) || (value.to_i.to_s == value && value.to_i >= 0)
           fail("Invalid value #{value}. Should be a unsigned Integer")
@@ -208,6 +219,7 @@ Puppet::Type.newtype(:dsc_xspdiagnosticloggingsettings) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_eventlogfloodprotectionthreshold) do
+    def mof_type; 'uint32' end
     validate do |value|
       unless (value.kind_of?(Numeric) && value >= 0) || (value.to_i.to_s == value && value.to_i >= 0)
           fail("Invalid value #{value}. Should be a unsigned Integer")
@@ -223,6 +235,7 @@ Puppet::Type.newtype(:dsc_xspdiagnosticloggingsettings) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_eventlogfloodprotectiontriggerperiod) do
+    def mof_type; 'uint32' end
     validate do |value|
       unless (value.kind_of?(Numeric) && value >= 0) || (value.to_i.to_s == value && value.to_i >= 0)
           fail("Invalid value #{value}. Should be a unsigned Integer")
@@ -238,6 +251,7 @@ Puppet::Type.newtype(:dsc_xspdiagnosticloggingsettings) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_logcutinterval) do
+    def mof_type; 'uint32' end
     validate do |value|
       unless (value.kind_of?(Numeric) && value >= 0) || (value.to_i.to_s == value && value.to_i >= 0)
           fail("Invalid value #{value}. Should be a unsigned Integer")
@@ -253,6 +267,7 @@ Puppet::Type.newtype(:dsc_xspdiagnosticloggingsettings) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_logmaxdiskspaceusageenabled) do
+    def mof_type; 'boolean' end
     validate do |value|
     end
     newvalues(true, false)
@@ -266,6 +281,7 @@ Puppet::Type.newtype(:dsc_xspdiagnosticloggingsettings) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_scripterrorreportingdelay) do
+    def mof_type; 'uint32' end
     validate do |value|
       unless (value.kind_of?(Numeric) && value >= 0) || (value.to_i.to_s == value && value.to_i >= 0)
           fail("Invalid value #{value}. Should be a unsigned Integer")
@@ -281,6 +297,7 @@ Puppet::Type.newtype(:dsc_xspdiagnosticloggingsettings) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_scripterrorreportingenabled) do
+    def mof_type; 'boolean' end
     validate do |value|
     end
     newvalues(true, false)
@@ -294,6 +311,7 @@ Puppet::Type.newtype(:dsc_xspdiagnosticloggingsettings) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_scripterrorreportingrequireauth) do
+    def mof_type; 'boolean' end
     validate do |value|
     end
     newvalues(true, false)
@@ -307,6 +325,7 @@ Puppet::Type.newtype(:dsc_xspdiagnosticloggingsettings) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_installaccount) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")

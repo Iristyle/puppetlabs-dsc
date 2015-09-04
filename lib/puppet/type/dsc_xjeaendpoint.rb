@@ -58,6 +58,7 @@ Puppet::Type.newtype(:dsc_xjeaendpoint) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_name) do
+    def mof_type; 'string' end
     desc "Name of the JEA toolkit to be generated"
     isrequired
     validate do |value|
@@ -72,6 +73,7 @@ Puppet::Type.newtype(:dsc_xjeaendpoint) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_toolkit, :array_matching => :all) do
+    def mof_type; 'string[]' end
     desc "List of Jea Toolkits to make available via this endpoint"
     validate do |value|
       unless value.kind_of?(Array) || value.kind_of?(String)
@@ -88,6 +90,7 @@ Puppet::Type.newtype(:dsc_xjeaendpoint) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_securitydescriptorsddl) do
+    def mof_type; 'string' end
     desc "Sddl to define who can access this JeaEndpoint"
     validate do |value|
       unless value.kind_of?(String)
@@ -101,6 +104,7 @@ Puppet::Type.newtype(:dsc_xjeaendpoint) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_group, :array_matching => :all) do
+    def mof_type; 'string[]' end
     desc "List of local groups that this Endpoints JeaSessionAccount should be a member of"
     validate do |value|
       unless value.kind_of?(Array) || value.kind_of?(String)
@@ -117,6 +121,7 @@ Puppet::Type.newtype(:dsc_xjeaendpoint) do
   # IsMandatory:  False
   # Values:       ["Present", "Absent"]
   newparam(:dsc_ensure) do
+    def mof_type; 'string' end
     validate do |value|
       resource[:ensure] = value.downcase
       unless value.kind_of?(String)
@@ -133,6 +138,7 @@ Puppet::Type.newtype(:dsc_xjeaendpoint) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_cleanall) do
+    def mof_type; 'boolean' end
     validate do |value|
     end
     newvalues(true, false)

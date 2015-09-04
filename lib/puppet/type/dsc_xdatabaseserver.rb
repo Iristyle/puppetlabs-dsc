@@ -57,6 +57,7 @@ Puppet::Type.newtype(:dsc_xdatabaseserver) do
   # IsMandatory:  True
   # Values:       ["Windows", "Mixed"]
   newparam(:dsc_loginmode) do
+    def mof_type; 'string' end
     isrequired
     validate do |value|
       unless value.kind_of?(String)

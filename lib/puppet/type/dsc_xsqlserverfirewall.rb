@@ -59,6 +59,7 @@ Puppet::Type.newtype(:dsc_xsqlserverfirewall) do
   # IsMandatory:  False
   # Values:       ["Present", "Absent"]
   newparam(:dsc_ensure) do
+    def mof_type; 'string' end
     desc "An enumerated value that describes if the SQL firewall rules are is expected to be enabled on the machine.\nPresent {default}  \nAbsent   \n"
     validate do |value|
       resource[:ensure] = value.downcase
@@ -76,6 +77,7 @@ Puppet::Type.newtype(:dsc_xsqlserverfirewall) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_sourcepath) do
+    def mof_type; 'string' end
     desc "UNC path to the root of the source files for installation."
     validate do |value|
       unless value.kind_of?(String)
@@ -89,6 +91,7 @@ Puppet::Type.newtype(:dsc_xsqlserverfirewall) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_sourcefolder) do
+    def mof_type; 'string' end
     desc "Folder within the source path containing the source files for installation."
     validate do |value|
       unless value.kind_of?(String)
@@ -102,6 +105,7 @@ Puppet::Type.newtype(:dsc_xsqlserverfirewall) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_features) do
+    def mof_type; 'string' end
     desc "SQL features to enable firewall rules for."
     isrequired
     validate do |value|
@@ -116,6 +120,7 @@ Puppet::Type.newtype(:dsc_xsqlserverfirewall) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_instancename) do
+    def mof_type; 'string' end
     desc "SQL instance to enable firewall rules for."
     isrequired
     validate do |value|
@@ -130,6 +135,7 @@ Puppet::Type.newtype(:dsc_xsqlserverfirewall) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_databaseenginefirewall) do
+    def mof_type; 'boolean' end
     desc "Is the firewall rule for the Database Engine enabled?"
     validate do |value|
     end
@@ -144,6 +150,7 @@ Puppet::Type.newtype(:dsc_xsqlserverfirewall) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_browserfirewall) do
+    def mof_type; 'boolean' end
     desc "Is the firewall rule for the Browser enabled?"
     validate do |value|
     end
@@ -158,6 +165,7 @@ Puppet::Type.newtype(:dsc_xsqlserverfirewall) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_reportingservicesfirewall) do
+    def mof_type; 'boolean' end
     desc "Is the firewall rule for Reporting Services enabled?"
     validate do |value|
     end
@@ -172,6 +180,7 @@ Puppet::Type.newtype(:dsc_xsqlserverfirewall) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_analysisservicesfirewall) do
+    def mof_type; 'boolean' end
     desc "Is the firewall rule for Analysis Services enabled?"
     validate do |value|
     end
@@ -186,6 +195,7 @@ Puppet::Type.newtype(:dsc_xsqlserverfirewall) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_integrationservicesfirewall) do
+    def mof_type; 'boolean' end
     desc "Is the firewall rule for the Integration Services enabled?"
     validate do |value|
     end

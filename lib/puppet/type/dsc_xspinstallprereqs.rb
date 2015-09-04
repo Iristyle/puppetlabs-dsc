@@ -57,6 +57,7 @@ Puppet::Type.newtype(:dsc_xspinstallprereqs) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_installerpath) do
+    def mof_type; 'string' end
     isrequired
     validate do |value|
       unless value.kind_of?(String)
@@ -70,6 +71,7 @@ Puppet::Type.newtype(:dsc_xspinstallprereqs) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_onlinemode) do
+    def mof_type; 'boolean' end
     validate do |value|
     end
     newvalues(true, false)
@@ -83,6 +85,7 @@ Puppet::Type.newtype(:dsc_xspinstallprereqs) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_sqlncli) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -95,6 +98,7 @@ Puppet::Type.newtype(:dsc_xspinstallprereqs) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_powershell) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -107,6 +111,7 @@ Puppet::Type.newtype(:dsc_xspinstallprereqs) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_netfx) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -119,6 +124,7 @@ Puppet::Type.newtype(:dsc_xspinstallprereqs) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_idfx) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -131,6 +137,7 @@ Puppet::Type.newtype(:dsc_xspinstallprereqs) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_sync) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -143,6 +150,7 @@ Puppet::Type.newtype(:dsc_xspinstallprereqs) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_appfabric) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -155,6 +163,7 @@ Puppet::Type.newtype(:dsc_xspinstallprereqs) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_idfx11) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -167,6 +176,7 @@ Puppet::Type.newtype(:dsc_xspinstallprereqs) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_msipcclient) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -179,6 +189,7 @@ Puppet::Type.newtype(:dsc_xspinstallprereqs) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_wcfdataservices) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -191,6 +202,7 @@ Puppet::Type.newtype(:dsc_xspinstallprereqs) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_kb2671763) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -203,6 +215,7 @@ Puppet::Type.newtype(:dsc_xspinstallprereqs) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_wcfdataservices56) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")

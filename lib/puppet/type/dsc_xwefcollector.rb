@@ -58,6 +58,7 @@ Puppet::Type.newtype(:dsc_xwefcollector) do
   # IsMandatory:  False
   # Values:       ["Present", "Absent"]
   newparam(:dsc_ensure) do
+    def mof_type; 'string' end
     desc "Determines whether the Collector service should be enabled or disabled"
     validate do |value|
       resource[:ensure] = value.downcase
@@ -75,6 +76,7 @@ Puppet::Type.newtype(:dsc_xwefcollector) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_name) do
+    def mof_type; 'string' end
     desc "Provide a unique name for the setting"
     isrequired
     validate do |value|

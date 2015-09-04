@@ -57,6 +57,7 @@ Puppet::Type.newtype(:dsc_xcluster) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_name) do
+    def mof_type; 'string' end
     desc "Name of the Cluster"
     isrequired
     validate do |value|
@@ -71,6 +72,7 @@ Puppet::Type.newtype(:dsc_xcluster) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_staticipaddress) do
+    def mof_type; 'string' end
     desc "StaticIPAddress of the Cluster"
     validate do |value|
       unless value.kind_of?(String)
@@ -84,6 +86,7 @@ Puppet::Type.newtype(:dsc_xcluster) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_domainadministratorcredential) do
+    def mof_type; 'string' end
     desc "Credential to create the cluster"
     validate do |value|
       unless value.kind_of?(String)

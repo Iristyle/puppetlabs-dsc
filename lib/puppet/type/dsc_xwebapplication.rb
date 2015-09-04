@@ -59,6 +59,7 @@ Puppet::Type.newtype(:dsc_xwebapplication) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_website) do
+    def mof_type; 'string' end
     desc "Name of website with which web application is associated"
     isrequired
     validate do |value|
@@ -73,6 +74,7 @@ Puppet::Type.newtype(:dsc_xwebapplication) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_name) do
+    def mof_type; 'string' end
     desc "Name of web application"
     isrequired
     validate do |value|
@@ -87,6 +89,7 @@ Puppet::Type.newtype(:dsc_xwebapplication) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_webapppool) do
+    def mof_type; 'string' end
     desc "Web application pool for the web application"
     validate do |value|
       unless value.kind_of?(String)
@@ -100,6 +103,7 @@ Puppet::Type.newtype(:dsc_xwebapplication) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_physicalpath) do
+    def mof_type; 'string' end
     desc "Physical path for the web application directory"
     validate do |value|
       unless value.kind_of?(String)
@@ -113,6 +117,7 @@ Puppet::Type.newtype(:dsc_xwebapplication) do
   # IsMandatory:  False
   # Values:       ["Present", "Absent"]
   newparam(:dsc_ensure) do
+    def mof_type; 'string' end
     desc "Whether web application should be present or absent"
     validate do |value|
       resource[:ensure] = value.downcase

@@ -58,6 +58,7 @@ Puppet::Type.newtype(:dsc_xremotedesktopadmin) do
   # IsMandatory:  True
   # Values:       ["Present", "Absent"]
   newparam(:dsc_ensure) do
+    def mof_type; 'string' end
     desc "Determines whether or not the computer should accept remote connections.  Present sets the value to Enabled and Absent sets the value to Disabled."
     isrequired
     validate do |value|
@@ -76,6 +77,7 @@ Puppet::Type.newtype(:dsc_xremotedesktopadmin) do
   # IsMandatory:  False
   # Values:       ["Secure", "NonSecure"]
   newparam(:dsc_userauthentication) do
+    def mof_type; 'string' end
     desc "User Authentication.  Setting this value to Secure configures the machine to require NLA."
     validate do |value|
       unless value.kind_of?(String)

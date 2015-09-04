@@ -58,6 +58,7 @@ Puppet::Type.newtype(:dsc_xsqlhaendpoint) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_instancename) do
+    def mof_type; 'string' end
     desc "Name of Sql Instance."
     isrequired
     validate do |value|
@@ -72,6 +73,7 @@ Puppet::Type.newtype(:dsc_xsqlhaendpoint) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_alloweduser) do
+    def mof_type; 'string' end
     desc "Windows Account that could access the HA database mirroring endpoing."
     validate do |value|
       unless value.kind_of?(String)
@@ -85,6 +87,7 @@ Puppet::Type.newtype(:dsc_xsqlhaendpoint) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_name) do
+    def mof_type; 'string' end
     desc "Unique name for HA database mirroring endpoint of the sql instance."
     isrequired
     validate do |value|
@@ -99,6 +102,7 @@ Puppet::Type.newtype(:dsc_xsqlhaendpoint) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_portnumber) do
+    def mof_type; 'uint32' end
     desc "The single port number(nnnn) on which the Sql HA to listen to."
     validate do |value|
       unless (value.kind_of?(Numeric) && value >= 0) || (value.to_i.to_s == value && value.to_i >= 0)

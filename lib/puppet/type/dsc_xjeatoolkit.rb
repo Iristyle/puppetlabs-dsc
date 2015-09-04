@@ -58,6 +58,7 @@ Puppet::Type.newtype(:dsc_xjeatoolkit) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_name) do
+    def mof_type; 'string' end
     desc "Name of the JEA toolkit to be generated"
     isrequired
     validate do |value|
@@ -72,6 +73,7 @@ Puppet::Type.newtype(:dsc_xjeatoolkit) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_commandspecs) do
+    def mof_type; 'string' end
     desc "CSV formated list of command specifications"
     validate do |value|
       unless value.kind_of?(String)
@@ -85,6 +87,7 @@ Puppet::Type.newtype(:dsc_xjeatoolkit) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_scriptdirectory, :array_matching => :all) do
+    def mof_type; 'string[]' end
     desc "array of script directories that can be run"
     validate do |value|
       unless value.kind_of?(Array) || value.kind_of?(String)
@@ -101,6 +104,7 @@ Puppet::Type.newtype(:dsc_xjeatoolkit) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_applications, :array_matching => :all) do
+    def mof_type; 'string[]' end
     desc "Array of executables that are allowed to run"
     validate do |value|
       unless value.kind_of?(Array) || value.kind_of?(String)
@@ -117,6 +121,7 @@ Puppet::Type.newtype(:dsc_xjeatoolkit) do
   # IsMandatory:  False
   # Values:       ["Present", "Absent"]
   newparam(:dsc_ensure) do
+    def mof_type; 'string' end
     validate do |value|
       resource[:ensure] = value.downcase
       unless value.kind_of?(String)

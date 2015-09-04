@@ -54,6 +54,7 @@ Puppet::Type.newtype(:dsc_windowsfeature) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_name) do
+    def mof_type; 'string' end
     isrequired
     validate do |value|
       unless value.kind_of?(String)
@@ -67,6 +68,7 @@ Puppet::Type.newtype(:dsc_windowsfeature) do
   # IsMandatory:  False
   # Values:       ["Present", "Absent"]
   newparam(:dsc_ensure) do
+    def mof_type; 'string' end
     desc "An enumerated value that describes if the role or feature is expected to be installed on not on the machine.\nPresent {default}  \nAbsent   \n"
     validate do |value|
       resource[:ensure] = value.downcase
@@ -84,6 +86,7 @@ Puppet::Type.newtype(:dsc_windowsfeature) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_displayname) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -96,6 +99,7 @@ Puppet::Type.newtype(:dsc_windowsfeature) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_source) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -108,6 +112,7 @@ Puppet::Type.newtype(:dsc_windowsfeature) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_includeallsubfeature) do
+    def mof_type; 'boolean' end
     validate do |value|
     end
     newvalues(true, false)
@@ -121,6 +126,7 @@ Puppet::Type.newtype(:dsc_windowsfeature) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_logpath) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")
@@ -133,6 +139,7 @@ Puppet::Type.newtype(:dsc_windowsfeature) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_credential) do
+    def mof_type; 'string' end
     validate do |value|
       unless value.kind_of?(String)
         fail("Invalid value '#{value}'. Should be a string")

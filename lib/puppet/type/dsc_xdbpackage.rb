@@ -57,6 +57,7 @@ Puppet::Type.newtype(:dsc_xdbpackage) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_credentials) do
+    def mof_type; 'string' end
     desc "Credentials to Connect to the sql server"
     validate do |value|
       unless value.kind_of?(String)
@@ -70,6 +71,7 @@ Puppet::Type.newtype(:dsc_xdbpackage) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_databasename) do
+    def mof_type; 'string' end
     desc "Name of the Database"
     isrequired
     validate do |value|
@@ -84,6 +86,7 @@ Puppet::Type.newtype(:dsc_xdbpackage) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_sqlserver) do
+    def mof_type; 'string' end
     desc "Sql Server Name"
     validate do |value|
       unless value.kind_of?(String)
@@ -97,6 +100,7 @@ Puppet::Type.newtype(:dsc_xdbpackage) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_path) do
+    def mof_type; 'string' end
     desc "Path to BacPac/DacPac"
     validate do |value|
       unless value.kind_of?(String)
@@ -110,6 +114,7 @@ Puppet::Type.newtype(:dsc_xdbpackage) do
   # IsMandatory:  False
   # Values:       ["DACPAC", "BACPAC"]
   newparam(:dsc_type) do
+    def mof_type; 'string' end
     desc "Type for backup(Extract id done for DACPAC and Import for BACPAC)"
     validate do |value|
       unless value.kind_of?(String)
@@ -126,6 +131,7 @@ Puppet::Type.newtype(:dsc_xdbpackage) do
   # IsMandatory:  False
   # Values:       ["2008-R2", "2012", "2014"]
   newparam(:dsc_sqlserverversion) do
+    def mof_type; 'string' end
     desc "Sql Server Version For DacFx"
     validate do |value|
       unless value.kind_of?(String)

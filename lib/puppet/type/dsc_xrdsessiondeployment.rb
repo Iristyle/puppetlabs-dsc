@@ -59,6 +59,7 @@ Puppet::Type.newtype(:dsc_xrdsessiondeployment) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_sessionhost) do
+    def mof_type; 'string' end
     desc "Specifies the FQDN of a server to host the RD Session Host role service. "
     isrequired
     validate do |value|
@@ -73,6 +74,7 @@ Puppet::Type.newtype(:dsc_xrdsessiondeployment) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_connectionbroker) do
+    def mof_type; 'string' end
     desc "Specifies the FQDN of a server to host the RD Connection Broker role service."
     isrequired
     validate do |value|
@@ -87,6 +89,7 @@ Puppet::Type.newtype(:dsc_xrdsessiondeployment) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_webaccessserver) do
+    def mof_type; 'string' end
     desc "Specifies the FQDN of a server to host the RD Web Access role service. "
     isrequired
     validate do |value|

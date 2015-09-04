@@ -57,6 +57,7 @@ Puppet::Type.newtype(:dsc_xsqlhaservice) do
   # IsMandatory:  True
   # Values:       None
   newparam(:dsc_instancename) do
+    def mof_type; 'string' end
     desc "The name of Sql instance."
     isrequired
     validate do |value|
@@ -71,6 +72,7 @@ Puppet::Type.newtype(:dsc_xsqlhaservice) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_sqladministratorcredential) do
+    def mof_type; 'string' end
     desc "Sql sa credential"
     validate do |value|
       unless value.kind_of?(String)
@@ -84,6 +86,7 @@ Puppet::Type.newtype(:dsc_xsqlhaservice) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_servicecredential) do
+    def mof_type; 'string' end
     desc "Domain credential to run sql service"
     validate do |value|
       unless value.kind_of?(String)

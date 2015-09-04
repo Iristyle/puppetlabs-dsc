@@ -58,6 +58,7 @@ Puppet::Type.newtype(:dsc_xadcscertificationauthority) do
   # IsMandatory:  True
   # Values:       ["EnterpriseRootCA", "EnterpriseSubordinateCA", "StandaloneRootCA", "StandaloneSubordinateCA"]
   newparam(:dsc_catype) do
+    def mof_type; 'string' end
     desc "Specifies the type of certification authority to install. The possible values are EnterpriseRootCA, EnterpriseSubordinateCA, StandaloneRootCA, or StandaloneSubordinateCA."
     isrequired
     validate do |value|
@@ -75,6 +76,7 @@ Puppet::Type.newtype(:dsc_xadcscertificationauthority) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_credential) do
+    def mof_type; 'string' end
     desc "To install an enterprise certification authority, the computer must be joined to an Active Directory Domain Services domain and a user account that is a member of the Enterprise Admin group is required. To install a standalone certification authority, the computer can be in a workgroup or AD DS domain. If the computer is in a workgroup, a user account that is a member of Administrators is required. If the computer is in an AD DS domain, a user account that is a member of Domain Admins is required."
     validate do |value|
       unless value.kind_of?(String)
@@ -88,6 +90,7 @@ Puppet::Type.newtype(:dsc_xadcscertificationauthority) do
   # IsMandatory:  False
   # Values:       ["Present", "Absent"]
   newparam(:dsc_ensure) do
+    def mof_type; 'string' end
     desc "Specifies whether the Certificate Authority should be installed or uninstalled."
     validate do |value|
       resource[:ensure] = value.downcase
@@ -105,6 +108,7 @@ Puppet::Type.newtype(:dsc_xadcscertificationauthority) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_cacommonname) do
+    def mof_type; 'string' end
     desc "Specifies the certification authority common name."
     validate do |value|
       unless value.kind_of?(String)
@@ -118,6 +122,7 @@ Puppet::Type.newtype(:dsc_xadcscertificationauthority) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_cadistinguishednamesuffix) do
+    def mof_type; 'string' end
     desc "Specifies the certification authority distinguished name suffix."
     validate do |value|
       unless value.kind_of?(String)
@@ -131,6 +136,7 @@ Puppet::Type.newtype(:dsc_xadcscertificationauthority) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_certfile) do
+    def mof_type; 'string' end
     desc "Specifies the file name of certification authority PKCS 12 formatted certificate file."
     validate do |value|
       unless value.kind_of?(String)
@@ -144,6 +150,7 @@ Puppet::Type.newtype(:dsc_xadcscertificationauthority) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_certfilepassword) do
+    def mof_type; 'string' end
     desc "Specifies the password for certification authority certificate file."
     validate do |value|
       unless value.kind_of?(String)
@@ -157,6 +164,7 @@ Puppet::Type.newtype(:dsc_xadcscertificationauthority) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_certificateid) do
+    def mof_type; 'string' end
     desc "Specifies the thumbprint or serial number of certification authority certificate."
     validate do |value|
       unless value.kind_of?(String)
@@ -170,6 +178,7 @@ Puppet::Type.newtype(:dsc_xadcscertificationauthority) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_cryptoprovidername) do
+    def mof_type; 'string' end
     desc "The name of the cryptographic service provider  or key storage provider that is used to generate or store the private key for the CA."
     validate do |value|
       unless value.kind_of?(String)
@@ -183,6 +192,7 @@ Puppet::Type.newtype(:dsc_xadcscertificationauthority) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_databasedirectory) do
+    def mof_type; 'string' end
     desc "Specifies the folder location of the certification authority database."
     validate do |value|
       unless value.kind_of?(String)
@@ -196,6 +206,7 @@ Puppet::Type.newtype(:dsc_xadcscertificationauthority) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_hashalgorithmname) do
+    def mof_type; 'string' end
     desc "Specifies the signature hash algorithm used by the certification authority."
     validate do |value|
       unless value.kind_of?(String)
@@ -209,6 +220,7 @@ Puppet::Type.newtype(:dsc_xadcscertificationauthority) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_ignoreunicode) do
+    def mof_type; 'boolean' end
     desc "Specifies that Unicode characters are allowed in certification authority name string."
     validate do |value|
     end
@@ -223,6 +235,7 @@ Puppet::Type.newtype(:dsc_xadcscertificationauthority) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_keycontainername) do
+    def mof_type; 'string' end
     desc "Specifies the name of an existing private key container."
     validate do |value|
       unless value.kind_of?(String)
@@ -236,6 +249,7 @@ Puppet::Type.newtype(:dsc_xadcscertificationauthority) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_keylength) do
+    def mof_type; 'uint32' end
     desc "Specifies the name of an existing private key container."
     validate do |value|
       unless (value.kind_of?(Numeric) && value >= 0) || (value.to_i.to_s == value && value.to_i >= 0)
@@ -252,6 +266,7 @@ Puppet::Type.newtype(:dsc_xadcscertificationauthority) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_logdirectory) do
+    def mof_type; 'string' end
     desc "Specifies the folder location of the certification authority database log."
     validate do |value|
       unless value.kind_of?(String)
@@ -265,6 +280,7 @@ Puppet::Type.newtype(:dsc_xadcscertificationauthority) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_outputcertrequestfile) do
+    def mof_type; 'string' end
     desc "Specifies the folder location for certificate request file."
     validate do |value|
       unless value.kind_of?(String)
@@ -278,6 +294,7 @@ Puppet::Type.newtype(:dsc_xadcscertificationauthority) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_overwriteexistingcainds) do
+    def mof_type; 'boolean' end
     desc "Specifies that the computer object in the Active Directory Domain Service domain should be overwritten with the same computer name."
     validate do |value|
     end
@@ -292,6 +309,7 @@ Puppet::Type.newtype(:dsc_xadcscertificationauthority) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_overwriteexistingdatabase) do
+    def mof_type; 'boolean' end
     desc "Specifies that the existing certification authority database should be overwritten."
     validate do |value|
     end
@@ -306,6 +324,7 @@ Puppet::Type.newtype(:dsc_xadcscertificationauthority) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_overwriteexistingkey) do
+    def mof_type; 'boolean' end
     desc "Overwrite existing key container with the same name"
     validate do |value|
     end
@@ -320,6 +339,7 @@ Puppet::Type.newtype(:dsc_xadcscertificationauthority) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_parentca) do
+    def mof_type; 'string' end
     desc "Specifies the configuration string of the parent certification authority that will certify this CA."
     validate do |value|
       unless value.kind_of?(String)
@@ -333,6 +353,7 @@ Puppet::Type.newtype(:dsc_xadcscertificationauthority) do
   # IsMandatory:  False
   # Values:       ["Hours", "Days", "Months", "Years"]
   newparam(:dsc_validityperiod) do
+    def mof_type; 'string' end
     desc "Specifies the validity period of the certification authority certificate in hours, days, weeks, months or years. If this is a subordinate CA, do not use this parameter, because the validity period is determined by the parent CA."
     validate do |value|
       unless value.kind_of?(String)
@@ -349,6 +370,7 @@ Puppet::Type.newtype(:dsc_xadcscertificationauthority) do
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_validityperiodunits) do
+    def mof_type; 'uint32' end
     desc "Validity period of the certification authority certificate. If this is a subordinate CA, do not specify this parameter because the validity period is determined by the parent CA."
     validate do |value|
       unless (value.kind_of?(Numeric) && value >= 0) || (value.to_i.to_s == value && value.to_i >= 0)
