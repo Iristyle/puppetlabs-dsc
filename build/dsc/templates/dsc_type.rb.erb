@@ -82,18 +82,71 @@ Puppet::Type.newtype(:dsc_<%= resource.friendlyname.downcase %>) do
       required = ['user', 'password']
       missing = required - value.keys.map(&:to_s)
       unless missing.empty?
-        fail "for <%= property.name %> you are missing the following keys: #{missing.join(',')}"
+        fail "for <%= property.name %> you are missing the following keys: #{missing.
+join(',')}"
       end
       required.each do |key|
         if value[key]
-          fail "#{key} for <%= property.name %> should be a String" unless value[key].is_a? String
+          fail "#{key} for <%= property.name %> should be a String" unless value[key]
+.is_a? String
         end
       end
 <%    when property.embeddedinstance? && property.embeddedinstance_array? -%>
+<%#     TODO: not yet the right location for this validation code %>
+<%#     emit required or allowed fields based on embeddedinstance definition -%>
+<%      if property.credential? -%>
+      required = ['user', 'password']
+      allowed = required
+<%      elsif !property.keyvaluepair? -%>
+      required = []
+      allowed = []
+<%
+          cim_classes_with_path
+            .select { |c| c[:klass].name == property.embeddedinstance_class_name }
+            .first[:klass]
+            .features
+            .each do |hash_prop|
+              if hash_prop.qualifiers.any? { |q| q.name == 'Required' }
+-%>
+<%#   TODO: type validation per property -%>
+      required << '<%= hash_prop.name.gsub("'", "\\\\'") %>'
+<%            else -%>
+      allowed << '<%= hash_prop.name.gsub("'", "\\\\'") %>'
+<%            end
+          end
+-%>
+      allowed.merge!(required)
+<%
+        end # property.credential? -%>
+<%
+          #require 'pry';
+          #binding.pry
+-%>
+      required.each do |key|
+        if value[key]
+          fail "#{key} for <%= property.name %> should be a String" unless value[key].is_a? String
+<%# TODO: based on embeddedinstance definition, values might be strings or something else -%>
+        end
+      end
+
+
+      specified_keys = value.keys.map(&:to_s)
+
+      missing = required - specified_keys
+      unless missing.empty?
+        fail "<%= property.name %> is missing the following required keys: #{missing.join(',')}"
+      end
+
+      extraneous = specified_keys - allowed
+      unless extraneous.empty?
+        fail "<%= property.name %> includes invalid keys: #{extraneous.join(',')}"
+      end
+<%#     an array of keyvaluepairs is a special case as it's really a plain old hashtable -%>
 <%      if property.keyvaluepair? -%>
       unless value.kind_of?(Hash)
         fail("Invalid value '#{value}'. Should be a hash")
       end
+<%#     otherwise an array of embeddedinstances is an array of hashes -%>
 <%      else -%>
       unless value.kind_of?(Array) || value.kind_of?(Hash)
         fail("Invalid value '#{value}'. Should be an array of hashes or a hash")
