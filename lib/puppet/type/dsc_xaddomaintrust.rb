@@ -73,15 +73,15 @@ Puppet::Type.newtype(:dsc_xaddomaintrust) do
   end
 
   # Name:         TargetDomainAdministratorCredential
-  # Type:         string
+  # Type:         MSFT_Credential
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_targetdomainadministratorcredential) do
-    def mof_type; 'string' end
+    def mof_type; 'MSFT_Credential' end
     desc "Credentials to authenticate to the target domain"
     validate do |value|
-      unless value.kind_of?(String)
-        fail("Invalid value '#{value}'. Should be a string")
+      unless value.kind_of?(Hash)
+        fail("Invalid value '#{value}'. Should be a hash")
       end
     end
   end

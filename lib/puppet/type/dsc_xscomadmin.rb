@@ -103,15 +103,15 @@ Puppet::Type.newtype(:dsc_xscomadmin) do
   end
 
   # Name:         SCOMAdminCredential
-  # Type:         string
+  # Type:         MSFT_Credential
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_scomadmincredential) do
-    def mof_type; 'string' end
+    def mof_type; 'MSFT_Credential' end
     desc "Credential to be used to perform the operations."
     validate do |value|
-      unless value.kind_of?(String)
-        fail("Invalid value '#{value}'. Should be a string")
+      unless value.kind_of?(Hash)
+        fail("Invalid value '#{value}'. Should be a hash")
       end
     end
   end

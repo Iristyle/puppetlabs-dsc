@@ -101,15 +101,15 @@ Puppet::Type.newtype(:dsc_xscdpmserversetup) do
   end
 
   # Name:         SetupCredential
-  # Type:         string
+  # Type:         MSFT_Credential
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_setupcredential) do
-    def mof_type; 'string' end
+    def mof_type; 'MSFT_Credential' end
     desc "Credential to be used to perform the installation."
     validate do |value|
-      unless value.kind_of?(String)
-        fail("Invalid value '#{value}'. Should be a string")
+      unless value.kind_of?(Hash)
+        fail("Invalid value '#{value}'. Should be a hash")
       end
     end
   end
@@ -199,15 +199,15 @@ Puppet::Type.newtype(:dsc_xscdpmserversetup) do
   end
 
   # Name:         YukonMachineCredential
-  # Type:         string
+  # Type:         MSFT_Credential
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_yukonmachinecredential) do
-    def mof_type; 'string' end
+    def mof_type; 'MSFT_Credential' end
     desc "Credential to be used to access the SQL instance for DPM at installation time."
     validate do |value|
-      unless value.kind_of?(String)
-        fail("Invalid value '#{value}'. Should be a string")
+      unless value.kind_of?(Hash)
+        fail("Invalid value '#{value}'. Should be a hash")
       end
     end
   end
@@ -241,15 +241,15 @@ Puppet::Type.newtype(:dsc_xscdpmserversetup) do
   end
 
   # Name:         ReportingMachineCredential
-  # Type:         string
+  # Type:         MSFT_Credential
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_reportingmachinecredential) do
-    def mof_type; 'string' end
+    def mof_type; 'MSFT_Credential' end
     desc "Credential to be used to access SQL reporting for DPM at installation time."
     validate do |value|
-      unless value.kind_of?(String)
-        fail("Invalid value '#{value}'. Should be a string")
+      unless value.kind_of?(Hash)
+        fail("Invalid value '#{value}'. Should be a hash")
       end
     end
   end

@@ -68,19 +68,24 @@ Puppet::Type.newtype(:dsc_xvhdfile) do
   end
 
   # Name:         FileDirectory
-  # Type:         string[]
+  # Type:         MSFT_xFileDirectory[]
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_filedirectory, :array_matching => :all) do
-    def mof_type; 'string[]' end
+    def mof_type; 'MSFT_xFileDirectory[]' end
     desc "The FileDirectory objects to copy to the VHD"
     validate do |value|
-      unless value.kind_of?(Array) || value.kind_of?(String)
-        fail("Invalid value '#{value}'. Should be a string or an array of strings")
+      unless value.kind_of?(Array) || value.kind_of?(Hash)
+        fail("Invalid value '#{value}'. Should be an array of hashes or a hash")
+      end
+      if value.kind_of?(Array)
+        value.each_with_index do |v, i|
+          fail "FileDirectory value at index #{i} should be a Hash" unless v.is_a? Hash
+        end
       end
     end
     munge do |value|
-      Array(value)
+      value.kind_of?(Hash) ? [value] : value
     end
   end
 

@@ -81,15 +81,15 @@ Puppet::Type.newtype(:dsc_xsqlserversetup) do
   end
 
   # Name:         SetupCredential
-  # Type:         string
+  # Type:         MSFT_Credential
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_setupcredential) do
-    def mof_type; 'string' end
+    def mof_type; 'MSFT_Credential' end
     desc "Credential to be used to perform the installation."
     validate do |value|
-      unless value.kind_of?(String)
-        fail("Invalid value '#{value}'. Should be a string")
+      unless value.kind_of?(Hash)
+        fail("Invalid value '#{value}'. Should be a hash")
       end
     end
   end
@@ -250,15 +250,15 @@ Puppet::Type.newtype(:dsc_xsqlserversetup) do
   end
 
   # Name:         SQLSvcAccount
-  # Type:         string
+  # Type:         MSFT_Credential
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_sqlsvcaccount) do
-    def mof_type; 'string' end
+    def mof_type; 'MSFT_Credential' end
     desc "Service account for the SQL service."
     validate do |value|
-      unless value.kind_of?(String)
-        fail("Invalid value '#{value}'. Should be a string")
+      unless value.kind_of?(Hash)
+        fail("Invalid value '#{value}'. Should be a hash")
       end
     end
   end
@@ -278,15 +278,15 @@ Puppet::Type.newtype(:dsc_xsqlserversetup) do
   end
 
   # Name:         AgtSvcAccount
-  # Type:         string
+  # Type:         MSFT_Credential
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_agtsvcaccount) do
-    def mof_type; 'string' end
+    def mof_type; 'MSFT_Credential' end
     desc "Service account for the SQL Agent service."
     validate do |value|
-      unless value.kind_of?(String)
-        fail("Invalid value '#{value}'. Should be a string")
+      unless value.kind_of?(Hash)
+        fail("Invalid value '#{value}'. Should be a hash")
       end
     end
   end
@@ -351,15 +351,15 @@ Puppet::Type.newtype(:dsc_xsqlserversetup) do
   end
 
   # Name:         SAPwd
-  # Type:         string
+  # Type:         MSFT_Credential
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_sapwd) do
-    def mof_type; 'string' end
+    def mof_type; 'MSFT_Credential' end
     desc "SA password, if SecurityMode=SQL"
     validate do |value|
-      unless value.kind_of?(String)
-        fail("Invalid value '#{value}'. Should be a string")
+      unless value.kind_of?(Hash)
+        fail("Invalid value '#{value}'. Should be a hash")
       end
     end
   end
@@ -449,15 +449,15 @@ Puppet::Type.newtype(:dsc_xsqlserversetup) do
   end
 
   # Name:         FTSvcAccount
-  # Type:         string
+  # Type:         MSFT_Credential
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_ftsvcaccount) do
-    def mof_type; 'string' end
+    def mof_type; 'MSFT_Credential' end
     desc "Service account for the Full Text service."
     validate do |value|
-      unless value.kind_of?(String)
-        fail("Invalid value '#{value}'. Should be a string")
+      unless value.kind_of?(Hash)
+        fail("Invalid value '#{value}'. Should be a hash")
       end
     end
   end
@@ -477,15 +477,15 @@ Puppet::Type.newtype(:dsc_xsqlserversetup) do
   end
 
   # Name:         RSSvcAccount
-  # Type:         string
+  # Type:         MSFT_Credential
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_rssvcaccount) do
-    def mof_type; 'string' end
+    def mof_type; 'MSFT_Credential' end
     desc "Service account for Reporting Services service."
     validate do |value|
-      unless value.kind_of?(String)
-        fail("Invalid value '#{value}'. Should be a string")
+      unless value.kind_of?(Hash)
+        fail("Invalid value '#{value}'. Should be a hash")
       end
     end
   end
@@ -505,15 +505,15 @@ Puppet::Type.newtype(:dsc_xsqlserversetup) do
   end
 
   # Name:         ASSvcAccount
-  # Type:         string
+  # Type:         MSFT_Credential
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_assvcaccount) do
-    def mof_type; 'string' end
+    def mof_type; 'MSFT_Credential' end
     desc "Service account for Analysus Services service."
     validate do |value|
-      unless value.kind_of?(String)
-        fail("Invalid value '#{value}'. Should be a string")
+      unless value.kind_of?(Hash)
+        fail("Invalid value '#{value}'. Should be a hash")
       end
     end
   end
@@ -634,15 +634,15 @@ Puppet::Type.newtype(:dsc_xsqlserversetup) do
   end
 
   # Name:         ISSvcAccount
-  # Type:         string
+  # Type:         MSFT_Credential
   # IsMandatory:  False
   # Values:       None
   newparam(:dsc_issvcaccount) do
-    def mof_type; 'string' end
+    def mof_type; 'MSFT_Credential' end
     desc "Service account for Integration Services service."
     validate do |value|
-      unless value.kind_of?(String)
-        fail("Invalid value '#{value}'. Should be a string")
+      unless value.kind_of?(Hash)
+        fail("Invalid value '#{value}'. Should be a hash")
       end
     end
   end
