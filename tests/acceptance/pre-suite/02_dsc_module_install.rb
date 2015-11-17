@@ -4,12 +4,9 @@ confine(:to, :platform => 'windows')
 
 # Init
 proj_root = File.expand_path(File.join(File.dirname(__FILE__), '../../../'))
-
+puts(proj_root)
 staging = { :module_name => 'puppetlabs-dsc' }
 local = { :module_name => 'dsc', :source => proj_root }
-
-# Check to see if module version is specified.
-staging[:version] = ENV['MODULE_VERSION'] if ENV['MODULE_VERSION']
 
 agents.each do |agent|
   step 'Install DSC Module Dependencies'
@@ -17,7 +14,8 @@ agents.each do |agent|
   on(agent, puppet('module install puppetlabs-powershell'))
 
   step 'Install DSC Module'
-  local[:target_module_path] = agent['distmoduledir']
+  local[:target_module_path] = agent['distmoduledir'][2,agent['distmoduledir'].length]
+
   # in CI install from staging forge, otherwise from local
   install_dev_puppet_module_on(agent, options[:forge_host] ? staging : local)
 end
