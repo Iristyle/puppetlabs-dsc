@@ -131,22 +131,12 @@ module PuppetX
         end
       end
 
-      def self.should_add_reboot_relationship(resource, reboot_resource, pending_relationships)
-        return false if !reboot_resource
-
-        # edge exists in graph from previous resource, so don't add
-        return false if resource.catalog.relationship_graph.edge?(resource, reboot_resource) ||
-          # newly formed edges not yet in catalog include the edge, so don't add
-          pending_relationships.any? { |e| e.source == resource && e.target == reboot_resource }
-
-        true
-      end
-
       # if an edge already exists from Reboot[dsc_reboot] to this resource
       # Puppet will recognize the cyclic dependency automatically and fail with:
       # Error: Failed to apply catalog: Found 1 dependency cycle:
       # (Dsc_file[foo] => Reboot[dsc_reboot] => Dsc_file[foo])
       def self.ensure_reboot_relationship(resource, pending_relationships)
+        require 'pry'; binding.pry
         reboot_resource = resource.catalog.resource(:reboot, 'dsc_reboot')
 
         # do nothing if no Reboot[dsc_reboot] or already an edge from resource to it
@@ -158,6 +148,21 @@ module PuppetX
         end
 
         pending_relationships
+      end
+
+      private
+
+      def self.should_add_reboot_relationship(resource, reboot_resource, pending_relationships)
+        return false if !reboot_resource
+
+        require 'pry'; binding.pry
+
+        # edge exists in graph from previous resource, so don't add
+        return false if resource.catalog.relationship_graph.edge?(resource, reboot_resource) ||
+          # newly formed edges not yet in catalog include the edge, so don't add
+          pending_relationships.any? { |e| e.source == resource && e.target == reboot_resource }
+
+        true
       end
     end
   end
