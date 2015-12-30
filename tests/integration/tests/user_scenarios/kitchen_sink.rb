@@ -43,7 +43,7 @@ dsc_manifest = ERB.new(File.read(dsc_manifest_template_path), 0, '>').result(bin
 teardown do
   confine_block(:to, :platform => 'windows') do
     step 'Uninstall 7-zip'
-    on(agents, "cmd /c \"#{seven_zip_install_path}\\Uninstall.exe /S\"")
+    on(agents, "cmd.exe /c \"#{seven_zip_install_path}\\Uninstall.exe /S\"")
 
     step 'Unset Environment Variable'
     set_dsc_resource(

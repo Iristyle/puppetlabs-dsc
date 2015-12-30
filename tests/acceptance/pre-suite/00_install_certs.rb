@@ -1,7 +1,7 @@
 test_name "Install CA Certs"
 confine(:to, :platform => 'windows')
 
-temp_dir_name = 'windows\temp'
+temp_dir_name = 'c:\windows\temp'
 
 GEOTRUST_GLOBAL_CA = <<-EOM
 -----BEGIN CERTIFICATE-----
@@ -80,14 +80,17 @@ EOM
 hosts.each do |host|
   # The 'root' is considered to be "C:\" on BitVise templates.
   step "Installing Geotrust CA cert"
-  create_remote_file(host, "#{temp_dir_name}/geotrustglobal.pem".gsub(/\\/,'/'), GEOTRUST_GLOBAL_CA)
-  on(host, "cmd /c certutil -v -addstore Root c:\\#{temp_dir_name}\\geotrustglobal.pem")
+  create_remote_file(host, "#{temp_dir_name}\\geotrustglobal.pem", GEOTRUST_GLOBAL_CA)
+  # create_remote_file(host, "#{temp_dir_name}/geotrustglobal.pem".gsub(/\\/,'/'), GEOTRUST_GLOBAL_CA)
+  on(host, "cmd.exe /c \"certutil -v -addstore Root #{temp_dir_name}\\geotrustglobal.pem\"")
 
   step "Installing Usertrust Network CA cert"
-  create_remote_file(host, "#{temp_dir_name}/usertrust-network.pem".gsub(/\\/,'/'), USERTRUST_NETWORK_CA)
-  on(host, "cmd /c certutil -v -addstore Root c:\\#{temp_dir_name}\\usertrust-network.pem")
+  create_remote_file(host, "#{temp_dir_name}\\usertrust-network.pem", USERTRUST_NETWORK_CA)
+  # create_remote_file(host, "#{temp_dir_name}/usertrust-network.pem".gsub(/\\/,'/'), USERTRUST_NETWORK_CA)
+  on(host, "cmd.exe /c \"certutil -v -addstore Root #{temp_dir_name}\\usertrust-network.pem\"")
 
   step "Installing Equifax CA cert"
-  create_remote_file(host, "#{temp_dir_name}/equifax.pem".gsub(/\\/,'/'), EQUIFAX_CA)
-  on(host, "cmd /c certutil -v -addstore Root c:\\#{temp_dir_name}\\equifax.pem")
+  create_remote_file(host, "#{temp_dir_name}\\equifax.pem", EQUIFAX_CA)
+  # create_remote_file(host, "#{temp_dir_name}/equifax.pem".gsub(/\\/,'/'), EQUIFAX_CA)
+  on(host, "cmd.exe /c \"certutil -v -addstore Root #{temp_dir_name}\\equifax.pem\"")
 end

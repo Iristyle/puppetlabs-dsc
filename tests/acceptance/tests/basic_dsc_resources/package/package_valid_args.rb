@@ -26,7 +26,7 @@ dsc_manifest = ERB.new(File.read(dsc_manifest_template_path), 0, '>').result(bin
 # Teardown
 teardown do
   step 'Remove Test Artifacts'
-  on(agents, "cmd /c \"#{install_path}\\Uninstall.exe /S\"")
+  on(agents, "cmd.exe /c \"#{install_path}\\Uninstall.exe /S\"")
 
   set_dsc_resource(
     agents,

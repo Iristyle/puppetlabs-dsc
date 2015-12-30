@@ -14,7 +14,10 @@ agents.each do |agent|
   on(agent, puppet('module install puppetlabs-powershell'))
 
   step 'Install DSC Module'
-  local[:target_module_path] = agent['distmoduledir'][2,agent['distmoduledir'].length]
+  # local[:target_module_path] = agent['distmoduledir'][2,agent['distmoduledir'].length]
+
+  # TODO: in Git bash (over an SSH connection), we get:
+  local[:target_module_path] = on(agent, "bash -c 'echo \"#{agent['distmoduledir']}\"'").stdout.chomp
 
   # in CI install from staging forge, otherwise from local
   install_dev_puppet_module_on(agent, options[:forge_host] ? staging : local)
