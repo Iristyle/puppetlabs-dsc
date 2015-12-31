@@ -15,47 +15,28 @@ module PuppetX::Dsc
       process_init_lock = Mutex.new
       process_started = ConditionVariable.new
 
-      @stdout_lock = Mutex.new
-      @stdout_written = ConditionVariable.new
-
-      @stdout_capture = []
-      stdout_monitor_thread = nil
+      @stream_lock = Mutex.new
 
       process_init_lock.synchronize do
         @runner_thread = Thread.new do
-          Open3::popen2(cmd) do |stdin, stdout, proc_thread|
-            Puppet.debug "#{Time.now} #{cmd} is running as pid: #{proc_thread.pid}"
+          begin
+            Open3::popen2(cmd) do |stdin, stdout, proc_thread|
+              Puppet.debug "#{Time.now} #{cmd} is running as pid: #{proc_thread.pid}"
 
-            @stdin = stdin
-            @stdout = stdout
-            stdin.sync = true
-            stdout.sync = true
+              @stdin = stdin
+              @stdout = stdout
+              stdin.sync = true
+              stdout.sync = true
 
-            stdout_monitor_thread = Thread.new do
-              while !@stdout.eof? do
-                @stdout_lock.synchronize do
-                  begin
-                    # this is necessary to ensure all output captured
-                    @stdout.flush
-                    while self.class.is_readable?(@stdout) do
-                      l = @stdout.gets
-                      Puppet.debug "#{Time.now} STDOUT> #{l}"
-                      @stdout_capture << l
-                    end
-                  rescue => e
-                    Puppet.debug "Could not read STDOUT: #{e}"
-                  ensure
-                    @stdout_written.signal()
-                  end
-                end
-              end
+              process_started.signal()
+
+              proc_thread.join
+              @return_code = proc_thread.value
             end
-
+          # process not found or otherwise failed to start
+          rescue Exception => e
             process_started.signal()
-
-            proc_thread.join
-            stdout_monitor_thread.join
-            @return_code = proc_thread.value
+            @return_code = -1
           end
         end
       end
@@ -71,6 +52,11 @@ module PuppetX::Dsc
     def self.is_readable?(stream, timeout = 0.5)
       read_ready = IO.select([stream], [], [], timeout)
       read_ready && stream == read_ready[0][0]
+    end
+
+    def self.is_writable?(stream, timeout = 2)
+      write_ready = IO.select([], [stream], [], timeout)
+      write_ready && stream == write_ready[1][0]
     end
 
     def execute(powershell_code)
@@ -97,26 +83,52 @@ module PuppetX::Dsc
 
     private
 
+    def write_stdin(input)
+      begin
+        # clear previously captured output
+        @stream_lock.synchronize do
+          raise "Unwriteable stream" if !self.class.is_writable?(@stdin)
+
+          @stdin.puts(input)
+          @stdin.flush()
+          # TODO: need to make sure Ruby wakes up thread responsible for powershell.exe
+          # only thing that works is sleep for a high amount of time - i.e. sleep(1)
+          sleep(1)
+        end
+      rescue => e
+        Puppet.debug "Error writing STDIN / reading STDOUT: #{e}"
+      end
+    end
+
     def read_stdout
-      output = ''
-      @stdout_lock.synchronize do
-        # should use readable?(@stdout) to avoid block / wait, but it races
-        # assume stdout populated / don't use timeout or output misaligned
-        @stdout_written.wait(@stdout_lock)
-        output = @stdout_capture.join('')
+      result = ''
+
+      begin
+        @stream_lock.synchronize do
+          @stdout.flush()
+
+          Thread.pass
+
+          # while !@stdout.eof? do
+          # this is necessary to ensure all output captured
+          output = []
+          while self.class.is_readable?(@stdout) do
+            l = @stdout.gets
+            Puppet.debug "#{Time.now} STDOUT> #{l}"
+            output << l
+          end
+
+          result = output.join('')
+        end
+      rescue => e
+        Puppet.debug "Error reading STDOUT: #{e}"
       end
 
-      output
+      result
     end
 
     def exec_read_result(powershell_code)
-      # clear previously captured output
-      @stdout_lock.synchronize { @stdout_capture.clear() }
-
-      @stdin.puts(powershell_code)
-      @stdin.flush()
-
-      # read results from stdout
+      write_stdin(powershell_code)
       read_stdout
     end
   end
