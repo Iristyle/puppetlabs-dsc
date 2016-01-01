@@ -83,6 +83,16 @@ module PuppetX::Dsc
         l = @stdout.gets
         Puppet.debug "#{Time.now} STDOUT> #{l}"
         output << l
+
+        # We need a way to get to process status.
+        # I'm not going to trust $? is going to
+        # give us the right thing. Especially on
+        # Windows.
+
+        #if !proc_thread.alive?
+        #  Puppet.debug "#{Time.now} #{cmd} has exited for unknown reasons."
+        #  raise "Process #{cmd} has exited, possibly due to malformed command."
+        #end
       end
 
       return output.join('')
