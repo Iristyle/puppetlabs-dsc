@@ -3,8 +3,6 @@ require 'thread'
 
 module PuppetX::Dsc
   class PowerShellManager
-    attr_accessor :return_code
-
     @@instances = {}
 
     def self.instance(cmd)
@@ -12,39 +10,17 @@ module PuppetX::Dsc
     end
 
     def initialize(cmd)
-      process_init_lock = Mutex.new
-      process_started = ConditionVariable.new
+      stdin_r, @stdin = IO.pipe
+      @stdout, stdout_w = IO.pipe
 
-      @stream_lock = Mutex.new
+      stdin_r.sync = true
+      @stdin.sync = true
+      @stdout.sync = true
+      stdout_w.sync = true
+      @pid = Process.spawn(cmd, :in => stdin_r, :out => stdout_w)
+      Process.detach(@pid)
 
-      process_init_lock.synchronize do
-        @runner_thread = Thread.new do
-          begin
-            Open3::popen2(cmd) do |stdin, stdout, proc_thread|
-              Puppet.debug "#{Time.now} #{cmd} is running as pid: #{proc_thread.pid}"
-
-              @stdin = stdin
-              @stdout = stdout
-              stdin.sync = true
-              stdout.sync = true
-
-              process_started.signal()
-
-              proc_thread.join
-              @return_code = proc_thread.value
-            end
-          # process not found or otherwise failed to start
-          rescue Exception => e
-            process_started.signal()
-            @return_code = -1
-          end
-        end
-      end
-
-      # block initializer until process started with popen
-      process_init_lock.synchronize do
-        process_started.wait(process_init_lock)
-      end
+      Puppet.debug "#{Time.now} #{cmd} is running as pid: #{@pid}"
 
       at_exit { exit }
     end
@@ -78,53 +54,41 @@ module PuppetX::Dsc
       Puppet.debug "PowerShellManager exiting..."
       @stdin.puts "\nexit\n"
       @stdin.close
-      @runner_thread.join
+      @stdout.close
+      # TODO: kill if not exited in X seconds?
+      @return_code = Process::waitpid(@pid, 2)
     end
 
     private
 
     def write_stdin(input)
-      begin
-        # clear previously captured output
-        @stream_lock.synchronize do
-          raise "Unwriteable stream" if !self.class.is_writable?(@stdin)
+      raise "Unwriteable stream" if !self.class.is_writable?(@stdin)
 
-          @stdin.puts(input)
-          @stdin.flush()
-          # TODO: need to make sure Ruby wakes up thread responsible for powershell.exe
-          # only thing that works is sleep for a high amount of time - i.e. sleep(1)
-          sleep(1)
-        end
-      rescue => e
-        Puppet.debug "Error writing STDIN / reading STDOUT: #{e}"
-      end
+      @stdin.puts(input)
+      @stdin.flush()
+    rescue => e
+      Puppet.warning "Error writing STDIN / reading STDOUT: #{e}"
     end
 
     def read_stdout
-      result = ''
+      output = []
+      # TODO: seems to need an initial timeout on first run
+      # otherwise we drop output on 1st or 2nd resource and return something like:
+      #  Could not evaluate: A JSON text must at least contain two octets!
+      # unfortunately this drives up overall execution time considerably
+      while self.class.is_readable?(@stdout, 2) do
+        # this is necessary to ensure all output captured
+        @stdout.flush()
 
-      begin
-        @stream_lock.synchronize do
-          @stdout.flush()
-
-          Thread.pass
-
-          # while !@stdout.eof? do
-          # this is necessary to ensure all output captured
-          output = []
-          while self.class.is_readable?(@stdout) do
-            l = @stdout.gets
-            Puppet.debug "#{Time.now} STDOUT> #{l}"
-            output << l
-          end
-
-          result = output.join('')
-        end
-      rescue => e
-        Puppet.debug "Error reading STDOUT: #{e}"
+        l = @stdout.gets
+        Puppet.debug "#{Time.now} STDOUT> #{l}"
+        output << l
       end
 
-      result
+      return output.join('')
+    rescue => e
+      Puppet.warning "Error reading STDOUT: #{e}"
+      ''
     end
 
     def exec_read_result(powershell_code)
