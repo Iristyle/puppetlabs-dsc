@@ -35,7 +35,7 @@ EOT
 
 
   def self.powershell_args
-    ['-NoProfile', '-NonInteractive', '-NoLogo', '-ExecutionPolicy', 'Bypass', '-Command', '-']
+    ['-NoProfile', '-NonInteractive', '-Sta', '-NoLogo', '-ExecutionPolicy', 'Bypass', '-Command', '-']
   end
 
   def ps_manager
