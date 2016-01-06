@@ -17,8 +17,8 @@ module PuppetX::Dsc
     def initialize(cmd)
       # TODO: CreateMutex with LPSECURITY_ATTRIBUTES and allow
       # child processes access to it - use NULL attributes for now
-      @mutex_name = "Global\\#{SecureRandom.uuid}"
-      @mutex_handle = create_mutex(@mutex_name)
+      @output_ready_event_name =  "Global\\#{SecureRandom.uuid}"
+      @output_ready_event = create_event(@output_ready_event_name)
 
       stdin_r, @stdin = IO.pipe
       @stdout, stdout_w = IO.pipe
@@ -29,11 +29,7 @@ module PuppetX::Dsc
       stdout_w.sync = true
       @pid = Process.spawn(cmd, :in => stdin_r, :out => stdout_w)
 
-      stdin_r.close()
-      stdout_w.close()
-
       Process.detach(@pid)
-      create_powershell_mutex(@mutex_name)
 
       Puppet.debug "#{Time.now} #{cmd} is running as pid: #{@pid}"
 
@@ -51,37 +47,22 @@ module PuppetX::Dsc
     end
 
     def execute(powershell_code)
-      # require 'pry'; binding.pry
       # always need a trailing newline to ensure PowerShell parses code
-      write_stdin(<<-CODE
-      # $mutex = [Threading.Mutex]::OpenExisting("#{@mutex_name}")
-      [Void]$mutex.WaitOne()
+      out = exec_read_result(<<-CODE
+      $event = [Threading.EventWaitHandle]::OpenExisting("#{@output_ready_event_name}")
 
-      CODE
-      )
-
-      # require 'pry'; binding.pry
-
-      write_stdin(<<-CODE
       $Error.Clear()
       $LASTEXITCODE = 0
 
-
-      Start-Sleep -Milliseconds 1500
+      #{powershell_code}
 
       [Console]::Out.Flush()
       [Console]::Error.Flush()
 
-      # $mutex | Format-List
-      [Void]$mutex.ReleaseMutex()
+      [Void]$event.Set()
 
       CODE
       )
-
-      out = read_stdout
-      release_mutex
-
-      # require 'pry'; binding.pry
 
       { :stdout => out }
     end
@@ -92,13 +73,31 @@ module PuppetX::Dsc
       @stdin.close
       @stdout.close
 
-      FFI::WIN32.CloseHandle(@mutex_handle) if @mutex_handle
+      FFI::WIN32.CloseHandle(@output_ready_event) if @output_ready_event
 
       # TODO: kill if not exited in X seconds?
       @return_code = Process::waitpid(@pid, 2)
     end
 
     private
+
+    def create_event(name, manual_reset = false, initial_state = false)
+      handle = FFI::Pointer::NULL_HANDLE
+
+      FFI::Pointer.from_string_to_wide_string(name) do |name_ptr|
+        handle = CreateEventW(FFI::Pointer::NULL,
+          manual_reset ? 1 : FFI::WIN32_FALSE,
+          initial_state ? 1 : FFI::WIN32_FALSE,
+          name_ptr)
+
+        if handle == FFI::Pointer::NULL_HANDLE
+          msg = "Failed to create new event #{name}"
+          raise Puppet::Util::Windows::Error.new(msg)
+        end
+      end
+
+      handle
+    end
 
     # The specified object is a mutex object that was not released by the thread that owned the mutex object before the owning thread terminated. Ownership of the mutex object is granted to the calling thread and the mutex state is set to nonsignaled.
     # If the mutex was protecting persistent state information, you should check it for consistency.
@@ -109,30 +108,6 @@ module PuppetX::Dsc
     WAIT_TIMEOUT = 0x00000102
     # Complete failure
     WAIT_FAILED = 0xFFFFFFFF
-
-    def create_mutex(name, own = false)
-      handle = FFI::Pointer::NULL_HANDLE
-
-      FFI::Pointer.from_string_to_wide_string(name) do |name_ptr|
-        handle = CreateMutexW(FFI::Pointer::NULL,
-          own ? 1 : FFI::WIN32_FALSE,
-          name_ptr)
-
-        if handle == FFI::Pointer::NULL_HANDLE
-          msg = "Failed to create new mutex #{name}"
-          raise Puppet::Util::Windows::Error.new(msg)
-        end
-      end
-
-      handle
-    end
-
-    def release_mutex
-      result = ReleaseMutex(@mutex_handle)
-      if (result == FFI::WIN32_FALSE)
-        Puppet.warning("Failed to release mutex #{@mutex_name}")
-      end
-    end
 
     def wait_on(wait_object, milliseconds = 20 * 1000)
       # wait 200ms at a time until signaled
@@ -158,30 +133,19 @@ module PuppetX::Dsc
       end
     end
 
-    def create_powershell_mutex(name)
-      write_stdin(<<-CODE
-      # $mutex = [Threading.Mutex]::OpenExisting("#{name}")
-      $mutex = New-Object Threading.Mutex($true, "#{name}")
-      # [Void]$mutex.ReleaseMutex()
-      # $mutex = New-Object Threading.Mutex($false, "#{name}")
-
-      CODE
-      )
-    end
-
     def write_stdin(input)
       raise "Unwriteable stream" if !self.class.is_writable?(@stdin)
 
       @stdin.puts(input)
-      @stdin.flush()
+      # @stdin.flush()
     rescue => e
       Puppet.warning "Error writing STDIN / reading STDOUT: #{e}"
     end
 
     def read_stdout
       output = []
-      @stdout.flush()
-      wait_on(@mutex_handle)
+      # @stdout.flush()
+      wait_on(@output_ready_event)
 
       # TODO: seems to need an initial timeout on first run
       # otherwise we drop output on 1st or 2nd resource and return something like:
@@ -190,9 +154,8 @@ module PuppetX::Dsc
       initially_readable = false
       while self.class.is_readable?(@stdout, 0.1) do
         initially_readable = true
-        # require 'pry'; binding.pry
         # this is necessary to ensure all output captured
-        @stdout.flush()
+        # @stdout.flush()
 
         l = @stdout.gets
         Puppet.debug "#{Time.now} STDOUT> #{l}"
@@ -207,13 +170,10 @@ module PuppetX::Dsc
       ''
     end
 
-    # def exec_read_result(powershell_code)
-    #   write_stdin(powershell_code)
-    #   out = read_stdout
-    #   release_mutex
-
-    #   out
-    # end
+    def exec_read_result(powershell_code)
+      write_stdin(powershell_code)
+      read_stdout
+    end
 
     ffi_convention :stdcall
 
@@ -232,31 +192,21 @@ module PuppetX::Dsc
     #          :bInheritHandle, :win32_bool
     # end
 
-    # https://msdn.microsoft.com/en-us/library/windows/desktop/ms682411(v=vs.85).aspx
-    # HANDLE WINAPI CreateMutex(
-    #   _In_opt_ LPSECURITY_ATTRIBUTES lpMutexAttributes,
-    #   _In_     BOOL                  bInitialOwner,
+    # https://msdn.microsoft.com/en-us/library/windows/desktop/ms682396(v=vs.85).aspx
+    # HANDLE WINAPI CreateEvent(
+    #   _In_opt_ LPSECURITY_ATTRIBUTES lpEventAttributes,
+    #   _In_     BOOL                  bManualReset,
+    #   _In_     BOOL                  bInitialState,
     #   _In_opt_ LPCTSTR               lpName
     # );
     ffi_lib :kernel32
-    attach_function :CreateMutexW, [:pointer, :win32_bool, :lpcwstr], :handle
-    # attach_function :CreateMutexW, [SECURITY_ATTRIBUTES, :win32_bool, :lpcwstr], :handle
+    attach_function :CreateEventW, [:pointer, :win32_bool, :win32_bool, :lpcwstr], :handle
 
-    # https://msdn.microsoft.com/en-us/library/windows/desktop/ms682418(v=vs.85).aspx
-    # HANDLE WINAPI CreateMutexEx(
-    #   _In_opt_ LPSECURITY_ATTRIBUTES lpMutexAttributes,
-    #   _In_opt_ LPCTSTR               lpName,
-    #   _In_     DWORD                 dwFlags,
-    #   _In_     DWORD                 dwDesiredAccess
-    # );
-    # CREATE_MUTEX_INITIAL_OWNER = 0x00000001
-    attach_function :CreateMutexExW, [:pointer, :lpcwstr, :dword, :dword], :handle
-
-    # https://msdn.microsoft.com/en-us/library/windows/desktop/ms685066(v=vs.85).aspx
-    # BOOL WINAPI ReleaseMutex(
-    #   _In_ HANDLE hMutex
+    # https://msdn.microsoft.com/en-us/library/windows/desktop/ms686211(v=vs.85).aspx
+    # BOOL WINAPI SetEvent(
+    #   _In_ HANDLE hEvent
     # );
     ffi_lib :kernel32
-    attach_function :ReleaseMutex, [:handle], :win32_bool
+    attach_function :SetEvent, [:handle], :win32_bool
   end
 end
