@@ -134,12 +134,12 @@ module PuppetX::Dsc
       end
     end
 
-    def wait_on_mutex(milliseconds = 20 * 1000)
+    def wait_on(wait_object, milliseconds = 20 * 1000)
       # wait 200ms at a time until signaled
       total = 0
       wait_ms = 200
       while true
-        wait_result = Puppet::Util::Windows::Process::WaitForSingleObject(@mutex_handle, wait_ms)
+        wait_result = Puppet::Util::Windows::Process::WaitForSingleObject(wait_object, wait_ms)
         case wait_result
         when WAIT_OBJECT_0
           Puppet.debug "Mutex signaled - Ruby process holds mutex"
@@ -181,7 +181,7 @@ module PuppetX::Dsc
     def read_stdout
       output = []
       @stdout.flush()
-      wait_on_mutex()
+      wait_on(@mutex_handle)
 
       # TODO: seems to need an initial timeout on first run
       # otherwise we drop output on 1st or 2nd resource and return something like:
