@@ -1,6 +1,5 @@
 require 'securerandom'
 require 'open3'
-require 'thread'
 require 'ffi'
 
 module PuppetX::Dsc
@@ -15,23 +14,14 @@ module PuppetX::Dsc
     end
 
     def initialize(cmd)
-      # TODO: CreateMutex with LPSECURITY_ATTRIBUTES and allow
-      # child processes access to it - use NULL attributes for now
       @output_ready_event_name =  "Global\\#{SecureRandom.uuid}"
       @output_ready_event = create_event(@output_ready_event_name)
 
-      stdin_r, @stdin = IO.pipe
-      @stdout, stdout_w = IO.pipe
-
-      stdin_r.sync = true
+      @stdin, @stdout, @stderr, @wait_thr = Open3.popen3(cmd)
       @stdin.sync = true
       @stdout.sync = true
-      stdout_w.sync = true
-      @pid = Process.spawn(cmd, :in => stdin_r, :out => stdout_w)
 
-      Process.detach(@pid)
-
-      Puppet.debug "#{Time.now} #{cmd} is running as pid: #{@pid}"
+      Puppet.debug "#{Time.now} #{cmd} is running as pid: #{@wait_thr[:pid]}"
 
       at_exit { exit }
     end
@@ -56,9 +46,6 @@ module PuppetX::Dsc
 
       #{powershell_code}
 
-      [Console]::Out.Flush()
-      [Console]::Error.Flush()
-
       [Void]$event.Set()
 
       CODE
@@ -72,11 +59,13 @@ module PuppetX::Dsc
       @stdin.puts "\nexit\n"
       @stdin.close
       @stdout.close
+      @stderr.close
 
       FFI::WIN32.CloseHandle(@output_ready_event) if @output_ready_event
 
       # TODO: kill if not exited in X seconds?
-      @return_code = Process::waitpid(@pid, 2)
+      # @return_code = Process::waitpid(@wait_thr[:pid], 2)
+      @return_code = @wait_thr.value
     end
 
     private
@@ -112,12 +101,12 @@ module PuppetX::Dsc
     def wait_on(wait_object, milliseconds = 20 * 1000)
       # wait 200ms at a time until signaled
       total = 0
-      wait_ms = 200
+      wait_ms = 50
       while true
         wait_result = Puppet::Util::Windows::Process::WaitForSingleObject(wait_object, wait_ms)
         case wait_result
         when WAIT_OBJECT_0
-          Puppet.debug "Mutex signaled - Ruby process holds mutex"
+          Puppet.debug "Object signaled - Ruby process holds mutex"
           return
         when WAIT_TIMEOUT
           total += wait_ms
@@ -127,8 +116,7 @@ module PuppetX::Dsc
           Puppet.debug "Wait abandoned..."
           raise 'Wuh-oh buddy...'
         when WAIT_FAILED
-          require 'pry'; binding.pry
-          raise 'Failure to wait on mutex'
+          raise 'Failure to wait on object'
         end
       end
     end
@@ -137,20 +125,14 @@ module PuppetX::Dsc
       raise "Unwriteable stream" if !self.class.is_writable?(@stdin)
 
       @stdin.puts(input)
-      # @stdin.flush()
     rescue => e
       Puppet.warning "Error writing STDIN / reading STDOUT: #{e}"
     end
 
     def read_stdout
       output = []
-      # @stdout.flush()
       wait_on(@output_ready_event)
 
-      # TODO: seems to need an initial timeout on first run
-      # otherwise we drop output on 1st or 2nd resource and return something like:
-      #  Could not evaluate: A JSON text must at least contain two octets!
-      # unfortunately this drives up overall execution time considerably
       initially_readable = false
       while self.class.is_readable?(@stdout, 0.1) do
         initially_readable = true
@@ -177,21 +159,6 @@ module PuppetX::Dsc
 
     ffi_convention :stdcall
 
-    # https://msdn.microsoft.com/en-us/library/windows/desktop/aa379561(v=vs.85).aspx
-    # SECURITY_DESCRIPTOR
-
-    # https://msdn.microsoft.com/en-us/library/windows/desktop/aa379560(v=vs.85).aspx
-    # typedef struct _SECURITY_ATTRIBUTES {
-    #   DWORD  nLength;
-    #   LPVOID lpSecurityDescriptor;
-    #   BOOL   bInheritHandle;
-    # } SECURITY_ATTRIBUTES, *PSECURITY_ATTRIBUTES, *LPSECURITY_ATTRIBUTES;
-    # class SECURITY_ATTRIBUTES < FFI::Struct
-    #   layout :nLength, :dword,
-    #          :lpSecurityDescriptor, :lpvoid,
-    #          :bInheritHandle, :win32_bool
-    # end
-
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms682396(v=vs.85).aspx
     # HANDLE WINAPI CreateEvent(
     #   _In_opt_ LPSECURITY_ATTRIBUTES lpEventAttributes,
@@ -201,12 +168,5 @@ module PuppetX::Dsc
     # );
     ffi_lib :kernel32
     attach_function :CreateEventW, [:pointer, :win32_bool, :win32_bool, :lpcwstr], :handle
-
-    # https://msdn.microsoft.com/en-us/library/windows/desktop/ms686211(v=vs.85).aspx
-    # BOOL WINAPI SetEvent(
-    #   _In_ HANDLE hEvent
-    # );
-    ffi_lib :kernel32
-    attach_function :SetEvent, [:handle], :win32_bool
   end
 end
