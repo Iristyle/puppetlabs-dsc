@@ -28,7 +28,12 @@ module PuppetX::Dsc
       @stdout.sync = true
       stdout_w.sync = true
       @pid = Process.spawn(cmd, :in => stdin_r, :out => stdout_w)
+
+      stdin_r.close()
+      stdout_w.close()
+
       Process.detach(@pid)
+      create_powershell_mutex(@mutex_name)
 
       Puppet.debug "#{Time.now} #{cmd} is running as pid: #{@pid}"
 
@@ -46,31 +51,37 @@ module PuppetX::Dsc
     end
 
     def execute(powershell_code)
+      # require 'pry'; binding.pry
       # always need a trailing newline to ensure PowerShell parses code
-      require 'pry'; binding.pry
-      out = exec_read_result(<<-CODE
-      [threading.thread]::CurrentThread.ManagedThreadId
-      $mutex = [Threading.Mutex]::OpenExisting("#{@mutex_name}")
-      [threading.thread]::CurrentThread.ManagedThreadId
-      # $mutex = New-Object Threading.Mutex($true, "#{@mutex_name}")
-      [threading.thread]::CurrentThread.ManagedThreadId
-      $Error.Clear()
-      [threading.thread]::CurrentThread.ManagedThreadId
-      $LASTEXITCODE = 0
-      [threading.thread]::CurrentThread.ManagedThreadId
-      #{powershell_code}
-      [Console]::Out.Flush()
-      [threading.thread]::CurrentThread.ManagedThreadId
-      [Console]::Error.Flush()
+      write_stdin(<<-CODE
+      # $mutex = [Threading.Mutex]::OpenExisting("#{@mutex_name}")
+      [Void]$mutex.WaitOne()
 
-
-      # $mutex | Format-List
-      [threading.thread]::CurrentThread.ManagedThreadId
-      $mutex.ReleaseMutex()
-      [threading.thread]::CurrentThread.ManagedThreadId
       CODE
       )
 
+      # require 'pry'; binding.pry
+
+      write_stdin(<<-CODE
+      $Error.Clear()
+      $LASTEXITCODE = 0
+
+
+      Start-Sleep -Milliseconds 1500
+
+      [Console]::Out.Flush()
+      [Console]::Error.Flush()
+
+      # $mutex | Format-List
+      [Void]$mutex.ReleaseMutex()
+
+      CODE
+      )
+
+      out = read_stdout
+      release_mutex
+
+      # require 'pry'; binding.pry
 
       { :stdout => out }
     end
@@ -125,26 +136,37 @@ module PuppetX::Dsc
 
     def wait_on_mutex(milliseconds = 20 * 1000)
       # wait 200ms at a time until signaled
-
+      total = 0
       wait_ms = 200
       while true
-        require 'pry'; binding.pry
         wait_result = Puppet::Util::Windows::Process::WaitForSingleObject(@mutex_handle, wait_ms)
         case wait_result
         when WAIT_OBJECT_0
+          Puppet.debug "Mutex signaled - Ruby process holds mutex"
           return
         when WAIT_TIMEOUT
           total += wait_ms
-          require 'pry'; binding.pry if (total > milliseconds)
+          Puppet.debug "Waiting #{wait_ms} milliseconds (total wait #{total})..."
           raise 'Wuh-oh wait exceeded' if (total > milliseconds)
         when WAIT_ABANDONED
-          require 'pry'; binding.pry
+          Puppet.debug "Wait abandoned..."
           raise 'Wuh-oh buddy...'
         when WAIT_FAILED
           require 'pry'; binding.pry
           raise 'Failure to wait on mutex'
         end
       end
+    end
+
+    def create_powershell_mutex(name)
+      write_stdin(<<-CODE
+      # $mutex = [Threading.Mutex]::OpenExisting("#{name}")
+      $mutex = New-Object Threading.Mutex($true, "#{name}")
+      # [Void]$mutex.ReleaseMutex()
+      # $mutex = New-Object Threading.Mutex($false, "#{name}")
+
+      CODE
+      )
     end
 
     def write_stdin(input)
@@ -165,7 +187,10 @@ module PuppetX::Dsc
       # otherwise we drop output on 1st or 2nd resource and return something like:
       #  Could not evaluate: A JSON text must at least contain two octets!
       # unfortunately this drives up overall execution time considerably
+      initially_readable = false
       while self.class.is_readable?(@stdout, 0.1) do
+        initially_readable = true
+        # require 'pry'; binding.pry
         # this is necessary to ensure all output captured
         @stdout.flush()
 
@@ -174,17 +199,21 @@ module PuppetX::Dsc
         output << l
       end
 
+      Puppet.debug "STDOUT was not readable" if !initially_readable
+
       return output.join('')
     rescue => e
       Puppet.warning "Error reading STDOUT: #{e}"
       ''
     end
 
-    def exec_read_result(powershell_code)
-      write_stdin(powershell_code)
-      read_stdout
-      release_mutex
-    end
+    # def exec_read_result(powershell_code)
+    #   write_stdin(powershell_code)
+    #   out = read_stdout
+    #   release_mutex
+
+    #   out
+    # end
 
     ffi_convention :stdcall
 
