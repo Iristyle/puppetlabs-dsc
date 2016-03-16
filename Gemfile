@@ -54,7 +54,7 @@ end
 
 group :build do
   gem 'cim',                :require => false
-  gem 'mof',                :require => false, :git => 'https://github.com/puppetlabs/mof.git'
+  gem 'mof',                :require => false, :git => 'https://github.com/Iristyle/mof.git', :branch => 'ticket/master/MODULES-3132-handle-UTF8-files-with-BOMs'
   gem 'charlock_holmes',    :require => false
   gem 'iconv', '~> 1.0.4',  :require => false if RUBY_VERSION >= '2.0'
 end
